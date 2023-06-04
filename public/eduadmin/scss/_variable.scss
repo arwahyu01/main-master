@@ -1,0 +1,261 @@
+// Variables
+
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i|Rubik:300,300i,400,400i,500,500i,700,700i,900,900i&display=swap');
+
+$bodyfont:'IBM Plex Sans', sans-serif;
+$headingfont:'Rubik', sans-serif;;
+
+$p100: 100%;
+
+$sid-bar-w: 270px;
+$hed-max: 125px;
+$main-hed-nav: 80px;
+$default-border-radius: 10px;
+$fct-border-radius: 5px;
+$border-circle: 50%;
+$mini-sid-bar-w: 60px;
+$ctrl-sid-bar-w: 345px;
+$inn-pg-sid-bar-w: 280px;
+$default-gutter-width: 1.5rem;
+// Typography
+//
+// Font-size, font-weight
+
+
+$fw-unset:unset;
+$fw-100:100;
+$fw-200: 200;
+$fw-300: 300;
+$fw-400: 400;
+$fw-500: 500;
+$fw-600: 600;
+$fw-700: 700;
+$fw-800: 800;
+$fw-900: 900;
+$fw-light: 100;
+$fw-normal: 400;
+$fw-medium: 500;
+$fw-bold: 700;
+
+$fs-0: 0;
+$fs-10: 0.7143rem;
+$fs-12: 0.8571rem;
+$fs-14: 1rem;
+$fs-16: 1.143rem;
+$fs-18: 1.286rem;
+$fs-20: 1.429rem;
+$fs-22: 1.5714285714285714rem;
+$fs-24: 1.714rem;
+$fs-26: 1.857rem;
+$fs-30: 2.143rem;
+$fs-32: 2.2857142857142856rem;
+$fs-36: 2.5714285714285716rem;
+$fs-38: 2.7142857142857144rem;
+$fs-40: 2.857rem;
+$fs-42: 3rem;
+$fs-46: 3.2857142857142856rem;
+$fs-48: 3.4285714285714284rem;
+$fs-50: 3.571rem;
+$fs-60: 4.286rem;
+$fs-70: 5rem;
+$fs-72: 5.142857142857143rem;
+$fs-76: 5.428571428571429rem;
+$fs-78: 5.571428571428571rem;
+$fs-80: 5.714rem;
+$fs-100: 7.142857142857143rem;
+$fs-140: 10rem ;
+$fs-180: 12.857142857142858rem;
+$fs-200: 14.285714285714286rem ;
+
+/*Social Media Colors*/
+$facebook: #3b5998;
+$google: #dd4b39;
+$twitter: #1da1f2;
+$linkedin: #0077b5;
+$pinterest: #bd081c;
+$git: #6cc644;
+$tumblr: #35465c;
+$vimeo: #1ab7ea;
+$youtube: #ff0000;
+$flickr: #ff0084;
+$reddit: #ff4500;
+$dribbble: #ea4c89;
+$skype: #00aff0;
+$instagram: #e1306c;
+$lastfm: #d51007;
+$behance: #1769ff;
+$rss: #f26522;
+$bitbucket: #205081;
+$dropbox: #007ee5;
+$foursquare: #2d5be3;
+$github: #4078c0;
+$vk: #45668e;
+
+/*Theme Colors*/
+$dark: #172b4c;
+$light:#f3f6f9;
+$light2:#ebedf3;
+$light3: #e4e6ef;
+$light4: #d1d3e0;
+$light5: #b5b5c3;
+$dx-blue: #485e90;
+$white:#ffffff;
+$black:#000000;
+$primary:#0052cc;
+$secondary:#b7c1d1;
+$info:#00baff;
+$success:#04a08b;
+$warning:#ff9920;
+$danger:#ff562f;
+$mildgray: #bcc2c8;
+
+$icon-lite-color: #172b4c;
+
+/*Lite color*/
+$primary-lite:#e1eaf9;
+$secondary-lite:#e9edf2;
+$info-lite:#d1f3ff;
+$success-lite:#d1f5f0;
+$warning-lite:#fff2e2;
+$danger-lite:#ffeae5;
+
+/*Theme Colors For Dark*/
+$body-dark: #0c1a32;
+$dark-text: #b5b5c3;
+$dark2: #566f9e;
+$dark3: #0c1a32;
+$dark-title: #bdd1f8;
+
+$colors: (
+  'primary':   $primary,
+  'secondary':   $secondary,
+  'info':      $info,
+  'success':   $success,
+  'warning':   $warning,
+  'danger':    $danger,
+  'dark':      $dark,
+  'white':     $white,
+  'black':     $black,
+  'light':     $light,
+);
+
+$gray-100:      #f3f6f9;
+$gray-200:      #ebedf3;
+$gray-300:      #e4e6ef;
+$gray-400:      #d1d3e0;
+$gray-500:      #b5b5c3;
+$gray-600:      #7e8299;
+$gray-700:      #5e6278;
+$gray-800:      #3f4254;
+$gray-900:      #181c32;
+
+
+$theme-primary-primary: #0052cc;
+$theme-primary-secondary:#b7c1d1;
+$theme-primary-info: #00baff;
+$theme-primary-success: #04a08b;
+$theme-primary-danger: #ff562f;
+$theme-primary-warning: #ff9920;
+
+$theme-primary-primary-lite: #e1eaf9;
+$theme-primary-secondary-lite:#e9edf2;
+$theme-primary-info-lite: #d1f3ff;
+$theme-primary-success-lite: #d1f5f0;
+$theme-primary-danger-lite: #ffeae5;
+$theme-primary-warning-lite: #fff2e2;
+
+$theme-primary-grd: linear-gradient(45deg, $theme-primary-primary, $theme-primary-info);
+$theme-primary-grd-dark: linear-gradient(45deg, darken($theme-primary-primary, 20%), darken($theme-primary-info, 20%));
+
+
+$theme-secondary-primary: #b7c1d1;
+$theme-secondary-secondary:#0052cc;
+$theme-secondary-info: #00baff;
+$theme-secondary-success: #04a08b;
+$theme-secondary-danger: #ff562f;
+$theme-secondary-warning: #ff9920;
+
+$theme-secondary-primary-lite: #e9edf2;
+$theme-secondary-secondary-lite:#e1eaf9;
+$theme-secondary-info-lite: #d1f3ff;
+$theme-secondary-success-lite: #d1f5f0;
+$theme-secondary-danger-lite: #ffeae5;
+$theme-secondary-warning-lite: #fff2e2;
+
+$theme-secondary-grd: linear-gradient(45deg, $theme-secondary-primary, $theme-secondary-info);
+$theme-secondary-grd-dark: linear-gradient(45deg, darken($theme-secondary-primary, 20%), darken($theme-secondary-info, 20%));
+
+$theme-info-primary: #00baff;
+$theme-info-secondary:#b7c1d1;
+$theme-info-info: #0052cc;
+$theme-info-success: #04a08b;
+$theme-info-danger: #ff562f;
+$theme-info-warning: #ff9920;
+
+$theme-info-primary-lite: #d1f3ff;
+$theme-info-secondary-lite:#e9edf2;
+$theme-info-info-lite: #e1eaf9;
+$theme-info-success-lite: #d1f5f0;
+$theme-info-danger-lite: #ffeae5;
+$theme-info-warning-lite: #fff2e2;
+
+$theme-info-grd: linear-gradient(45deg, $theme-info-primary, $theme-info-info);
+$theme-info-grd-dark: linear-gradient(45deg, darken($theme-info-primary, 20%), darken($theme-info-info, 20%));
+
+$theme-success-primary: #04a08b;
+$theme-success-secondary:#b7c1d1;
+$theme-success-info: #00baff;
+$theme-success-success: #0052cc;
+$theme-success-danger: #ff562f;
+$theme-success-warning: #ff9920;
+
+$theme-success-primary-lite: #d1f5f0;
+$theme-success-secondary-lite:#e9edf2;
+$theme-success-info-lite: #d1f3ff;
+$theme-success-success-lite: #e1eaf9;
+$theme-success-danger-lite: #ffeae5;
+$theme-success-warning-lite: #fff2e2;
+
+$theme-success-grd: linear-gradient(45deg, $theme-success-primary, $theme-success-info);
+$theme-success-grd-dark: linear-gradient(45deg, darken($theme-success-primary, 20%), darken($theme-success-info, 20%));
+
+$theme-danger-primary: #ff562f;
+$theme-danger-secondary:#b7c1d1;
+$theme-danger-info: #00baff;
+$theme-danger-success: #04a08b;
+$theme-danger-danger: #0052cc;
+$theme-danger-warning: #ff9920;
+
+$theme-danger-primary-lite: #ffeae5;
+$theme-danger-secondary-lite:#e9edf2;
+$theme-danger-info-lite: #d1f3ff;
+$theme-danger-success-lite: #d1f5f0;
+$theme-danger-danger-lite: #e1eaf9;
+$theme-danger-warning-lite: #fff2e2;
+
+$theme-danger-grd: linear-gradient(45deg, $theme-danger-primary, $theme-danger-info);
+$theme-danger-grd-dark: linear-gradient(45deg, darken($theme-danger-primary, 20%), darken($theme-danger-info, 20%));
+
+$theme-warning-primary: #ff9920;
+$theme-warning-secondary:#b7c1d1;
+$theme-warning-info: #00baff;
+$theme-warning-success: #04a08b;
+$theme-warning-danger: #ff562f;
+$theme-warning-warning: #0052cc;
+
+$theme-warning-primary-lite: #fff2e2;
+$theme-warning-secondary-lite:#e9edf2;
+$theme-warning-info-lite: #d1f3ff;
+$theme-warning-success-lite: #d1f5f0;
+$theme-warning-danger-lite: #ffeae5;
+$theme-warning-warning-lite: #e1eaf9;
+
+$theme-warning-grd: linear-gradient(45deg, $theme-warning-primary, $theme-warning-info);
+$theme-warning-grd-dark: linear-gradient(45deg, darken($theme-warning-primary, 20%), darken($theme-warning-info, 20%));
+
+
+
+
+
+
+
