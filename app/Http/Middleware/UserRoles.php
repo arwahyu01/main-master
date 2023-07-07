@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-class userRoles
+class UserRoles
 {
     public function handle(Request $request, Closure $next)
     {

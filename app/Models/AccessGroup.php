@@ -32,9 +32,18 @@ class AccessGroup extends Model
         $route = collect(explode(".", Route::currentRouteName()))->first();
         if ($menu = Menu::where('code', $route)->first()) {
             return $query->whereHas('access_menu', function ($query) use ($menu, $crud) {
-                $query->whereMenuId($menu->id)->whereJsonContains('access', $crud);
+                $query->whereMenuId($menu->id)->whereAccessGroupId($this->id)->whereJsonContains('access', $crud);
             })->exists();
         }
         return false;
+    }
+
+    public function scopeFilterLevel($query) : object
+    {
+        $level = auth()->user()->level->code;
+        if($level != 'root'){
+            $query->whereNotIn('code', ['root']);
+        }
+        return $query;
     }
 }

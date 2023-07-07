@@ -17,8 +17,23 @@ class Log extends Model
 
     protected $fillable=['alias', 'data', 'ip', 'user_agent'];
 
-    public function loggable() : object
+    public function loggable()
     {
         return $this->morphTo();
+    }
+
+    public function getDateAttribute()
+    {
+        return date('d-m-Y', strtotime($this->created_at));
+    }
+
+    public function getTimeAttribute()
+    {
+        return date('H:i:s', strtotime($this->created_at));
+    }
+
+    public function getDataAttribute($value)
+    {
+        return json_decode($value);
     }
 }

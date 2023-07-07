@@ -65,4 +65,21 @@ class User extends Authenticatable
     {
         return $this->access_group->canAccess('delete');
     }
+
+    public function scopeFilterLevel($query)
+    {
+        $level = auth()->user()->level->code;
+        if($level != 'root'){
+            if($level == 'user'){
+                $query->where('id', auth()->id());
+            }
+            $query->where('level_id', '!=', '1');
+        }
+        return $query;
+    }
+
+    public function getAllUserIdAttribute() : array
+    {
+        return $this->whereNotIn('level_id', [1])->pluck('id')->toArray();
+    }
 }

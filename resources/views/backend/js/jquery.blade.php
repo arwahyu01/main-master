@@ -1,5 +1,6 @@
 {{--<script>--}}
     $(function () {
+        getNotification();
         sidebarMenu();
         $('.search-menu').on('input', function () {
             let keyword = $(this).val();
@@ -26,11 +27,38 @@
                 $(this).val('').focus().attr('placeholder', 'Type to search ...');
             }
         });
+
+        // clear notification
+        $('#clear-notification').on('click', function () {
+            if ($(this).data('total') > 0) {
+                $.ajax({
+                    url: '{!! url(config('master.app.url.backend').'/clear-notification') !!}',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.status) {
+                            getNotification();
+                            swal({
+                                title: "Berhasil",
+                                text: "Notifikasi berhasil dibersihkan",
+                                type: "success",
+                                showConfirmButton: false,
+                                showCancelButton: false,
+                                timer: 1500,
+                            });
+                        }
+                    },
+                    error: function () {
+                        $('.notification-list').html("<p class='text-center'>Error load notification</p>");
+                    }
+                });
+            }
+        })
     });
 
     function sidebarMenu() {
         $.ajax({
-            url: '{!! url(config('master.app.url.backend').'/menu/list-menu') !!}',
+            url: '{!! url(config('master.app.url.backend').'/list-menu') !!}',
             type: 'GET',
             dataType: 'json',
             success: function (response) {
@@ -41,7 +69,7 @@
                         $('.all-menu').append(menuChild(value.access_children, value));
                     } else {
                         $('.all-menu').append(`
-                                <li class="list-menu" data-key="${value.code.toLowerCase()}">
+                                <li class="text-light list-menu" data-key="${value.code.toLowerCase()}">
                                     <a href="{!! url(config('master.app.url.backend')) !!}/${value.url}"><i class="${value.icon}"></i> <span>${value.title}</span></a>
                                 </li>
                             `);
@@ -56,7 +84,7 @@
 
         const menuChild = function (children, value) {
             let html = '<li class="treeview parent-menu">';
-            html += `<a href="#" class="list-menu" data-key="${value.code.toLowerCase()}"><i class="${value.icon}"></i><span>${value.title}</span><span class="pull-right-container"><i class="fa fa-angle-right pull-right"></i></span></a>`;
+            html += `<a href="#" class="text-light list-menu" data-key="${value.code.toLowerCase()}"><i class="${value.icon}"></i><span>${value.title}</span><span class="pull-right-container"><i class="fa fa-angle-right pull-right"></i></span></a>`;
             html += '<ul class="treeview-menu">';
             $.each(children, function (index, child) {
                 if (child.access_children.length > 0) {
@@ -121,6 +149,42 @@
                 });
             }
         });
+    }
+
+    function getNotification() {
+        $.ajax({
+            url: '{!! url(config('master.app.url.backend').'/get-notification') !!}',
+            type: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                let head_notify = $('.notification-list');
+                if (response.notifications.data.length > 0) {
+                    head_notify.html('');
+                    $('#clear-notification').attr('data-total', response.notifications.total);
+                    $.each(response.notifications.data, function (i, v) {
+                        let open_modal = v.link === "#" ? `data-action="show" data-url="notification" data-id="${v.id} class="btn-action""` : '';
+                        head_notify.append(`<li> <a href="${v.link}" ${open_modal}><i class="${v.icon} ${v.color}"></i> ${v.title}, ${v.content}</a> </li>`);
+                    });
+
+                    setTimeout(function () {
+                        $('#notification-button').attr('title', `Kamu memiliki ${response.notifications.total} notifikasi`).addClass('animated swing text-danger').tooltip('show');
+                        hideTooltips('#notification-button')
+                    }, 1000);
+
+                } else {
+                    head_notify.html(`<li class="text-center"><i class="fa fa-smile-o fa-2x text-primary"></i><a href="#" class="mt-0">Tidak ada notifikasi yang belum dibaca</a></li>`);
+                    $('#notification-button').attr('title', `Kamu memiliki ${response.notifications.total} notifikasi`).removeClass('animated swing text-danger');
+                }
+            },
+            error: function () {
+                $('.notification-list').html("<p class='text-center'>Error load notification</p>");
+            }
+        });
+        const hideTooltips = (target) => {
+            setTimeout(function () {
+                $(target).removeAttr('data-bs-original-title').tooltip('hide');
+            }, 5000);
+        };
     }
 
     function logout() {

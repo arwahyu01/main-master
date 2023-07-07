@@ -6,5 +6,5 @@
             </li>
         </ul>
     </div>
-    &copy; {!! date('Y') !!} <a href="#">{!! config('master.app.profile.name') !!}</a>. All Rights Reserved.
+    &copy; {!! date('Y') !!} <a href="#">{!! config('master.app.profile.name') !!}</a>, make with <i class="mdi mdi-heart text-danger"></i> for a better web. Theme by <a href="https://themeforest.net/" target="_blank">Eduadmin | ThemeForest</a>
 </footer>

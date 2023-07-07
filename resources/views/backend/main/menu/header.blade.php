@@ -1,12 +1,12 @@
 <header class="main-header">
     <div class="d-flex align-items-center logo-box justify-content-start">
         <a href="#" class="waves-effect waves-light nav-link d-none d-md-inline-block mx-10 push-btn bg-transparent text-white" data-toggle="push-menu" role="button">
-            <span class="icon-Align-left"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
+            <i class="icon-Align-left"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
         </a>
         <a href="#" class="logo">
             <div class="logo-lg">
-                <span class="light-logo"><img src="{{ url($template."/images/logo-light-text.png")}}" alt="logo"></span>
-                <span class="dark-logo"><img src="{{ url($template."/images/logo-dark-text.png")}}" alt="logo"></span>
+                <i class="light-logo"><img src="{{ url($template).config('master.app.web.logo_light')}}" alt="logo"></i>
+                <i class="dark-logo"><img src="{{ url($template).config('master.app.web.logo_dark')}}" alt="logo"></i>
             </div>
         </a>
     </div>
@@ -15,7 +15,7 @@
             <ul class="header-megamenu nav">
                 <li class="btn-group nav-item d-md-none">
                     <a href="#" class="waves-effect waves-light nav-link push-btn" data-toggle="push-menu" role="button">
-                        <span class="icon-Align-left"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
+                        <i class="icon-Align-left"><i class="path1"></i><i class="path2"></i><i class="path3"></i></i>
                     </a>
                 </li>
                 <li class="btn-group nav-item d-lg-inline-flex d-none">
@@ -33,8 +33,7 @@
                             <div class="input-group">
                                 <input type="search" class="form-control search-menu" placeholder="Search" aria-label="Search" aria-describedby="button-addon2">
                                 <div class="input-group-append">
-                                    <button class="btn" type="button" id="button-addon3"><i class="ti-search"></i>
-                                    </button>
+                                    <button class="btn" type="button" id="button-addon3"><i class="ti-search"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -42,37 +41,28 @@
                 </li>
                 <li class="dropdown notifications-menu">
                     <a href="#" class="waves-effect waves-light dropdown-toggle" data-bs-toggle="dropdown" title="Notifications">
-                        <i class="icon-Notifications"><span class="path1"></span><span class="path2"></span></i>
+                        <div class="icon-Notifications" id="notification-button"><span class="path1"></span><span class="path2"></span></div>
                     </a>
                     <ul class="dropdown-menu animated bounceIn">
                         <li class="header">
                             <div class="p-20">
                                 <div class="flexbox">
                                     <div>
-                                        <h4 class="mb-0 mt-0">Notifications</h4>
+                                        <h4 class="mb-0 mt-0">Notifikasi</h4>
                                     </div>
                                     <div>
-                                        <a href="#" class="text-danger">Clear All</a>
+                                        <a href="#" class="text-danger" id="clear-notification">Bersihkan</a>
                                     </div>
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <ul class="menu sm-scrol">
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-users text-info"></i> Curabitur id eros quis nunc suscipit blandit.
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-warning text-warning"></i> Duis malesuada justo eu sapien elementum, in semper diam posuere.
-                                    </a>
-                                </li>
+                            <ul class="menu sm-scrol notification-list">
+                                {{-- list of notification --}}
                             </ul>
                         </li>
                         <li class="footer">
-                            <a href="#">View all</a>
+                            <a href="{!! url(config('master.app.url.backend').'/notification') !!}">Lihat Semua</a>
                         </li>
                     </ul>
                 </li>
@@ -82,8 +72,10 @@
                     </a>
                     <ul class="dropdown-menu animated flipInX">
                         <li class="user-body">
-                            <a class="dropdown-item" href="#"><i class="ti-settings text-muted me-2"></i> Settings</a>
+                            <a class="dropdown-item" href="#"><i class="ti-user text-muted me-2"></i>{!! $user->name !!}</a>
                             <div class="dropdown-divider"></div>
+                        </li>
+                        <li class="user-body">
                             <a class="dropdown-item" href="#" onclick="logout()"><i class="ti-lock text-muted me-2"></i> Logout</a>
                         </li>
                     </ul>

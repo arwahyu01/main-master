@@ -43,4 +43,14 @@ class Pengumuman extends Model
     {
         return Carbon::createFromDate($this->end)->diffInDays();
     }
+
+    public function file() : object
+    {
+        return $this->morphOne(File::class, 'fileable');
+    }
+
+    public function notification()
+    {
+        return $this->morphOne(Notification::class, 'notifiable');
+    }
 }

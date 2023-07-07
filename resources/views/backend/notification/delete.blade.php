@@ -5,11 +5,11 @@
         <div class="info-data">
             <div class="panel">
                 <div class="panel-body panel-dark bg-dark">
-                    @foreach(collect(json_decode($data,TRUE))->except(['id','created_at','updated_at']) as $key => $value)
+                    @foreach(collect(json_decode($data,TRUE))->except(['id','created_at','updated_at','deleted_at']) as $key => $value)
                         <p>
                             <code>{{ $key }}</code>
                             <span class="text-danger">:</span>
-                            <span class="text-info">{{ $value }}</span>
+                            <span class="text-info">{!! is_array($value) ? json_encode($value,true) : $value !!}</span>
                         </p>
                     @endforeach
                 </div>
@@ -24,4 +24,5 @@
 {!! Form::close() !!}
 <script>
     $('.modal-title').html('<i class="mdi mdi-delete-forever"></i> Hapus Data {!! $page->title !!}');
+    $('.submit-data').html('<i class="fa fa-trash"></i> Hapus Data');
 </script>

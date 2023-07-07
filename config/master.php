@@ -32,7 +32,8 @@ return [
         'web'=>[
             'template'=>'eduadmin', // template for frontend view (default: eduadmin)
             'icon'=>'',
-            'logo'=>'',
+            'logo_light'=>'/images/logo-light-text.png',
+            'logo_dark'=>'/images/logo-dark-text.png',
             'favicon'=>'/images/favicon.ico',
             'background'=>'/images/auth-bg/bg-1.jpg',
         ],

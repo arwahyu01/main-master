@@ -21,9 +21,18 @@ class File extends Model
 
     protected $fillable=['alias', 'data'];
 
+    protected $appends =[
+      'link_stream','link_download','link_delete'
+    ];
+
     public function fileable()
     {
         return $this->morphTo();
+    }
+
+    public function getFileNameAttribute() : string
+    {
+        return $this->data['name'] ?? $this->target;
     }
 
     public function getTargetAttribute() : string
@@ -38,7 +47,7 @@ class File extends Model
 
     public function getNameAttribute() : string
     {
-        return Arr::last(Str::of($this->target)->explode('/')->toArray());
+        return Arr::last(Str::of($this->file_name)->explode('/')->toArray());
     }
 
     public function getPathAttribute() : string
@@ -100,13 +109,15 @@ class File extends Model
         return url(config('master.app.url.backend')."/file/delete/{$this->id}/{$this->name_alias}-".uniqid());
     }
 
-    public function getDownloadAttribute() : string
-    {
-        return Storage::disk($this->disk)->download($this->target, "{$this->model_name}-{$this->id}.{$this->extension}");
-    }
-
     public function exists() : bool
     {
         return Storage::disk($this->disk)->exists($this->target);
+    }
+
+    protected static function booted()
+    {
+        static::forceDeleting(function ($file) {
+            Storage::disk($file->disk)->delete($file->target);
+        });
     }
 }

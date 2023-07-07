@@ -28,6 +28,7 @@ $(window.document).on('click', '.btn-action', function (e) {
         width: 'whatever',
         modal: {
             keyboard: false,
+            backdrop: 'static',
         },
         ajax: {
             dataType: 'html',
@@ -38,7 +39,7 @@ $(window.document).on('click', '.btn-action', function (e) {
             },
             success: function () {
                 $.hideLoading();
-                $(`#${modalId}`).modal({backdrop: 'static', keyboard: false}).modal('show');
+                $(`#${modalId}`).modal('show');
             },
             error: function (xhr) {
                 $.hideLoading();
@@ -50,8 +51,9 @@ $(window.document).on('click', '.btn-action', function (e) {
 
 $(window.document).on('click', '.submit-data', function (e) {
     e.preventDefault()
+    let btnSubmit = $(this);
+    let textBtn = btnSubmit.text();
     let parent = $(this).parents('.modal').length ? $(this).parents('.modal') : $(this).parents();
-    let textSubmit = $(this).text();
     let formId = parent.find('form').attr('id');
     let progress = $('.progress-bar');
     let dismiss = parent.find('[data-bs-dismiss]');
@@ -72,13 +74,13 @@ $(window.document).on('click', '.submit-data', function (e) {
             progress.html('0% Complete');
             dismiss.attr('disabled', true);
             $('.progress').show();
-            $('.form-control').removeClass('is-invalid');
+            $('.form-control').removeClass('is-invalid border border-danger');
             $('.invalid-feedback, .alert-danger').remove();
-            $('.submit-data').attr('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Memproses...');
+            btnSubmit.attr('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Memproses...');
         },
         success: function (response, status, xhr, $form) {
             $('.progress').hide();
-            $('.submit-data').attr('disabled', false).html('<i class="fa fa-save"></i> ' + textSubmit);
+            btnSubmit.attr('disabled', false).html('<i class="fa fa-save"></i> ' + textBtn);
             dismiss.removeAttr('disabled');
             if (response.status === true) {
                 const _targetTable = $form.find('input[name="table-id"]').val() ?? null;
@@ -103,7 +105,7 @@ $(window.document).on('click', '.submit-data', function (e) {
                 if (_targetFunction !== null) {
                     let functions = _targetFunction.split(',');
                     $.each(functions, function (index, value) {
-                        window.eval(value) // Call target function
+                        window.eval?.(value) // Call target function
                     });
                 }
                 if (_redirect !== null) {
@@ -113,7 +115,7 @@ $(window.document).on('click', '.submit-data', function (e) {
             } else {
                 if (response.hasOwnProperty('data')) {
                     $.each(response.data, function (index, value) {
-                        $(`#${index}`).addClass('is-invalid').parent().append(`<span class="invalid-feedback" role="alert"><strong>${value}</strong></span>`);
+                        $(`#${index}`).addClass('is-invalid border border-danger').parent().append(`<span class="invalid-feedback" role="alert"><strong>${value}</strong></span>`);
                     });
                 } else {
                     swal({
@@ -129,7 +131,7 @@ $(window.document).on('click', '.submit-data', function (e) {
         },
         error: function (xhr) {
             $('.progress').hide();
-            $('.submit-data').attr('disabled', false).html('<i class="fa fa-save"></i> ' + textSubmit);
+            btnSubmit.attr('disabled', false).html('<i class="fa fa-save"></i> ' + textBtn);
             $('.message').html(`<div class="alert alert-danger fade show mt-3"><b>Error!</b> ${xhr.status} ${xhr.statusText}.</div>`)
         }
     }).submit();

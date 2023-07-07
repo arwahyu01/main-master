@@ -74,7 +74,7 @@
                             <label class="control-label">Tentukan Hak Akses</label> <span class="text-danger">*</span>
                             <a href="javascript:void(0)" type="button" onclick="checkAll('access-crud-{{$key}}',{{$key}})" class="check-all-{{$key}} btn btn-xs btn-success"><i class="fa fa-check"></i> Check All</a>
                             <div class="row mt-2">
-                                @foreach(config('accessmenu.crud') as $i => $v)
+                                @foreach(config('master.app.level') as $i => $v)
                                     <div class="col-md-2 access-crud-{{$key}}">
                                         {!! Form::checkbox('access_crud_'.$key.'[]', $v, collect($data->access_menu()->where('access_group_id',$key)->first()->access ?? [])->contains($v), ['id' => 'crud_'.$i.'_'.$key, 'class' => 'filled-in chk-col-info']) !!}
                                         {!! Form::label('crud_'.$i.'_'.$key, ucwords($v)) !!}

@@ -1,10 +1,14 @@
 <?php
 use Illuminate\Support\Facades\Route;
 Route::group(['prefix'=>config('master.app.url.backend')], function () {
-    //logout
-    Route::post('logout','Auth\AuthController@logout')->name('logout');
-    //dashboard
+    //public route
     Route::resource('dashboard', "Dashboard\DashboardController")->name('index', 'dashboard');
+    Route::get('/list-menu', "Menu\MenuController@listMenu")->name('menu.list-menu');
+    Route::get('detail-pengumuman/{id}/{slug}', "Pengumuman\PengumumanController@detail")->name('pengumuman');
+    Route::get('get-notification', 'Notification\NotificationController@getNotification');
+    Route::get('clear-notification', 'Notification\NotificationController@markAsRead');
+    Route::post('logout','Auth\AuthController@logout')->name('logout');
+    //end public route
     //question
     Route::prefix('question')->as('question')->group(function () {
         Route::get('data', "Question\QuestionController@data");
@@ -12,8 +16,6 @@ Route::group(['prefix'=>config('master.app.url.backend')], function () {
         Route::get('viewer', "Question\QuestionController@updateViewer");
         Route::post('response', "Question\QuestionController@response");
     });
-    //detail-pengumuman
-    Route::get('detail-pengumuman/{id}/{slug}', "Pengumuman\PengumumanController@detail")->name('pengumuman');
     Route::resource('question', "Question\QuestionController")->name('index', 'question');
     //file
     Route::prefix('file')->as('file')->group(function () {
@@ -33,8 +35,8 @@ Route::group(['prefix'=>config('master.app.url.backend')], function () {
         Route::post('/sorted', "Menu\MenuController@sorted")->name('menu.sorted');
         Route::prefix('menu')->as('menu')->group(function () {
             Route::get('/data', "Menu\MenuController@data");
-            Route::get('/list-menu', "Menu\MenuController@listMenu");
             Route::get('delete/{id}', "Menu\MenuController@delete");
+            Route::get('convert-menu', "Menu\MenuController@convertMenuToJson");;
         });
         Route::resource('menu', "Menu\MenuController");
         //end-menu
@@ -73,6 +75,13 @@ Route::group(['prefix'=>config('master.app.url.backend')], function () {
 		});
 		Route::resource('pengumuman', 'Pengumuman\PengumumanController');
 		//end-pengumuman
+        //notification
+		Route::prefix('notification')->as('notification')->group(function () {
+			Route::get('data', 'Notification\NotificationController@data');
+			Route::get('delete/{id}', 'Notification\NotificationController@delete');
+		});
+		Route::resource('notification', 'Notification\NotificationController');
+		//end-notification
 	});
 });
 

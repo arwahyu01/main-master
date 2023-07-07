@@ -73,7 +73,7 @@ add this code to your routeServiceProvider.php
 public function boot()
 {
     ...
-    Route::middleware(['web'])->namespace('App\Http\Controllers')->group(base_path('routes/mvc-route.php'));
+    Route::middleware(['web','auth','backend'])->namespace('App\Http\Controllers\Backend')->group(base_path('routes/mvc-route.php'));
     ...
 }
 ```
@@ -81,11 +81,11 @@ public function boot()
 open file config/mvc.php and change the key value to your path folder
 ```
 return [
-    'path_controller' => 'app/Http/Controllers', // this is path to controller folder
-    'path_model' => 'app/Models', // this is path to model folder
-    'path_view' => 'views', // this is path to view folder (e.g: views/backend or views/frontend)
+    'path_controller' => 'App/Http/Controllers/Backend', // path to controller folder (default: app/Http/Controllers)
+    'path_model' => 'App\Models', // path to model folder (default: app/Models)
+    'path_view' => 'views/backend', // path to view folder (default: resources/views)
     'path_route' => 'routes/mvc-route.php', // path to route file (default: routes/mvc-route.php)
-    'route_prefix' => 'backend', // route prefix (e.g: backend, admin, etc) (optional)
+    'route_prefix' => 'admin', // Customize with your "Prefix Route" (e.g: 'admin', 'backend' etc.) (optional)
 ];
 ```
 if you want to change the default "PATH ROUTE" you can change it in config/mvc.php
@@ -136,7 +136,10 @@ Copy the code below to your route file (e.g: routes/web.php)
 ```
 
 ## License
-- No License (free to use for personal and commercial use)
-- please give me a star if you like this project, and don't remove the credits in any of the files
+- No License (free to use for personal)
+- Template `Eduadmin` is not free, you can buy it in [here](https://themeforest.net/item/eduadmin-responsive-bootstrap-admin-template-dashboard/29365133)
+- please give me a star if you like this project
+- Don't remove the credits in any of the files
+- Don't forget to follow my github account
 
 #### i hope this project can help you to make your project faster and easier to develop :)

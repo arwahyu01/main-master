@@ -59,7 +59,7 @@
     }
 </style>
 <script>
-    $('.select2').select2();
+    $('#menu_id, #parent_id').select2().parent().css('z-index', 9999)
     $('.modal-title').html('<i class="fa fa-edit"></i> Edit Data {!! $page->title !!}');
     $('.submit-data').html('<i class="fa fa-save"></i> Simpan Data');
     $('#content').summernote({
@@ -67,10 +67,19 @@
         height: 250,
         toolbar: [
             "fontsize",
+            "fontname",
+            "forecolor",
             "paragraph",
             "table",
             "insert",
             "codeview",
-        ]
+            "link",
+            "color"
+        ],
+        fontSizes: ['8', '9', '10', '11', '12', '14', '18', '24', '36'],
     });
+    var noteModal = document.querySelector('.note-modal');
+    noteModal.style.zIndex = 9999;
+    noteModal.querySelector('.checkbox').style.display = 'none';
+    noteModal.querySelector('.note-modal-content').style.padding = '3px';
 </script>

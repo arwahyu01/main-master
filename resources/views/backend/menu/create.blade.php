@@ -73,7 +73,7 @@
                             <label class="control-label">Tentukan Hak Akses</label> <span class="text-danger">*</span>
                             <a href="javascript:void(0)" type="button" onclick="checkAll('access-crud-{{$key}}',{{$key}})" class="check-all-{{$key}} btn btn-xs btn-success"><i class="fa fa-check"></i> Check All</a>
                             <div class="row mt-2">
-                                @foreach(config('accessmenu.crud') as $i => $v)
+                                @foreach(config('master.app.level') as $i => $v)
                                     <div class="col-md-2 access-crud-{{$key}}">
                                         <input type="checkbox" onclick="checkAllLevel('crud_{{$i}}',this)" name="access_crud_{{$key}}[]" value="{{$v}}" id="crud_{{$i}}_{{$key}}" class="filled-in chk-col-info">
                                         <label for="crud_{{$i}}_{{$key}}">{{ucwords($v)}}</label>

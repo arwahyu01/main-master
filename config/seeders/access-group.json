@@ -1,0 +1,31 @@
+[
+    {
+        "root": [
+            "master",
+            "menu",
+            "level",
+            "access-group",
+            "access-menu",
+            "faq",
+            "question",
+            "pengumuman",
+            "dashboard",
+            "user"
+        ]
+    },
+    {
+        "admin": [
+            "master",
+            "question",
+            "dashboard",
+            "user"
+        ]
+    },
+    {
+        "user": [
+            "dashboard",
+            "question",
+            "user"
+        ]
+    }
+]

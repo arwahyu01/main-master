@@ -23,6 +23,14 @@
                                 <div class="box-comments p-10 mt-3">
                                     {!! $data->content !!}
                                 </div>
+                                <div class="file p-10 mt-3">
+                                    <span class="fa fa-paperclip"></span> File Pendukung :
+                                    @if($data->file)
+                                        <a href="{!! $data->file->link_stream.'?id='.uniqid() !!}" target="_blank">{!! $data->file->name !!}</a>
+                                    @else
+                                        <span class="badge badge-danger">Tidak ada file</span>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                         <button type="button" class="btn btn-sm btn-danger pull-right" onclick="window.close();">

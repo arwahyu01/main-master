@@ -30,4 +30,13 @@ class Level extends Model
         }
         return $levels;
     }
+
+    public function scopeFilterLevel($query) : object
+    {
+        $level = auth()->user()->level->code;
+        if($level != 'root'){
+            $query->whereNotIn('code', ['root']);
+        }
+        return $query;
+    }
 }

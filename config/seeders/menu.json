@@ -1,0 +1,133 @@
+[
+    {
+        "title": "Question",
+        "subtitle": "Frequently Asked Questions",
+        "code": "question",
+        "model": "Faq",
+        "url": "question",
+        "icon": "fa fa-question-circle-o",
+        "type": "backend",
+        "show": false,
+        "active": true,
+        "sort": 4,
+        "children": []
+    },
+    {
+        "title": "Master",
+        "subtitle": "Master",
+        "code": "master",
+        "model": "",
+        "url": "master",
+        "icon": "fa fa-cogs",
+        "type": "backend",
+        "show": true,
+        "active": true,
+        "sort": 2,
+        "children": [
+            {
+                "title": "Menu",
+                "subtitle": "Menu",
+                "code": "menu",
+                "model": "Menu",
+                "url": "menu",
+                "icon": "fa fa-bars",
+                "type": "backend",
+                "show": true,
+                "active": true,
+                "sort": 1,
+                "children": []
+            },
+            {
+                "title": "Level",
+                "subtitle": "Level",
+                "code": "level",
+                "model": "Level",
+                "url": "level",
+                "icon": "fa fa-user",
+                "type": "backend",
+                "show": true,
+                "active": true,
+                "sort": 2,
+                "children": []
+            },
+            {
+                "title": "Access Group",
+                "subtitle": "Access Group",
+                "code": "access-group",
+                "model": "AccessGroup",
+                "url": "access-group",
+                "icon": "fa fa-shield",
+                "type": "backend",
+                "show": true,
+                "active": true,
+                "sort": 3,
+                "children": []
+            },
+            {
+                "title": "Access Menu",
+                "subtitle": "Access Menu",
+                "code": "access-menu",
+                "model": "AccessMenu",
+                "url": "access-menu",
+                "icon": "fa fa-address-card",
+                "type": "backend",
+                "show": true,
+                "active": true,
+                "sort": 4,
+                "children": []
+            },
+            {
+                "title": "Pengumuman",
+                "subtitle": "Kelola Pengumuman",
+                "code": "pengumuman",
+                "model": "Pengumuman",
+                "url": "pengumuman",
+                "icon": "fa fa-bullhorn",
+                "type": "backend",
+                "show": true,
+                "active": true,
+                "sort": 5,
+                "children": []
+            },
+            {
+                "title": "Faq",
+                "subtitle": "Frequently Asked Questions",
+                "code": "faq",
+                "model": "Faq",
+                "url": "faq",
+                "icon": "fa fa-question-circle",
+                "type": "backend",
+                "show": true,
+                "active": true,
+                "sort": 6,
+                "children": []
+            }
+        ]
+    },
+    {
+        "title": "Dashboard",
+        "subtitle": "Dashboard",
+        "code": "dashboard",
+        "model": "",
+        "url": "dashboard",
+        "icon": "fa fa-tachometer",
+        "type": "backend",
+        "show": true,
+        "active": true,
+        "sort": 1,
+        "children": []
+    },
+    {
+        "title": "User",
+        "subtitle": "User",
+        "code": "user",
+        "model": "User",
+        "url": "user",
+        "icon": "fa fa-users",
+        "type": "backend",
+        "show": true,
+        "active": true,
+        "sort": 3,
+        "children": []
+    }
+]

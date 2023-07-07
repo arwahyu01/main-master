@@ -14,10 +14,10 @@
                         </ul>
                     </div>
                 </div>
-                <div class="box-body box-inverse">
+                <div class="box-body box-shadowed box-outline-{!! config('master.content.pengumuman.color.'.$pengumuman->urgency) !!} text-dark">
                     {!! \App\support\Helper::sortText($pengumuman->content,1000) !!}
                     <div class="pull-right">
-                        <a href="{!! $pengumuman->link !!}" target="_blank" class="btn btn-sm btn-primary">Baca Selengkapnya</a>
+                        <a href="{!! $pengumuman->link !!}" target="_blank" class="btn btn-sm btn-{!! config('master.content.pengumuman.color.'.$pengumuman->urgency) !!}">Baca Selengkapnya</a>
                     </div>
                 </div>
             </div>

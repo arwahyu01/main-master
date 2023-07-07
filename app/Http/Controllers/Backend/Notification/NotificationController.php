@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Pengumuman;
+namespace App\Http\Controllers\Backend\Notification;
 
 use App\Http\Controllers\Controller;
-use App\Models\Menu;
-use App\support\Helper;
+use App\Models\Notification;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class PengumumanController extends Controller
+class NotificationController extends Controller
 {
     public function index()
     {
@@ -18,50 +17,44 @@ class PengumumanController extends Controller
 
     public function create()
     {
-        $data=[
-            'menu'=>Menu::pluck('title','id'),
-            'parent'=>$this->model::pluck('title','id'),
-        ];
-        return view($this->view.'.create',$data);
+        return view($this->view.'.create');
     }
 
     public function data()
     {
-        $data=$this->model::with('menu');
+        $data=$this->model::filterByUser();
         return datatables()->of($data)
-            ->editColumn('publish', function ($data) {
-                return $data->publish ? '<span class="badge badge-success">Ya</span>' : '<span class="badge badge-danger">Tidak</span>';
+            ->addColumn('title', function ($data) {
+                return $data->data['title'];
+            })
+            ->addColumn('content', function ($data) {
+                return $data->data['content'];
+            })
+            ->addColumn('status', function ($data) {
+                return config('template.notification.'.($data->status ? 'read' : 'unread'));
             })
             ->addColumn('action', function ($data) {
                 $button ='';
-                if(auth()->user()->read){
+                if(Auth::user()->level->canAccess('read')){
                     $button .= '<button type="button" class="btn-action btn btn-sm btn-outline" data-title="Detail" data-action="show" data-url="'.$this->url.'" data-id="'.$data->id.'" title="Tampilkan"><i class="fa fa-eye text-info"></i></button>';
                 }
-                if(auth()->user()->create){
+                if(Auth::user()->level->canAccess('update')){
                     $button.='<button class="btn-action btn btn-sm btn-outline" data-title="Edit" data-action="edit" data-url="'.$this->url.'" data-id="'.$data->id.'" title="Edit"> <i class="fa fa-edit text-warning"></i> </button> ';
                 }
-                if(auth()->user()->delete){
+                if(Auth::user()->level->canAccess('delete')){
                     $button.='<button class="btn-action btn btn-sm btn-outline" data-title="Delete" data-action="delete" data-url="'.$this->url.'" data-id="'.$data->id.'" title="Delete"> <i class="fa fa-trash text-danger"></i> </button>';
                 }
                 return "<div class='btn-group'>".$button."</div>";
             })
             ->addIndexColumn()
-            ->rawColumns(['action','publish'])
+            ->rawColumns(['action','content','status','title'])
             ->make(TRUE);
     }
 
     public function store(Request $request)
     {
         $validated=Validator::make($request->all(), [
-            'menu_id' => 'required',
-			'title' => 'required',
-			'start' => 'required|date|before:end',
-			'end' => 'required|date|after:start',
-			'content' => 'required',
-			'urgency' => 'required',
-			'publish' => 'nullable',
-			'parent_id' => 'nullable',
-            'file' => 'nullable|mimes:jpg,jpeg,png,pdf,doc,docx,xls,xlsx|max:2048',
+
         ]);
         if ($validated->fails()) {
             $response=[
@@ -71,59 +64,37 @@ class PengumumanController extends Controller
             ];
         }
         else {
-            if ($pengumuman=$this->model::create($request->all())) {
-                if($request->hasFile('file')){
-                    $pengumuman->file()->create([
-                        'data'=>  [
-                            'name'      => $request->file('file')->getClientOriginalName(),
-                            'disk'      => config('filesystems.default'),
-                            'target'    => Storage::disk(config('filesystems.default'))->putFile($this->code.'/'.date('Y').'/'.date('m').'/'.date('d'),$request->file('file')),
-                        ]
-                    ]);
-                }
-                $users=$request->user()->all_user_id;
-                Helper::sendNotification($pengumuman, $users, [
-                    'title' => 'Pengumuman Baru',
-                    'link' => $pengumuman->link,
-                    'icon' => 'fa fa-bullhorn',
-                    'color' => 'text-info',
-                    'content' => $pengumuman->title
-                ]);
+            if ($this->model::create($request->all())) {
                 $response=[
                     'status'=>TRUE, 'message'=>'Data berhasil disimpan',
                 ];
             }
+            else {
+                $response=[
+                    'status'=>FALSE, 'message'=>'Data gagal disimpan',
+                ];
+            }
         }
-        return response()->json($response ?? ['status'=>FALSE, 'message'=>'Data gagal disimpan']);
+        return response()->json($response);
     }
 
     public function show($id)
     {
         $data = $this->model::find($id);
+        $data->update(['status'=>TRUE]);
         return view($this->view.'.show', compact('data'));
     }
 
     public function edit($id)
     {
-        $data=[
-            'menu'=>Menu::pluck('title', 'id'),
-            'data'=>$this->model::find($id),
-            'parent'=>$this->model::pluck('title', 'id'),
-        ];
-        return view($this->view.'.edit', $data);
+        $data = $this->model::find($id);
+        return view($this->view.'.edit', compact('data'));
     }
 
     public function update(Request $request, $id)
     {
         $validated=Validator::make($request->all(), [
-            'menu_id' => 'required',
-			'title' => 'required',
-			'start' => 'required|date|before:end',
-			'end' => 'required|date|after:start',
-			'content' => 'required',
-			'urgency' => 'required',
-			'publish' => 'nullable',
-			'parent_id' => 'nullable',
+
         ]);
         if($validated->fails()){
             $response=[
@@ -133,7 +104,6 @@ class PengumumanController extends Controller
             ];
         }
         else{
-            $request->has('publish') ? $request->merge(['publish'=>1]) : $request->merge(['publish'=>0]);
             $data=$this->model::find($id);
             if($data->update($request->all())){
                 $response=[
@@ -163,11 +133,14 @@ class PengumumanController extends Controller
         return response()->json($response ?? ['status'=>FALSE, 'message'=>'Data gagal dihapus']);
     }
 
-    public function detail($id, $title)
+    public function getNotification(Notification $notification)
     {
-        if($data=$this->model::find($id)) {
-            return view($this->view.'.detail', compact('data', 'title'));
-        }
-        abort(404, 'Halaman tidak ditemukan');
+        return response()->json($notification->fetchNotification(),200);
+    }
+
+    public function markAsRead(Notification $notification)
+    {
+        $notification->markAsRead(Auth::id());
+        return response()->json(['status'=>true],200);
     }
 }

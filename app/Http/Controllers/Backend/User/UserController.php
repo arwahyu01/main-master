@@ -18,18 +18,18 @@ class UserController extends Controller
 
     public function create()
     {
-        $level = Level::pluck('name', 'id');
-        $access_group = AccessGroup::pluck('name', 'id');
+        $level = Level::filterLevel()->pluck('name', 'id');
+        $access_group = AccessGroup::filterLevel()->pluck('name', 'id');
         return view($this->view.'.create', compact('level', 'access_group'));
     }
 
     public function data()
     {
-        $data = $this->model::with('level', 'access_group');
+        $data = $this->model::filterLevel()->with('level', 'access_group');
         return datatables()->of($data)
             ->addColumn('action', function ($data) {
                 $button ='';
-                if(Auth::user()->create){
+                if(Auth::user()->update){
                     $button.='<button class="btn-action btn btn-sm btn-outline" data-title="Edit" data-action="edit" data-url="'.$this->url.'" data-id="'.$data->id.'" title="Edit"> <i class="fa fa-edit text-warning"></i> </button> ';
                 }
                 if(Auth::user()->delete){
@@ -48,8 +48,8 @@ class UserController extends Controller
             'name'=>'required',
             'email'=>'required|email|unique:users',
             'password'=>'required|min:8',
-            'level_id'=>'required',
-            'access_group_id'=>'required',
+            'level_id'=>'nullable',
+            'access_group_id'=>'nullable',
         ]);
         if ($validated->fails()) {
             $response=[
@@ -81,8 +81,8 @@ class UserController extends Controller
     public function edit($id)
     {
         $data = $this->model::findOrFail($id);
-        $level = Level::pluck('name', 'id');
-        $access_group = AccessGroup::pluck('name', 'id');
+        $level = Level::filterLevel()->pluck('name', 'id');
+        $access_group = AccessGroup::filterLevel()->pluck('name', 'id');
         return view($this->view.'.edit', compact('data', 'level', 'access_group'));
     }
 
@@ -90,8 +90,8 @@ class UserController extends Controller
     {
         $validated=Validator::make($request->all(), [
             'name'=>'required',
-            'level_id'=>'required',
-            'access_group_id'=>'required',
+            'level_id'=>'nullable',
+            'access_group_id'=>'nullable',
         ]);
         if($validated->fails()){
             $response=[
@@ -101,9 +101,6 @@ class UserController extends Controller
             ];
         }
         else{
-            if($request->password){
-                $request->merge(['password'=>bcrypt($request->password)]);
-            }
             $data=$this->model::find($id);
             if($data->update($request->all())){
                 $response=[

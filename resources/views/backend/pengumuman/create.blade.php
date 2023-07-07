@@ -34,6 +34,11 @@
             {!! Form::select('urgency',config('master.content.pengumuman.status'),null,['class'=>'form-control','id'=>'urgency','placeholder'=>'Pilih Urgensi']) !!}
         </div>
         <div class='form-group'>
+            {!! Form::label('file', 'File Pendukung', array('class' => 'control-label')) !!}
+            <span class="text-danger">*</span>
+            {!! Form::file('file',null,['class'=>'form-control','id'=>'file','placeholder'=>'Ketik Disini']) !!}
+        </div>
+        <div class='form-group'>
             {!! Form::label('parent_id', 'Bagian dari pengumuman lain', array('class' => 'control-label')) !!}
             {!! Form::select('parent_id',$parent,null,['class'=>'form-control select2','id'=>'parent_id','placeholder'=>'Pilih Pengumuman']) !!}
         </div>
@@ -59,7 +64,7 @@
     }
 </style>
 <script>
-    $('.select2').select2();
+    $('#menu_id, #parent_id').select2().parent().css('z-index', 9999)
     $('.modal-title').html('<i class="fa fa-plus-circle"></i> Tambah Data {!! $page->title !!}');
     $('.submit-data').html('<i class="fa fa-save"></i> Simpan Data');
     $('#content').summernote({
@@ -71,6 +76,12 @@
             "table",
             "insert",
             "codeview",
-        ]
+            "link",
+        ],
+        fontSizes: ['8', '9', '10', '11', '12', '14', '18', '24', '36'],
     });
+    var noteModal = document.querySelector('.note-modal');
+    noteModal.style.zIndex = 9999;
+    noteModal.querySelector('.checkbox').style.display = 'none';
+    noteModal.querySelector('.note-modal-content').style.padding = '3px';
 </script>

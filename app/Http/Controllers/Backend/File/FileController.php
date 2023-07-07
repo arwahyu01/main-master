@@ -27,12 +27,14 @@ class FileController extends Controller
     {
         if ($file=File::find($id)) {
             if ($file->exists()) {
-                return $file->download;
+                return response()->make($file->take, 200, [
+                    'Content-Type'=>$file->mime, 'Content-Disposition'=>'attachment; filename="'.$filename.'.'.$file->extension.'"',
+                ]);
             }
         }
-        return view('errors.404', [
+        return view(config('master.app.view.backend').'.errors.404', [
             'data'=>[
-                'code'=>410, 'status'=>'GONE', 'file'=>$filename, 'title'=>'File Not Found', 'message'=>'im sorry, the file you are looking for is not found',
+                'code'=>410, 'status'=>'GONE', 'file'=>$file->name, 'title'=>'File Not Found', 'message'=>'im sorry, the file you are looking for is not found',
             ],
         ]);
     }
@@ -41,7 +43,7 @@ class FileController extends Controller
     {
         if ($file=File::find($id)) {
             if ($file->exists()) {
-                $file->forceDelete();
+                $file->delete();
                 $response=[
                     'status'=>TRUE, 'message'=>"File $filename has been deleted",
                 ];

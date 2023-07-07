@@ -17,7 +17,7 @@
         @if($data->id == $user->id)
             <div class="form-group row">
                 <div class="col-md-6">
-                    {!! Form::label('password', 'Password', array('class' => 'control-label')) !!}
+                    {!! Form::label('password', 'Password Baru', array('class' => 'control-label')) !!}
                     {!! Form::password('password',['class'=>'form-control','id'=>'password','placeholder'=>'Password']) !!}
                 </div>
                 <div class="col-md-6">
@@ -26,18 +26,20 @@
                 </div>
             </div>
         @endif
-        <div class="form-group row">
-            <div class="col-md-6">
-                {!! Form::label('level_id', 'Level', array('class' => 'form-label')) !!}
-                <span class="text-danger">*</span>
-                {!! Form::select('level_id',$level, $data->level_id, ['class' => 'form-control select2', 'id' => 'level_id']) !!}
+        @if(in_array($user->level->code,['root','admin']))
+            <div class="form-group row">
+                <div class="col-md-6">
+                    {!! Form::label('level_id', 'Level', array('class' => 'form-label')) !!}
+                    <span class="text-danger">*</span>
+                    {!! Form::select('level_id',$level, $data->level_id, ['class' => 'form-control select2', 'id' => 'level_id']) !!}
+                </div>
+                <div class="col-md-6">
+                    {!! Form::label('access_group_id', 'Access Group', array('class' => 'form-label')) !!}
+                    <span class="text-danger">*</span>
+                    {!! Form::select('access_group_id',$access_group, $data->access_group_id, ['class' => 'form-control select2', 'id' => 'access_group_id']) !!}
+                </div>
             </div>
-            <div class="col-md-6">
-                {!! Form::label('access_group_id', 'Access Group', array('class' => 'form-label')) !!}
-                <span class="text-danger">*</span>
-                {!! Form::select('access_group_id',$access_group, $data->access_group_id, ['class' => 'form-control select2', 'id' => 'access_group_id']) !!}
-            </div>
-        </div>
+        @endif
     </div>
 </div>
 <div class="row">
