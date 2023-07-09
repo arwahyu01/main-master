@@ -7,7 +7,6 @@ use App\Models\AccessGroup;
 use App\Models\Level;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -44,33 +43,18 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $validated=Validator::make($request->all(), [
-            'name'=>'required',
-            'email'=>'required|email|unique:users',
-            'password'=>'required|min:8',
-            'level_id'=>'nullable',
-            'access_group_id'=>'nullable',
+        $request->validate([
+            'first_name' => 'required|min:2',
+            'last_name' => 'nullable|min:3',
+            'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
+            'password' => 'required|min:8',
+            'level_id' => 'required|exists:levels,id',
+            'access_group_id' => 'required|exists:access_groups,id',
         ]);
-        if ($validated->fails()) {
-            $response=[
-                'status'=>FALSE,
-                'message'=>'Data gagal disimpan',
-                'data'=>$validated->errors(),
-            ];
+        if ($this->model::create($request->all())) {
+            $response = ['status' => TRUE, 'message' => 'Data berhasil disimpan'];
         }
-        else {
-            if ($this->model::create($request->all())) {
-                $response=[
-                    'status'=>TRUE, 'message'=>'Data berhasil disimpan',
-                ];
-            }
-            else {
-                $response=[
-                    'status'=>FALSE, 'message'=>'Data gagal disimpan',
-                ];
-            }
-        }
-        return response()->json($response);
+        return response()->json($response ?? ['status' => FALSE, 'message' => 'Data gagal disimpan']);
     }
 
     public function show($id)
@@ -88,28 +72,18 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validated=Validator::make($request->all(), [
-            'name'=>'required',
-            'level_id'=>'nullable',
-            'access_group_id'=>'nullable',
+        $request->validate([
+            'first_name' => 'required|min:2',
+            'last_name' => 'nullable|min:3',
+            'level_id' => 'nullable|exists:levels,id',
+            'access_group_id' => 'nullable|exists:access_groups,id',
         ]);
-        if($validated->fails()){
-            $response=[
-                'status'=>FALSE,
-                'message'=>'Data gagal disimpan',
-                'data'=>$validated->errors(),
-            ];
+
+        $data = $this->model::find($id);
+        if ($data->update($request->all())) {
+            $response = ['status' => TRUE, 'message' => 'Data berhasil disimpan'];
         }
-        else{
-            $data=$this->model::find($id);
-            if($data->update($request->all())){
-                $response=[
-                    'status'=>TRUE,
-                    'message'=>'Data berhasil disimpan',
-                ];
-            }
-        }
-        return response()->json($response ?? ['status'=>FALSE, 'message'=>'Data gagal disimpan']);
+        return response()->json($response ?? ['status' => FALSE, 'message' => 'Data gagal disimpan']);
     }
 
     public function delete($id)
@@ -122,10 +96,7 @@ class UserController extends Controller
     {
         $data=$this->model::find($id);
         if($data->delete()){
-            $response=[
-                'status'=>TRUE,
-                'message'=>'Data berhasil dihapus',
-            ];
+            $response=['status'=>TRUE, 'message'=>'Data berhasil dihapus'];
         }
         return response()->json($response ?? ['status'=>FALSE, 'message'=>'Data gagal dihapus']);
     }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Menu extends Model
 {
@@ -65,6 +66,6 @@ class Menu extends Model
 
     public function getModelAttribute() : string
     {
-        return 'App\\Models\\'.$this->attributes['model'];
+        return Str::replace('/','\\',config('master.app.root.model')).'\\'.$this->attributes['model'];
     }
 }

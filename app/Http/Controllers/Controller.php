@@ -12,13 +12,15 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public string $view,$code,$model;
+    public string $view, $code, $model, $url;
+    public object $help;
 
-    public function __construct()
+    public function __construct(Helper $helper)
     {
-        $this->view=config('master.app.view.backend').'.'.(Helper::menu()['code'] ?? 'dashboard');
-        $this->code= (Helper::menu()['code'] ?? 'dashboard');
-        $this->model=(Helper::menu()['model'] ?? 'Dashboard');
-        $this->url=(Helper::menu()['url'] ?? 'dashboard');
+        $this->help = $helper;
+        $this->code = $helper->menu()->code ?? 'dashboard';
+        $this->model = $helper->menu()->model ?? 'dashboard';
+        $this->url = $helper->menu()->url ?? 'dashboard';
+        $this->view = config('master.app.view.backend') . '.' . $this->code;
     }
 }

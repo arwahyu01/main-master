@@ -9,16 +9,9 @@ use Illuminate\Support\Facades\Route;
 
 class Helper
 {
-    public static function menu(): ?array
+    public static function menu(): ?object
     {
-        if ($menu=Menu::whereCode(explode(".", Route::currentRouteName())[0])->first()) {
-            $data=[
-                'code'=>$menu->code ?? NULL,
-                'model'=>$menu->model ?? NULL,
-                'url'=>$menu->url ?? NULL,
-            ];
-        }
-        return $data ?? NULL;
+        return Menu::whereCode(explode(".", Route::currentRouteName())[0])->first();
     }
 
     /**
@@ -50,5 +43,13 @@ class Helper
     public static function sortText($text,$length=100): string
     {
         return substr($text, 0, $length) . (strlen($text) > $length ? '...' : '');
+    }
+
+    public static function sendNotification($model, $users, array $array)
+    {
+        $users = is_array($users) ? $users : [$users];
+        $model->notification()->createMany(collect($users)->map(function ($item) use ($array) {
+            return ['user_id' => $item, 'data' => $array,'status'=>0];
+        })->toArray());
     }
 }

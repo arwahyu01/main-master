@@ -7,7 +7,6 @@ use App\Models\AccessGroup;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 class AccessMenuController extends Controller
 {
@@ -45,30 +44,13 @@ class AccessMenuController extends Controller
 
     public function store(Request $request)
     {
-        $validated=Validator::make($request->all(), [
-            'access_group_id' => 'required',
-			'menu_id' => 'required',
-        ]);
-        if ($validated->fails()) {
-            $response=[
-                'status'=>FALSE,
-                'message'=>'Data gagal disimpan',
-                'data'=>$validated->errors(),
+        $request->validate(['name' => 'required', 'code' => 'required']);
+        if ($this->model::create($request->all())) {
+            $response = [
+                'status' => TRUE, 'message' => 'Data berhasil disimpan',
             ];
         }
-        else {
-            if ($this->model::create($request->all())) {
-                $response=[
-                    'status'=>TRUE, 'message'=>'Data berhasil disimpan',
-                ];
-            }
-            else {
-                $response=[
-                    'status'=>FALSE, 'message'=>'Data gagal disimpan',
-                ];
-            }
-        }
-        return response()->json($response);
+        return response()->json($response ?? ['status' => FALSE, 'message' => 'Data gagal disimpan']);
     }
 
     public function show($id)
@@ -87,27 +69,13 @@ class AccessMenuController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validated=Validator::make($request->all(), [
-            'access_group_id' => 'required',
-			'menu_id' => 'required',
-        ]);
-        if($validated->fails()){
-            $response=[
-                'status'=>FALSE,
-                'message'=>'Data gagal disimpan',
-                'data'=>$validated->errors(),
-            ];
-        }
-        else {
-            $this->model::whereAccessGroupId($id)->forceDelete();
-            foreach ($request->menu_id as $menu) {
-                $this->model::create([
-                    'access_group_id'=>$id, 'menu_id'=>$menu,
-                ]);
-            }
-            $response=[
-                'status'=>TRUE, 'message'=>'Data berhasil disimpan',
-            ];
+        $request->validate(['access_group_id' => 'required|exists:access_groups,id', 'menu_id' => 'required']);
+        $data = collect($request->menu_id)->map(function ($item) use ($id) {
+            return ['access_group_id' => $id, 'menu_id' => $item];
+        });
+        $this->model::whereAccessGroupId($id)->forceDelete();
+        if(AccessGroup::find($id)->access_menu()->createMany($data->toArray())){
+            $response=['status'=>TRUE, 'message'=>'Data berhasil disimpan'];
         }
         return response()->json($response ?? ['status'=>FALSE, 'message'=>'Data gagal disimpan']);
     }
@@ -121,10 +89,7 @@ class AccessMenuController extends Controller
     public function destroy($id)
     {
         if($this->model::whereAccessGroupId($id)->forceDelete()){
-            $response=[
-                'status'=>TRUE,
-                'message'=>'Data berhasil dihapus',
-            ];
+            $response=['status'=>TRUE, 'message'=>'Data berhasil dihapus'];
         }
         return response()->json($response ?? ['status'=>FALSE, 'message'=>'Data gagal dihapus, silahkan coba lagi nanti !']);
     }

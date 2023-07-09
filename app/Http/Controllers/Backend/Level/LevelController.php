@@ -57,32 +57,16 @@ class LevelController extends Controller
 
     public function store(Request $request)
     {
-        $validated=Validator::make($request->all(), [
-			'name' => 'required',
-			'code' => 'required',
-			'access' => 'required',
+        $request->validate([
+            'name' => 'required|unique:levels',
+            'code' => 'required|unique:levels',
+            'access' => 'required',
         ]);
-        if ($validated->fails()) {
-            $response=[
-                'status'=>FALSE,
-                'message'=>'Data gagal disimpan',
-                'data'=>$validated->errors(),
-            ];
+        $request->merge(['access' => $this->model::makeLevelArray($request)]);
+        if ($this->model::create($request->all())) {
+            $response = ['status' => TRUE, 'message' => 'Data berhasil disimpan'];
         }
-        else {
-            $request->merge(['access'=>$this->model::makeLevelArray($request)]);
-            if ($this->model::create($request->all())) {
-                $response=[
-                    'status'=>TRUE, 'message'=>'Data berhasil disimpan',
-                ];
-            }
-            else {
-                $response=[
-                    'status'=>FALSE, 'message'=>'Data gagal disimpan',
-                ];
-            }
-        }
-        return response()->json($response);
+        return response()->json($response ?? ['status' => FALSE, 'message' => 'Data gagal disimpan']);
     }
 
     public function show($id)
@@ -99,29 +83,17 @@ class LevelController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validated=Validator::make($request->all(), [
-			'name' => 'required',
-			'code' => 'required',
-			'access' => 'required',
+        $request->validate([
+            'name' => 'required|unique:levels,name,' . $id . ',id',
+            'code' => 'required|unique:levels,code,' . $id . ',id',
+            'access' => 'required',
         ]);
-        if($validated->fails()){
-            $response=[
-                'status'=>FALSE,
-                'message'=>'Data gagal disimpan',
-                'data'=>$validated->errors(),
-            ];
+        $data = $this->model::find($id);
+        $request->merge(['access' => $this->model::makeLevelArray($request)]);
+        if ($data->update($request->all())) {
+            $response = ['status' => TRUE, 'message' => 'Data berhasil disimpan'];
         }
-        else{
-            $data=$this->model::find($id);
-            $request->merge(['access'=>$this->model::makeLevelArray($request)]);
-            if($data->update($request->all())){
-                $response=[
-                    'status'=>TRUE,
-                    'message'=>'Data berhasil disimpan',
-                ];
-            }
-        }
-        return response()->json($response ?? ['status'=>FALSE, 'message'=>'Data gagal disimpan']);
+        return response()->json($response ?? ['status' => FALSE, 'message' => 'Data gagal disimpan']);
     }
 
     public function delete($id)
@@ -134,10 +106,7 @@ class LevelController extends Controller
     {
         $data=$this->model::find($id);
         if($data->delete()){
-            $response=[
-                'status'=>TRUE,
-                'message'=>'Data berhasil dihapus',
-            ];
+            $response=['status'=>TRUE, 'message'=>'Data berhasil dihapus'];
         }
         return response()->json($response ?? ['status'=>FALSE, 'message'=>'Data gagal dihapus']);
     }

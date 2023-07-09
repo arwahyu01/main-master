@@ -53,29 +53,7 @@ class NotificationController extends Controller
 
     public function store(Request $request)
     {
-        $validated=Validator::make($request->all(), [
-
-        ]);
-        if ($validated->fails()) {
-            $response=[
-                'status'=>FALSE,
-                'message'=>'Data gagal disimpan',
-                'data'=>$validated->errors(),
-            ];
-        }
-        else {
-            if ($this->model::create($request->all())) {
-                $response=[
-                    'status'=>TRUE, 'message'=>'Data berhasil disimpan',
-                ];
-            }
-            else {
-                $response=[
-                    'status'=>FALSE, 'message'=>'Data gagal disimpan',
-                ];
-            }
-        }
-        return response()->json($response);
+        // store data
     }
 
     public function show($id)
@@ -93,26 +71,7 @@ class NotificationController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validated=Validator::make($request->all(), [
-
-        ]);
-        if($validated->fails()){
-            $response=[
-                'status'=>FALSE,
-                'message'=>'Data gagal disimpan',
-                'data'=>$validated->errors(),
-            ];
-        }
-        else{
-            $data=$this->model::find($id);
-            if($data->update($request->all())){
-                $response=[
-                    'status'=>TRUE,
-                    'message'=>'Data berhasil disimpan',
-                ];
-            }
-        }
-        return response()->json($response ?? ['status'=>FALSE, 'message'=>'Data gagal disimpan']);
+        // update data
     }
 
     public function delete($id)
@@ -125,10 +84,7 @@ class NotificationController extends Controller
     {
         $data=$this->model::find($id);
         if($data->delete()){
-            $response=[
-                'status'=>TRUE,
-                'message'=>'Data berhasil dihapus',
-            ];
+            $response=['status'=>TRUE, 'message'=>'Data berhasil dihapus'];
         }
         return response()->json($response ?? ['status'=>FALSE, 'message'=>'Data gagal dihapus']);
     }

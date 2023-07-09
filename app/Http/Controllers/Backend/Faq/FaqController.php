@@ -28,9 +28,6 @@ class FaqController extends Controller
         return datatables()->of($data)
             ->addColumn('action', function ($data) {
                 $button ='';
-                if(Auth::user()->create){
-                    $button .= '<a href="'.url('admin/faq-sub/index/'.$data->id).'" class="btn btn-sm btn-outline" data-title="Sub FAQ" data-action="show" data-url="'.$this->url.'" data-id="'.$data->id.'" title="Tampilkan"><i class="fa fa-eye text-info"></i></button>';
-                }
                 if(Auth::user()->read){
                     $button .= '<button type="button" class="btn-action btn btn-sm btn-outline" data-title="Detail" data-action="show" data-url="'.$this->url.'" data-id="'.$data->id.'" title="Tampilkan"><i class="fa fa-eye text-info"></i></button>';
                 }
@@ -79,44 +76,29 @@ class FaqController extends Controller
 
     public function store(Request $request)
     {
-        $validated=Validator::make($request->all(), [
-            'title' => 'required',
-			'description' => 'nullable',
-			'file' => 'nullable',
-			'link' => 'nullable',
-			'visitors' => 'required',
-			'like' => 'required',
-			'dislike' => 'required',
-			'publish' => 'nullable',
+        $request->validate([
+            'title' => 'required|unique:faqs',
+            'description' => 'nullable',
+            'file' => 'nullable',
+            'link' => 'nullable',
+            'visitors' => 'required|numeric',
+            'like' => 'required|numeric',
+            'dislike' => 'required|numeric',
+            'publish' => 'nullable|boolean',
         ]);
-        if ($validated->fails()) {
-            $response=[
-                'status'=>FALSE,
-                'message'=>'Data gagal disimpan',
-                'data'=>$validated->errors(),
-            ];
-        }
-        else {
-            if ($data = $this->model::create($request->all())) {
-                if($request->hasFile('file')){
-                    $data->file()->create([
-                        'data'=>[
-                            'disk'=>config('filesystems.default'),
-                            'target'=>Storage::putFile($data->folder, $request->file('file')),
-                        ],
-                    ]);
-                }
-                $response=[
-                    'status'=>TRUE, 'message'=>'Data berhasil disimpan',
-                ];
+
+        if ($data = $this->model::create($request->all())) {
+            if ($request->hasFile('file')) {
+                $data->file()->create([
+                    'data' => [
+                        'disk' => config('filesystems.default'),
+                        'target' => Storage::putFile($data->folder, $request->file('file')),
+                    ],
+                ]);
             }
-            else {
-                $response=[
-                    'status'=>FALSE, 'message'=>'Data gagal disimpan',
-                ];
-            }
+            $response = ['status' => TRUE, 'message' => 'Data berhasil disimpan'];
         }
-        return response()->json($response);
+        return response()->json($response ?? ['status' => FALSE, 'message' => 'Data gagal disimpan']);
     }
 
     public function show($id)
@@ -134,41 +116,36 @@ class FaqController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validated=Validator::make($request->all(), [
-            'title' => 'required',
-			'description' => 'required',
-			'visitors' => 'required',
-			'like' => 'required',
-			'dislike' => 'required',
+        $request->validate([
+            'title' => 'required|unique:faqs,title,' . $id,
+            'description' => 'nullable',
+            'file' => 'nullable',
+            'link' => 'nullable',
+            'visitors' => 'required|numeric',
+            'like' => 'required|numeric',
+            'dislike' => 'required|numeric',
+            'publish' => 'nullable|boolean',
         ]);
-        if($validated->fails()){
-            $response=[
-                'status'=>FALSE, 'message'=>'Data gagal disimpan', 'data'=>$validated->errors(),
-            ];
+
+        $data = $this->model::find($id);
+        if (!$request->has('publish')) {
+            $request->merge(['publish' => 0]);
         }
-        else{
-            $data=$this->model::find($id);
-            if(!$request->has('publish')){
-                $request->merge(['publish'=>0]);
-            }
-            if($data->update($request->all())){
-                if ($request->hasFile('file')) {
-                    if ($data->file) {
-                        $data->file->forceDelete();
-                    }
-                    $data->file()->create([
-                        'data'=>[
-                            'disk'=>config('filesystems.default'),
-                            'target'=>Storage::putFile($data->folder, $request->file('file')),
-                        ],
-                    ]);
+        if ($data->update($request->all())) {
+            if ($request->hasFile('file')) {
+                if ($data->file) {
+                    $data->file->forceDelete();
                 }
-                $response=[
-                    'status'=>TRUE, 'message'=>'Data berhasil disimpan',
-                ];
+                $data->file()->create([
+                    'data' => [
+                        'disk' => config('filesystems.default'),
+                        'target' => Storage::putFile($data->folder, $request->file('file')),
+                    ],
+                ]);
             }
+            $response = ['status' => TRUE, 'message' => 'Data berhasil disimpan'];
         }
-        return response()->json($response ?? ['status'=>FALSE, 'message'=>'Data gagal disimpan']);
+        return response()->json($response ?? ['status' => FALSE, 'message' => 'Data gagal disimpan']);
     }
 
     public function delete($id)
@@ -184,9 +161,7 @@ class FaqController extends Controller
             $file->forceDelete();
         }
         if ($data->delete()) {
-            $response=[
-                'status'=>TRUE, 'message'=>'Data berhasil dihapus',
-            ];
+            $response=['status'=>TRUE, 'message'=>'Data berhasil dihapus'];
         }
         return response()->json($response ?? ['status'=>FALSE, 'message'=>'Data gagal dihapus']);
     }

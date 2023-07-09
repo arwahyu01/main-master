@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Backend\AccessGroup;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 class AccessGroupController extends Controller
 {
@@ -43,30 +42,11 @@ class AccessGroupController extends Controller
 
     public function store(Request $request)
     {
-        $validated=Validator::make($request->all(), [
-			'name' => 'required',
-			'code' => 'required',
-        ]);
-        if ($validated->fails()) {
-            $response=[
-                'status'=>FALSE,
-                'message'=>'Data gagal disimpan',
-                'data'=>$validated->errors(),
-            ];
+        $request->validate(['name' => 'required', 'code' => 'required']);
+        if ($this->model::create($request->all())) {
+            $response = ['status' => TRUE, 'message' => 'Data berhasil disimpan'];
         }
-        else {
-            if ($this->model::create($request->all())) {
-                $response=[
-                    'status'=>TRUE, 'message'=>'Data berhasil disimpan',
-                ];
-            }
-            else {
-                $response=[
-                    'status'=>FALSE, 'message'=>'Data gagal disimpan',
-                ];
-            }
-        }
-        return response()->json($response);
+        return response()->json($response ?? ['status' => FALSE, 'message' => 'Data gagal disimpan']);
     }
 
     public function show($id)
@@ -83,27 +63,12 @@ class AccessGroupController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validated=Validator::make($request->all(), [
-			'name' => 'required',
-			'code' => 'required',
-        ]);
-        if($validated->fails()){
-            $response=[
-                'status'=>FALSE,
-                'message'=>'Data gagal disimpan',
-                'data'=>$validated->errors(),
-            ];
+        $request->validate(['name' => 'required', 'code' => 'required']);
+        $data = $this->model::find($id);
+        if ($data->update($request->all())) {
+            $response = ['status' => TRUE, 'message' => 'Data berhasil disimpan'];
         }
-        else{
-            $data=$this->model::find($id);
-            if($data->update($request->all())){
-                $response=[
-                    'status'=>TRUE,
-                    'message'=>'Data berhasil disimpan',
-                ];
-            }
-        }
-        return response()->json($response ?? ['status'=>FALSE, 'message'=>'Data gagal disimpan']);
+        return response()->json($response ?? ['status' => FALSE, 'message' => 'Data gagal disimpan']);
     }
 
     public function delete($id)
@@ -116,10 +81,7 @@ class AccessGroupController extends Controller
     {
         $data=$this->model::find($id);
         if($data->delete()){
-            $response=[
-                'status'=>TRUE,
-                'message'=>'Data berhasil dihapus',
-            ];
+            $response=['status'=>TRUE, 'message'=>'Data berhasil dihapus'];
         }
         return response()->json($response ?? ['status'=>FALSE, 'message'=>'Data gagal dihapus']);
     }

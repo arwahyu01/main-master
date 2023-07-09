@@ -15,8 +15,6 @@ $(window.document).on('click', '.btn-action', function (e) {
         url = `${url}/delete/${id}`;
     } else if (action === 'show') {
         url = `${url}/${id}`;
-    } else {
-        url = `${url}`;
     }
 
     $.loadModal({
@@ -26,10 +24,7 @@ $(window.document).on('click', '.btn-action', function (e) {
         bgClass: `${bgClass}`,
         title: `${title}`,
         width: 'whatever',
-        modal: {
-            keyboard: false,
-            backdrop: 'static',
-        },
+        modal: {keyboard: false, backdrop: 'static'},
         ajax: {
             dataType: 'html',
             method: 'GET',
@@ -113,10 +108,8 @@ $(window.document).on('click', '.submit-data', function (e) {
                 }
                 $('.modal').modal('hide'); // Hide modal
             } else {
-                if (response.hasOwnProperty('data')) {
-                    $.each(response.data, function (index, value) {
-                        $(`#${index}`).addClass('is-invalid border border-danger').parent().append(`<span class="invalid-feedback" role="alert"><strong>${value}</strong></span>`);
-                    });
+                if (response.hasOwnProperty('errors')) {
+                    _errorBuilder(response.data);
                 } else {
                     swal({
                         title: response.title ?? "Oops!",
@@ -130,9 +123,28 @@ $(window.document).on('click', '.submit-data', function (e) {
             }
         },
         error: function (xhr) {
+            if(xhr.status === 422) {
+                _errorBuilder(xhr.responseJSON.errors);
+            }else{
+                swal({
+                    title: "Oops!",
+                    text: xhr.status + ' ' + xhr.statusText,
+                    icon: "error",
+                    type: "error",
+                    timer: 2500,
+                    showConfirmButton: false
+                });
+            }
             $('.progress').hide();
             btnSubmit.attr('disabled', false).html('<i class="fa fa-save"></i> ' + textBtn);
+            dismiss.removeAttr('disabled');
             $('.message').html(`<div class="alert alert-danger fade show mt-3"><b>Error!</b> ${xhr.status} ${xhr.statusText}.</div>`)
         }
     }).submit();
+
+    const _errorBuilder = function (errors) {
+        $.each(errors, function (index, value) {
+            $(`#${index}`).addClass('is-invalid border border-danger').parent().append(`<span class="invalid-feedback" role="alert"><strong>${value}</strong></span>`);
+        });
+    }
 });

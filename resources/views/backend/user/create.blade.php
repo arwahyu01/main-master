@@ -1,13 +1,17 @@
 {!! Form::open(['id'=>'form-create-'.$page->code, 'route' => [$page->url.'.store'], 'class' => 'form form form-horizontal', 'method' => 'post','files' => TRUE]) !!}
 <div class="panel shadow-sm">
-    <div class="panel-heading">
-        <h6 class="panel-title">Isi Form Dibawah Ini Untuk Menambahkan Data {!! $page->title !!}</h6>
-    </div>
     <div class="panel-body">
-        <div class="form-group">
-            {!! Form::label('name', 'Name', array('class' => 'control-label')) !!}
-            <span class="text-danger">*</span>
-            {!! Form::text('name',NULL,['class'=>'form-control','id'=>'name','placeholder'=>'Name']) !!}
+        <div class="row">
+            <div class="col-md-6 form-group">
+                {!! Form::label('first_name', 'First Name', array('class' => 'control-label')) !!}
+                <span class="text-danger">*</span>
+                {!! Form::text('first_name',null,['class'=>'form-control','id'=>'first_name','placeholder'=>'First Name']) !!}
+            </div>
+            <div class="col-md-6 form-group">
+                {!! Form::label('last_name', 'Last Name', array('class' => 'control-label')) !!}
+                <span class="text-danger">*</span>
+                {!! Form::text('last_name',null,['class'=>'form-control','id'=>'last_name','placeholder'=>'Last Name']) !!}
+            </div>
         </div>
         <div class="form-group">
             {!! Form::label('email', 'Email', array('class' => 'control-label')) !!}

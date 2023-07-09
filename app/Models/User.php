@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -11,18 +12,20 @@ use Laravel\Sanctum\Sanctum;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasUuids;
+    use HasApiTokens, HasFactory, Notifiable, HasUuids, softDeletes;
 
     protected $fillable = [
-        'name', 'email', 'password', 'email_verified_at', 'level_id', 'access_group_id',
+        'first_name', 'last_name', 'email', 'password', 'email_verified_at', 'level_id', 'access_group_id',
     ];
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token','access_group_id','level_id','created_at','updated_at','deleted_at','email_verified_at','first_name','last_name'
     ];
     protected $casts = [
         'email_verified_at' => 'datetime',
         'id' => 'string',
     ];
+
+    protected $appends =['name'];
 
     protected $primaryKey = 'id';
 
@@ -44,6 +47,11 @@ class User extends Authenticatable
     public function tokens(): object
     {
         return $this->morphMany(Sanctum::$personalAccessTokenModel, 'tokenable', 'tokenable_type', 'tokenable_id');
+    }
+
+    public function getNameAttribute()
+    {
+        return $this->first_name.' '.$this->last_name;
     }
 
     public function getCreateAttribute(): bool

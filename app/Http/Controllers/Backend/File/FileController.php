@@ -44,9 +44,7 @@ class FileController extends Controller
         if ($file=File::find($id)) {
             if ($file->exists()) {
                 $file->delete();
-                $response=[
-                    'status'=>TRUE, 'message'=>"File $filename has been deleted",
-                ];
+                $response=['status'=>TRUE, 'message'=>"File $filename has been deleted"];
             }
         }
         return response()->json($response ?? ['status'=>FALSE, 'message'=>'file not found or already deleted']);

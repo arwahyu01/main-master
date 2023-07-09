@@ -49,7 +49,7 @@ class Pengumuman extends Model
         return $this->morphOne(File::class, 'fileable');
     }
 
-    public function notification()
+    public function notification() : object
     {
         return $this->morphOne(Notification::class, 'notifiable');
     }

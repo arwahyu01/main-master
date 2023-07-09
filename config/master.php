@@ -19,6 +19,7 @@ return [
         'root'=>[
             'backend'=>'App/Http/Controllers/Backend', // path to backend controller
             'frontend'=>'App/Http/Controllers/Frontend', // path to frontend controller
+            'model'=>'App/Models', // path to model
             'view'=>'views/backend' // path to backend view
         ],
         'url'=>[

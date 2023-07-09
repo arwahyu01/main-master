@@ -34,34 +34,31 @@ class MenuController extends Controller
 
     public function store(Request $request)
     {
-        $validator=Validator::make($request->all(), [
-            'parent_id'=>'nullable',
-            'title'=>'required',
-            'subtitle'=>'nullable',
-            'code'=>'required|unique:menus',
-            'model'=>'nullable',
-            'url'=>'required',
-            'icon'=>'required',
-            'type'=>'required',
-            'show'=>'nullable',
-            'active'=>'nullable',
-            'access_group_id'=>'required|array|min:1',
+        $request->validate([
+            'parent_id' => 'nullable',
+            'title' => 'required|unique:menus',
+            'subtitle' => 'nullable',
+            'code' => 'required|unique:menus',
+            'url' => 'required|unique:menus',
+            'model' => 'nullable',
+            'icon' => 'required',
+            'type' => 'required',
+            'show' => 'nullable',
+            'active' => 'nullable',
+            'access_group_id' => 'required|array|exists:access_groups,id',
         ]);
-        if ($validator->fails()) {
-            $response=['status'=>FALSE, 'message'=>'Data gagal disimpan', 'data'=>$validator->messages()];
-        }
-        else {
-            if ($data = $this->model::create($request->all())) {
-                foreach ($request->access_group_id as $access_group_id) {
-                    $data->access_menu()->updateOrCreate(['access_group_id' => $access_group_id], ['menu_id' => $data->id, 'access' => $request->input('access_crud_' . $access_group_id)]);
-                }
-                $response=['status'=>TRUE, 'message'=>'Data berhasil disimpan'];
-            }
-            else {
-                $response=['status'=>FALSE, 'message'=>'Data gagal disimpan'];
+
+        if ($data = $this->model::create($request->all())) {
+            $access_menu =collect($request->access_group_id)->each(function ($access_group_id) use ($request, $data) {
+                return ['menu_id' => $data->id, 'access_group_id' => $access_group_id, 'access' => $request->input('access_crud_' . $access_group_id)];
+            });
+            if($data->accessMenu()->createMany($access_menu->toArray())) {
+                $response = ['status' => TRUE, 'message' => 'Data berhasil disimpan'];
+            }else{
+                $data->forceDelete();
             }
         }
-        return response()->json($response);
+        return response()->json($response ?? ['status' => FALSE, 'message' => 'Data gagal disimpan']);
     }
 
     public function show($id)
@@ -81,38 +78,32 @@ class MenuController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validator=Validator::make($request->all(), [
-            'parent_id'=>'nullable',
-            'title'=>'required',
-            'subtitle'=>'nullable',
-            'code'=>'required|unique:menus,code,'.$id,
-            'model'=>'nullable',
-            'url'=>'required',
-            'icon'=>'required',
-            'type'=>'required',
-            'show'=>'required',
-            'active'=>'required',
-            'access_group_id'=>'required|array|min:1'
+        $request->validate([
+            'parent_id' => 'nullable',
+            'title' => 'required',
+            'subtitle' => 'nullable',
+            'code' => 'required|unique:menus,code,' . $id,
+            'url' => 'required|unique:menus,url,' . $id,
+            'model' => 'nullable',
+            'icon' => 'required',
+            'type' => 'required',
+            'show' => 'nullable',
+            'active' => 'nullable',
+            'access_group_id' => 'required|array|exists:access_groups,id',
         ]);
-        if ($validator->fails()) {
-            $response=[
-                'status'=>FALSE, 'message'=>'Data gagal disimpan', 'data'=>$validator->messages(),
-            ];
-        }
-        else {
-            if ($data = $this->model::find($id)) {
-                $data->update($request->all());
+
+        if ($data = $this->model::find($id)) {
+            if($data->update($request->all())) {
                 $data->access_menu()->delete();
-                foreach ($request->access_group_id as $access_group_id) {
-                   $data->access_menu()->updateOrCreate(['access_group_id'=>$access_group_id], ['menu_id'=>$data->id,'access'=>$request->input('access_crud_'.$access_group_id)]);
+                $access_menu = collect($request->access_group_id)->each(function ($access_group_id) use ($request, $data) {
+                    return ['menu_id' => $data->id, 'access_group_id' => $access_group_id, 'access' => $request->input('access_crud_' . $access_group_id)];
+                });
+                if ($data->accessMenu()->createMany($access_menu->toArray())) {
+                    $response = ['status' => TRUE, 'message' => 'Data berhasil disimpan'];
                 }
-                $response=['status'=>TRUE, 'message'=>'Data berhasil disimpan'];
-            }
-            else {
-                $response=['status'=>FALSE, 'message'=>'Data gagal disimpan'];
             }
         }
-        return response()->json($response);
+        return response()->json($response ?? ['status' => FALSE, 'message' => 'Data gagal disimpan']);
     }
 
     public function delete($id)

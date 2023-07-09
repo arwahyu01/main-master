@@ -12,7 +12,8 @@ class UserSeeder extends Seeder
         $data = [
             [
                 'id'=> Str::uuid(),
-                'name'=> 'Root User',
+                'first_name'=> 'User',
+                'last_name'=> 'Root',
                 'email'=> 'root@mail.com',
                 'password'=> 'root',
                 'level_id'=> 1,
