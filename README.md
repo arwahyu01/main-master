@@ -136,10 +136,10 @@ Copy the code below to your route file (e.g: routes/web.php)
 ```
 
 ## License
-- No License (free to use for personal)
+- No License (free to use for personal)[README.md](..%2Fmvc-builder%2FREADME.md)
 - Template `Eduadmin` is not free, you can buy it in [here](https://themeforest.net/item/eduadmin-responsive-bootstrap-admin-template-dashboard/29365133)
-- please give me a star if you like this project
+- please give me a star & follow my github account if you like this project :)
 - Don't remove the credits in any of the files
-- Don't forget to follow my github account
+- Buy me a coffee [here](https://trakteer.id/arwp)
 
 #### i hope this project can help you to make your project faster and easier to develop :)
