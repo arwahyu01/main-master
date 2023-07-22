@@ -6,7 +6,7 @@ PHP Framework For Web Artisans
 
 <h3 style="text-align: center"> Main Master </h3>
 <p style="text-align: center">
-Main Master is a laravel project that can be used as a base project for your laravel project. This project is made to make it easier for developers to create a laravel project. This project is made with laravel 10 and bootstrap 5.
+Main Master is the base project for laravel projects. This project was created to make it easier for developers to create laravel projects. This project is build with laravel 10 and bootstrap 5.
 </p>
 <p style="text-align: center">
 Made with ❤️ by <a href="https://www.linkedin.com/in/arwahyupradana/" target="_blank">arwp</a>
@@ -36,72 +36,47 @@ Made with ❤️ by <a href="https://www.linkedin.com/in/arwahyupradana/" target
 
 ## How to install
 ```bash
+# From Packagist
+$ composer create-project arwp/main-master
+# ---- OR -----
 # Clone the repository
-$ git clone https://gitlab.com/arwahyu/main-master.git
-$ cd Main-Master
+$ git clone https://github.com/arwahyu01/main-master.git
+$ cd main-master
 $ composer install
 $ cp .env.example .env
 $ php artisan key:generate
 $ php artisan migrate --seed
 $ php artisan serve # or use valet
-``` 
+```
+
+## Custom Script
+#### For Datatable
+- use this script to send multiple data to 'datatable.blade.js'
+```
+    <script type="application/javascript">
+        fetch("{{ url('/js/'.$backend.'/'.$page->code.'/datatable.js') }}", {
+            method: 'POST',
+            headers: {"X-CSRF-TOKEN": "{{ csrf_token() }}"},
+            body: JSON.stringify({id: "{{ $id }}"})
+        }).then(e => e.text()).then(r => eval?.(`"use strict";(${r})`));
+    </script>
+```
+- `JSON.stringify({'id': "{{ $id }}",'id2': "{{ $id2 }}"})` for multiple id or data
+- Warning: `eval` function is not secure, so don't remove `?.` in `eval?.` function for security reason
+- Add `$id`, in datatable.blade.js file like this :
+```
+    $('#datatable').DataTable({
+        ajax: "{{ url(config('master.app.url.backend').'/'.$url.'/data/'.$id) }}",`
+    });
+```
 
 ## Features for developer
 Install this package to your laravel project
 ```bash
 composer require arwp/mvc
 ```
-## Setup and Configuration :
-add this code to your config/app.php
-```
-'providers' => [
-    ...
-    Arwp\Mvc\MvcServiceProvider::class,
-    ...
-]
-```
-you need to publish the resource file to your project
-```bash
-$ php artisan vendor:publish --provider="Arwp\Mvc\MvcServiceProvider"
-  #publised file config/mvc.php
-  #publised file routes/mvc-route.php
-  #publised file Console/Commands/createMvc.php
-  #publised file Console/Commands/deleteMvc.php
-````
-add this code to your routeServiceProvider.php
-```
-public function boot()
-{
-    ...
-    Route::middleware(['web','auth','backend'])->namespace('App\Http\Controllers\Backend')->group(base_path('routes/mvc-route.php'));
-    ...
-}
-```
-
-open file config/mvc.php and change the key value to your path folder
-```
-return [
-    'path_controller' => 'App/Http/Controllers/Backend', // path to controller folder (default: app/Http/Controllers)
-    'path_model' => 'App\Models', // path to model folder (default: app/Models)
-    'path_view' => 'views/backend', // path to view folder (default: resources/views)
-    'path_route' => 'routes/mvc-route.php', // path to route file (default: routes/mvc-route.php)
-    'route_prefix' => 'admin', // Customize with your "Prefix Route" (e.g: 'admin', 'backend' etc.) (optional)
-];
-```
-if you want to change the default "PATH ROUTE" you can change it in config/mvc.php
-```
-return [
-    ...
-    'path_route' => 'routes/web.php', // change this to your route file
-    ...
-];
-```
-Copy the code below to your route file (e.g: routes/web.php)
-```
-//{{route replacer}} DON'T REMOVE THIS LINE
-```
-
-## How to use package :
+#### Don't forget to set the configuration, read more here https://github.com/arwahyu01/mvc-builder | <a href="https://github.com/arwahyu01/mvc-builder" target="_blank">Click Here</a>
+### How to use this package :
   - Run `php artisan make:mvc [name]` in your terminal to create a module
     - [x] Controller (with CRUD function)
     - [x] Model (with fillable and relation)
@@ -114,31 +89,12 @@ Copy the code below to your route file (e.g: routes/web.php)
 
   - Run `php artisan delete:mvc [name]` to delete a module (delete all file and table in database)
 
-### Custom Script
-#### Datatable
-- use this script for send data to datatable js
-```
-    <script type="application/javascript">
-        fetch("{{ url('/js/'.$backend.'/'.$page->code.'/datatable.js') }}", {
-            method: 'POST',
-            headers: {"X-CSRF-TOKEN": "{{ csrf_token() }}"},
-            body: JSON.stringify({id: "{{ $id }}"})
-        }).then(e => e.text()).then(r => eval?.(`"use strict";(${r})`));
-    </script>
-```
-- you can use `JSON.stringify({'id': "{{ $id }}",'id2': "{{ $id2 }}"})` for multiple id
-- Warning: `eval` function is not secure, so you don't remove `?.` in `eval?.` function for security reason
-- Add `$id`, in datatable js file like this :
-```
-    $('#datatable').DataTable({
-        ajax: "{{ url(config('master.app.url.backend').'/'.$url.'/data/'.$id) }}",`
-    });
-```
 
 ## License
 - No License (free to use for personal)[README.md](..%2Fmvc-builder%2FREADME.md)
 - Template `Eduadmin` is not free, you can buy it in [here](https://themeforest.net/item/eduadmin-responsive-bootstrap-admin-template-dashboard/29365133)
 - please give me a star & follow my github account if you like this project :)
 - Don't remove the credits in any of the files
+- Buy me a coffee [here](https://trakteer.id/arwp)
 
 #### i hope this project can help you to make your project faster and easier to develop :)
