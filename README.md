@@ -75,7 +75,7 @@ Install this package to your laravel project
 ```bash
 composer require arwp/mvc
 ```
-#### Don't forget to set the configuration, read more here https://github.com/arwahyu01/mvc-builder | <a href="https://github.com/arwahyu01/mvc-builder" target="_blank">Click Here</a>
+#### Don't forget to set the configuration, read more <a href="https://github.com/arwahyu01/mvc-builder" target="_blank">here</a>
 ### How to use this package :
   - Run `php artisan make:mvc [name]` in your terminal to create a module
     - [x] Controller (with CRUD function)
