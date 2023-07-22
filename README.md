@@ -95,6 +95,5 @@ composer require arwp/mvc
 - Template `Eduadmin` is not free, you can buy it in [here](https://themeforest.net/item/eduadmin-responsive-bootstrap-admin-template-dashboard/29365133)
 - please give me a star & follow my github account if you like this project :)
 - Don't remove the credits in any of the files
-- Buy me a coffee [here](https://trakteer.id/arwp)
 
 #### i hope this project can help you to make your project faster and easier to develop :)
