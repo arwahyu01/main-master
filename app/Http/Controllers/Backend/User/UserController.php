@@ -77,6 +77,7 @@ class UserController extends Controller
             'last_name' => 'nullable|min:3',
             'level_id' => 'nullable|exists:levels,id',
             'access_group_id' => 'nullable|exists:access_groups,id',
+            'email' => 'required|email',
         ]);
 
         $data = $this->model::find($id);

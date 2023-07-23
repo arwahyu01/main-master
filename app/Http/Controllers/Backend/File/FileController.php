@@ -39,7 +39,7 @@ class FileController extends Controller
         ]);
     }
 
-    public function delete($id, $filename)
+    public function deleteFile($id, $filename)
     {
         if ($file=File::find($id)) {
             if ($file->exists()) {

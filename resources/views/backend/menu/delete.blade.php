@@ -1,4 +1,4 @@
-{!! Form::open(['id'=>'form-create-'.$page->code, 'route' => [$page->code.'.destroy', $data->id], 'class' => 'form form-horizontal', 'method' => 'DELETE']) !!}
+{!! html()->form('DELETE', route($page->code.'.destroy', $data->id))->id('form-create-'.$page->code)->class('form form-horizontal')->open() !!}
 <div class="row">
     <div class="col-md-12">
         <label class="control-label h6">Apakah Anda Yakin Ingin Menghapus Data Ini?</label>
@@ -37,8 +37,8 @@
         <span class="message"></span>
     </div>
 </div>
-{!! Form::hidden('function', 'loadMenu()' , ['id' => 'function']) !!}
-{!! Form::close() !!}
+{!! html()->hidden('function')->value('loadMenu(),sidebarMenu()')->id('function') !!}
+{!! html()->form()->close() !!}
 <script>
     $('.modal-title').html('<i class="mdi mdi-delete-forever"></i> Hapus Data {!! $page->title !!}');
 </script>

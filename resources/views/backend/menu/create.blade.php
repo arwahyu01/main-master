@@ -1,70 +1,70 @@
-{!! Form::open(['id'=>'form-create-'.$page->code, 'route' => [$page->url.'.store'], 'class' => 'form form-horizontal', 'method' => 'post','files' => TRUE]) !!}
+{{ html()->form('POST', route($page->url.'.store'))->id('form-create-'.$page->code)->acceptsFiles()->class('form form-horizontal')->open() }}
 <div class="row">
     <div class="col-md-6">
         <div class="form-group">
-            {!! Form::label('title', 'Nama Menu', ['class' => 'control-label']) !!}
+            {!! html()->label('Nama Menu','title')->class('control-label') !!}
             <span class="text-danger">*</span>
-            {!! Form::text('title', NULL, ['id' => 'title', 'class' => 'form-control', 'placeholder' => 'Nama Menu']) !!}
+            {!! html()->text('title')->placeholder('Type name here')->class('form-control')->id('title') !!}
         </div>
         <div class="form-group">
-            {!! Form::label('subtitle', 'Informasi', ['class' => 'control-label']) !!}
-            <span class="text-danger">e.g : Welcome to Menu page</span>
-            {!! Form::text('subtitle', NULL, ['id' => 'subtitle', 'class' => 'form-control', 'placeholder' => 'Sub Title']) !!}
+            {!! html()->label('Informasi','subtitle')->class('control-label') !!}
+            {!! html()->span('e.g : Welcome to Menu page')->class('text-danger') !!}
+            {!! html()->text('subtitle')->placeholder('Type subtitle here')->class('form-control')->id('subtitle') !!}
         </div>
         <div class="form-group">
-            {!! Form::label('model', 'Model', ['class' => 'control-label']) !!}
+            {!! html()->label('Model','model')->class('control-label') !!}
             <span class="text-danger">*</span>
-            {!! Form::select('model', $model, [],['id' => 'model', 'class' => 'form-control select2', 'placeholder' => 'Pilih Model (optional)']) !!}
+            {!! html()->select('model', $model)->placeholder('Pilih Model (optional)')->class('form-control select2')->id('model') !!}
         </div>
         <div class="form-group">
-            {!! Form::label('code', 'Kode Menu', ['class' => 'control-label']) !!}
+            {!! html()->label('Kode Menu','code')->class('control-label') !!}
             <span class="text-danger">*</span>
-            {!! Form::text('code', NULL, ['id' => 'code', 'class' => 'form-control', 'placeholder' => 'Kode Menu']) !!}
+            {!! html()->text('code')->placeholder('Type code here')->class('form-control')->id('code') !!}
         </div>
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            {!! Form::label('icon', 'Icon', ['class' => 'control-label']) !!}
+            {!! html()->label('Icon','icon')->class('control-label') !!}
             <span class="text-danger">*</span>
             <div class="input-group mb-3">
                 <span class="input-group-prepend">
                     <i class="input-group-text selected-icon"></i>
                 </span>
-                {!! Form::text('icon', NULL, ['id' => 'icon', 'class' => 'form-control iconpicker', 'placeholder' => 'Icon','autocomplete' => 'off']) !!}
+                {!! html()->text('icon')->placeholder('Icon')->class('form-control iconpicker')->id('icon')->attributes(['autocomplete' => 'off']) !!}
             </div>
         </div>
         <div class="form-group">
-            {!! Form::label('type', 'Tipe Menu', ['class' => 'control-label']) !!}
+            {!! html()->label('Tipe Menu','type')->class('control-label') !!}
             <span class="text-danger">*</span>
-            {!! Form::select('type', ['' => 'Pilih Tipe Menu', 'backend' => 'Backend', 'frontend' => 'Frontend'], NULL, array('id' => 'type', 'class' => 'form-control')) !!}
+            {!! html()->select('type', ['' => 'Pilih Tipe Menu', 'backend' => 'Backend', 'frontend' => 'Frontend'],'backend')->class('form-control')->id('type') !!}
         </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    {!! Form::label('show', 'Tampilkan', ['class' => 'control-label']) !!}
+                    {!! html()->label('Tampilkan','show')->class('control-label') !!}
                     <span class="text-danger">*</span>
-                    {!! Form::select('show', [1 => 'Ya', 0 => 'Tidak'], NULL, ['id' => 'show', 'class' => 'form-control']) !!}
+                    {!! html()->select('show', [1 => 'Ya', 0 => 'Tidak'], 1)->class('form-control')->id('show') !!}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    {!! Form::label('active', 'Status', ['class' => 'control-label']) !!}
+                    {!! html()->label('Status','active')->class('control-label') !!}
                     <span class="text-danger">*</span>
-                    {!! Form::select('active', [1 => 'Aktif', 0 => 'Tidak Aktif'], NULL, ['id' => 'active', 'class' => 'form-control']) !!}
+                    {!! html()->select('active', [1 => 'Aktif', 0 => 'Tidak Aktif'], 1)->class('form-control')->id('active') !!}
                 </div>
             </div>
         </div>
         <div class="form-group">
-            {!! Form::label('url', 'Link', ['class' => 'control-label']) !!}
+            {!! html()->label('Link','url')->class('control-label') !!}
             <span class="text-danger">*</span>
-            {!! Form::text('url', NULL, ['id' => 'url', 'class' => 'form-control', 'placeholder' => 'Link']) !!}
+            {!! html()->text('url')->placeholder('Type url here')->class('form-control')->id('url') !!}
         </div>
     </div>
     <div class="col-md-12">
         <div class="form-group">
-            {!! Form::label('access_group_id', 'Yang dapat mengakses menu ini ?', ['class' => 'control-label']) !!}
+            {!! html()->label('Yang dapat mengakses menu ini ?','access_group_id')->class('control-label') !!}
             <span class="text-danger">*</span>
-            <div class="row">
+            <div class="row p-5" id="access_group_id">
                 @foreach($access_group as $key => $value)
                     <div class="col-12">
                         <input type="checkbox" name="access_group_id[]" onclick="checkAllLevel('access-menu-crud-{{$key}}',this)" value="{{ $key }}" id="md_checkbox_{{$key}}" class="filled-in chk-col-primary access_group_id">
@@ -97,8 +97,8 @@
         </div>
     </div>
 </div>
-{!! Form::hidden('function', 'loadMenu()' , ['id' => 'function']) !!}
-{!! Form::close() !!}
+{!! html()->hidden('function')->value('loadMenu(),sidebarMenu()')->id('function') !!}
+{!! html()->form()->close() !!}
 <style>
     .select2-container {
         z-index: 9999 !important;
@@ -131,19 +131,19 @@
     $('.access_group_id').on('click', function () {
         let count = $('.access_group_id:checked').length;
         if (count > 0) {
-            $('.access-menu-crud-'+$(this).val()).show();
+            $('.access-menu-crud-' + $(this).val()).show();
         } else {
-            $('.access-crud'+$(this).val()).find('input[type="checkbox"]').prop('checked', false);
-            $('.access-menu-level'+$(this).val()).hide();
+            $('.access-crud' + $(this).val()).find('input[type="checkbox"]').prop('checked', false);
+            $('.access-menu-level' + $(this).val()).hide();
         }
     })
 
-    function checkAll(param,key) {
+    function checkAll(param, key) {
         let div = $('.' + param),
             checked = div.find('input[type="checkbox"]:checked').length,
             total = div.find('input[type="checkbox"]').length;
         div.find('input[type="checkbox"]').prop('checked', checked !== total)
-        $('.check-all-'+key).html(checked !== total ? '<i class="fa fa-check"></i> Uncheck All' : '<i class="fa fa-check"></i> Check All')
+        $('.check-all-' + key).html(checked !== total ? '<i class="fa fa-check"></i> Uncheck All' : '<i class="fa fa-check"></i> Check All')
     }
 
     function checkAllLevel(param, obj) {

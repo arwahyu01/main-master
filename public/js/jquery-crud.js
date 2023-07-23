@@ -138,7 +138,7 @@ $(window.document).on('click', '.submit-data', function (e) {
             $('.progress').hide();
             btnSubmit.attr('disabled', false).html('<i class="fa fa-save"></i> ' + textBtn);
             dismiss.removeAttr('disabled');
-            $('.message').html(`<div class="alert alert-danger fade show mt-3"><b>Error!</b> ${xhr.status} ${xhr.statusText}.</div>`)
+            $('.message').html(`<div class="alert alert-danger fade show mt-3"><b>Error!</b> ${xhr.status} ${xhr.responseJSON.message}.</div>`)
         }
     }).submit();
 

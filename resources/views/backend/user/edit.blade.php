@@ -1,46 +1,46 @@
-{!! Form::open(['id'=>'form-create-'.$page->code, 'route' => [$page->url.'.update', $data->id], 'class' => 'form form-horizontal', 'method' => 'put', 'files' => TRUE]) !!}
+{!! html()->modelForm($data,'PUT', route($page->url.'.update', $data->id))->id('form-create-'.$page->code)->acceptsFiles()->class('form form-horizontal')->open() !!}
 <div class="panel shadow-sm">
     <div class="panel-body">
         <div class="row">
             <div class="col-md-6 form-group">
-                {!! Form::label('first_name', 'First Name', array('class' => 'control-label')) !!}
+                {!! html()->label('First Name','first_name')->class('control-label') !!}
                 <span class="text-danger">*</span>
-                {!! Form::text('first_name',$data->first_name,['class'=>'form-control','id'=>'first_name','placeholder'=>'First Name']) !!}
+                {!! html()->text('first_name',$data->first_name)->placeholder('Type first name here')->class('form-control')->id('first_name') !!}
             </div>
             <div class="col-md-6 form-group">
-                {!! Form::label('last_name', 'Last Name', array('class' => 'control-label')) !!}
+                {!! html()->label('Last Name','last_name')->class('control-label') !!}
                 <span class="text-danger">*</span>
-                {!! Form::text('last_name',$data->last_name,['class'=>'form-control','id'=>'last_name','placeholder'=>'Last Name']) !!}
+                {!! html()->text('last_name',$data->last_name)->placeholder('Type last name here')->class('form-control')->id('last_name') !!}
             </div>
         </div>
         <div class="form-group">
-            {!! Form::label('email', 'Email', array('class' => 'control-label')) !!}
+            {!! html()->label('Email','email')->class('control-label') !!}
             <span class="text-danger">*</span>
-            {!! Form::text('email',$data->email,['class'=>'form-control','id'=>'email','placeholder'=>'Email','disabled'=>'disabled']) !!}
+            {!! html()->text('email',$data->email)->placeholder('Type email here')->class('form-control')->id('email') !!}
         </div>
         @if($data->id == $user->id)
             <div class="form-group row">
                 <div class="col-md-6">
-                    {!! Form::label('password', 'Password Baru', array('class' => 'control-label')) !!}
-                    {!! Form::password('password',['class'=>'form-control','id'=>'password','placeholder'=>'Password']) !!}
+                    {!! html()->label('Password','password')->class('control-label') !!}
+                    {!! html()->password('password')->placeholder('Type password here')->class('form-control')->id('password') !!}
                 </div>
                 <div class="col-md-6">
-                    {!! Form::label('password_confirmation', 'Password Confirmation', array('class' => 'control-label')) !!}
-                    {!! Form::password('password_confirmation',['class'=>'form-control','id'=>'password_confirmation','placeholder'=>'Password Confirmation']) !!}
+                    {!! html()->label('Password Confirmation','password_confirmation')->class('control-label') !!}
+                    {!! html()->password('password_confirmation')->placeholder('Type password confirmation here')->class('form-control')->id('password_confirmation') !!}
                 </div>
             </div>
         @endif
         @if(in_array($user->level->code,['root','admin']))
             <div class="form-group row">
                 <div class="col-md-6">
-                    {!! Form::label('level_id', 'Level', array('class' => 'form-label')) !!}
+                    {!! html()->label('Level','level_id')->class('control-label') !!}
                     <span class="text-danger">*</span>
-                    {!! Form::select('level_id',$level, $data->level_id, ['class' => 'form-control select2', 'id' => 'level_id']) !!}
+                    {!! html()->select('level_id',$level,$data->level_id)->class('form-control select2')->id('level_id') !!}
                 </div>
                 <div class="col-md-6">
-                    {!! Form::label('access_group_id', 'Access Group', array('class' => 'form-label')) !!}
+                    {!! html()->label('Access Group','access_group_id')->class('control-label') !!}
                     <span class="text-danger">*</span>
-                    {!! Form::select('access_group_id',$access_group, $data->access_group_id, ['class' => 'form-control select2', 'id' => 'access_group_id']) !!}
+                    {!! html()->select('access_group_id',$access_group,$data->access_group_id)->class('form-control select2')->id('access_group_id') !!}
                 </div>
             </div>
         @endif
@@ -56,8 +56,8 @@
         </div>
     </div>
 </div>
-{!! Form::hidden('table-id','datatable',['id'=>'table-id']) !!}
-{!! Form::close() !!}
+{!! html()->hidden('table-id','datatable')->id('table-id') !!}
+{!! html()->form()->close() !!}
 <style>
     .select2-container {
         z-index: 9999 !important;

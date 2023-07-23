@@ -1,24 +1,24 @@
-{!! Form::open(['id'=>'form-create-'.$page->code, 'route' => [$page->url.'.update', $data->id], 'class' => 'form form-horizontal', 'method' => 'put', 'files' => TRUE]) !!}
+{!! html()->modelForm($data,'PUT', route($page->url.'.update', $data->id))->id('form-create-'.$page->code)->acceptsFiles()->class('form form-horizontal')->open() !!}
 <div class="panel shadow-sm">
     <div class="panel-body">
         <div class='form-group'>
-            {!! Form::label('title', 'Title / Group Name', array('class' => 'control-label')) !!}
+            {!! html()->label()->class('control-label')->for('title')->text('Title / Group Name') !!}
             <span class="text-danger">*</span>
-            {!! Form::text('title',$data->title,['class'=>'form-control','id'=>'title','placeholder'=>'Write Here ...']) !!}
+            {!! html()->text('title',$data->title)->placeholder('Type title here')->class('form-control')->id('title') !!}
         </div>
         <div class='form-group'>
-            {!! Form::label('menu_id', 'Menu', array('class' => 'control-label')) !!}
+            {!! html()->label('menu_id')->class('control-label')->for('menu_id')->text('Menu') !!}
             <span class="text-danger">*</span>
-            {!! Form::select('menu_id',$menu,$data->menu_id,['class'=>'form-control select2','id'=>'menu_id','placeholder'=>'Choose Menu']) !!}
+            {!! html()->select('menu_id',$menu,$data->menu_id)->class('form-control select2')->id('menu_id')->placeholder('Choose Menu') !!}
         </div>
         <div class='form-group'>
-            {!! Form::label('description', 'Description', array('class' => 'control-label')) !!}
-            {!! Form::textarea('description',$data->description,['class'=>'form-control hide','id'=>'description','placeholder'=>'Write Here ...']) !!}
+            {!! html()->label('description')->class('control-label')->for('description')->text('Description') !!}
+            {!! html()->textarea('description',$data->description)->placeholder('Write Here ...')->class('form-control hie')->id('description') !!}
         </div>
         <div class='form-group'>
-            {!! Form::label('file', 'Upload File,  ', array('class' => 'control-label')) !!}
-            <span class="text-danger"> Allowed : pdf, video (mp4), image (jpg, png) </span><br>
-            {!! Form::file('file',NULL,['class'=>'form-control','id'=>'file',"accept"=>"application/pdf,video/*,image/*"]) !!}
+            {!! html()->label('file')->class('control-label')->for('file')->text('File') !!}
+            <span class="text-danger">Allowed : pdf, video (mp4), image (jpg, png)</span><br>
+            {!! html()->file('file')->class('form-control')->id('file')->accept('application/pdf,video/*,image/*') !!}
         </div>
         @if(!is_null($data->file))
             @if($data->file->exists())
@@ -26,16 +26,14 @@
                     <table class="table table-{!! $data->id !!}">
                         <tr>
                             <td>
-                                File :
-                                <a href="{{ url($data->file->link_stream) }}" target="_blank"> {{ $data->file->name }} </a><br>
+                                File : <a href="{{ url($data->file->link_stream) }}" target="_blank"> {{ $data->file->name }} </a><br>
                             </td>
                             <td>
-                                Size : {{ $data->file->size }}
+                                Size : {!! $data->file->size !!}
                             </td>
                             <td>
-                                <a href="{{ url($data->file->link_download) }}" target="_blank" class="btn btn-xs btn-primary">
-                                    <i class="fa fa-download"></i> Download </a>
-                                <a href="#delete" data-url="{{ url($data->file->link_delete) }}" class="delete btn btn-danger btn-xs">Delete File</a>
+                                {!! html()->a(url($data->file->link_download),'<i class="fa fa-download"></i> Download')->class('btn btn-xs btn-primary')->target('_blank') !!}
+                                {!! html()->a('#delete','<i class="fa fa-trash"></i> Delete File')->class('delete btn btn-danger btn-xs')->attribute('data-url',url($data->file->link_delete)) !!}
                             </td>
                         </tr>
                     </table>
@@ -45,32 +43,32 @@
         <div class="row">
             <div class="col-auto">
                 <div class='form-group'>
-                    {!! Form::label('visitors', 'Visitors', array('class' => 'control-label')) !!}
-                    {!! Form::number('visitors',$data->visitors,['class'=>'form-control','id'=>'visitors']) !!}
+                    {!! html()->label('Visitors')->class('control-label')->for('visitors') !!}
+                    {!! html()->number('visitors',$data->visitors)->class('form-control')->id('visitors') !!}
                 </div>
             </div>
             <div class="col-auto">
                 <div class='form-group'>
-                    {!! Form::label('like', 'Like', array('class' => 'control-label')) !!}
-                    {!! Form::number('like',$data->like,['class'=>'form-control','id'=>'like']) !!}
+                    {!! html()->label('Like')->class('control-label')->for('like') !!}
+                    {!! html()->number('like',$data->like)->class('form-control')->id('like') !!}
                 </div>
             </div>
             <div class="col-auto">
                 <div class='form-group'>
-                    {!! Form::label('dislike', 'Dislike', array('class' => 'control-label')) !!}
-                    {!! Form::number('dislike',$data->dislike,['class'=>'form-control','id'=>'dislike']) !!}
+                    {!! html()->label('Dislike')->class('control-label')->for('dislike') !!}
+                    {!! html()->number('dislike',$data->dislike)->class('form-control')->id('dislike') !!}
                 </div>
             </div>
         </div>
         <div class='form-group'>
-            <input type="checkbox" name="publish" id="md_checkbox" value="1" class="filled-in chk-col-primary" @if($data->publish) checked @endif>
-            <label for="md_checkbox">Publish</label>
+            {!! html()->checkbox('publish',$data->publish)->id('md_checkbox')->class('filled-in chk-col-primary') !!}
+            {!! html()->label('Publish')->class('control-label')->for('md_checkbox') !!}
         </div>
     </div>
 </div>
 <div class="progress-bar bg-success" role="progressbar" style="width: 0;height: 15px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-{!! Form::hidden('table-id','datatable',['id'=>'table-id']) !!}
-{!! Form::close() !!}
+{!! html()->hidden('table-id','datatable')->id('table-id') !!}
+{!! html()->form()->close() !!}
 <style>
     .select2-container {
         z-index: 9999 !important;

@@ -32,7 +32,7 @@ class File extends Model
 
     public function getFileNameAttribute() : string
     {
-        return $this->data['name'] ?? $this->target;
+        return Str::slug($this->data['name'] ?? $this->target);
     }
 
     public function getTargetAttribute() : string

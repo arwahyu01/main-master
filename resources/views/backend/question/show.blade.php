@@ -133,7 +133,6 @@
                 },
                 success: function (data) {
                     $(this).attr('disabled', false);
-
                 },
                 error: function () {
                     $(this).attr('disabled', false);

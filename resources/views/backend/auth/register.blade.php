@@ -13,10 +13,22 @@
                             </div>
                             <div class="p-40">
                                 <form method="post" name="form-register" id="form-register">
-                                    <div class="form-group">
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text bg-transparent"><i class="ti-user"></i></span>
-                                            <input name="name" id="name" type="text" class="form-control ps-15 bg-transparent" placeholder="Full Name" required>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text bg-transparent"><i class="ti-user"></i></span>
+                                                    <input name="first_name" id="first_name" type="text" class="form-control ps-15 bg-transparent" placeholder="First name" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text bg-transparent"><i class="ti-user"></i></span>
+                                                    <input name="last_name" id="last_name" type="text" class="form-control ps-15 bg-transparent" placeholder="First name" required>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">

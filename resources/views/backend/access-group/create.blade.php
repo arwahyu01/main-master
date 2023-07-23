@@ -1,30 +1,24 @@
-{!! Form::open(['id'=>'form-create-'.$page->code, 'route' => [$page->url.'.store'], 'class' => 'form form form-horizontal', 'method' => 'post','files' => TRUE]) !!}
+{{ html()->form('POST', route($page->url.'.store'))->id('form-create-'.$page->code)->acceptsFiles()->class('form form-horizontal')->open() }}
 <div class="panel shadow-sm">
     <div class="panel-body">
-		<div class='form-group'>
-			{!! Form::label('name', 'Name', array('class' => 'control-label')) !!}
-			{!! Form::text('name',NULL,['class'=>'form-control','id'=>'name','placeholder'=>'Ketik Disini']) !!}
-		</div>
-		<div class='form-group'>
-			{!! Form::label('code', 'Code', array('class' => 'control-label')) !!}
-			{!! Form::text('code',NULL,['class'=>'form-control','id'=>'code','placeholder'=>'Ketik Disini']) !!}
-		</div>
+        <div class='form-group'>
+            {!! html()->label()->class('control-label')->for('name')->text('Name') !!}
+            {!! html()->text('name')->placeholder('Type name here')->class('form-control')->id('name') !!}
+        </div>
+        <div class='form-group'>
+            {!! html()->label()->class('control-label')->for('code')->text('Code') !!}
+            {!! html()->text('code')->placeholder('Type code here')->class('form-control')->id('code') !!}
+        </div>
     </div>
 </div>
-{!! Form::hidden('table-id','datatable',['id'=>'table-id']) !!}
-{!! Form::close() !!}
+{!! html()->hidden('table-id','datatable')->id('table-id') !!}
+{!! html()->form()->close() !!}
 <style>
-    .select2-container {
-        z-index: 9999 !important;
-        width: 100% !important;
-    }
-
     .modal-lg {
         max-width: 1000px !important;
     }
 </style>
 <script>
-    $('.select2').select2();
     $('.modal-title').html('<i class="fa fa-plus-circle"></i> Tambah Data {!! $page->title !!}');
     $('.submit-data').html('<i class="fa fa-save"></i> Simpan Data');
 </script>

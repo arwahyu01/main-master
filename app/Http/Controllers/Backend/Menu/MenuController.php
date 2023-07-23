@@ -49,10 +49,10 @@ class MenuController extends Controller
         ]);
 
         if ($data = $this->model::create($request->all())) {
-            $access_menu =collect($request->access_group_id)->each(function ($access_group_id) use ($request, $data) {
-                return ['menu_id' => $data->id, 'access_group_id' => $access_group_id, 'access' => $request->input('access_crud_' . $access_group_id)];
-            });
-            if($data->accessMenu()->createMany($access_menu->toArray())) {
+            foreach ($request->access_group_id as $access_group_id) {
+                $access_menu[]=['menu_id'=>$data->id, 'access_group_id'=>$access_group_id, 'access'=>$request->input('access_crud_'.$access_group_id)];
+            }
+            if($data->access_menu()->createMany($access_menu)) {
                 $response = ['status' => TRUE, 'message' => 'Data berhasil disimpan'];
             }else{
                 $data->forceDelete();
@@ -95,10 +95,10 @@ class MenuController extends Controller
         if ($data = $this->model::find($id)) {
             if($data->update($request->all())) {
                 $data->access_menu()->delete();
-                $access_menu = collect($request->access_group_id)->each(function ($access_group_id) use ($request, $data) {
-                    return ['menu_id' => $data->id, 'access_group_id' => $access_group_id, 'access' => $request->input('access_crud_' . $access_group_id)];
-                });
-                if ($data->accessMenu()->createMany($access_menu->toArray())) {
+                foreach ($request->access_group_id as $access_group_id) {
+                    $access_menu[]=['menu_id'=>$data->id, 'access_group_id'=>$access_group_id, 'access'=>$request->input('access_crud_'.$access_group_id)];
+                }
+                if($data->access_menu()->createMany($access_menu)) {
                     $response = ['status' => TRUE, 'message' => 'Data berhasil disimpan'];
                 }
             }

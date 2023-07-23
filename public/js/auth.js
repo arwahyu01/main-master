@@ -25,16 +25,20 @@ $(function () {
                 data: form,
                 processData: false,
                 contentType: false,
+                dataType: 'json',
+                cache: false,
                 beforeSend: function () {
                     login_info.html('');
                 },
-                success: function (data) {
+                success: function (e) {
                     $('#go-login').html('SIGN IN');
-                    if (data.status === 200 && data.data.hasOwnProperty('token')) {
-                        login_info.html('<i class="fa fa-check text-success"></i> Login successful, redirecting...');
-                        window.location.href = 'login';
+                    if (e.status === 200 && e.data !== null) {
+                        if(e.data.hasOwnProperty('token')) {
+                            login_info.html('<i class="fa fa-check text-success"></i> Login successful, redirecting...');
+                            window.location.href = 'login';
+                        }
                     } else {
-                        login_info.html('<span class="text-danger"><i class="fa fa-exclamation-triangle"></i> ' + data.message + '</span>');
+                        login_info.html('<span class="text-danger"><i class="fa fa-exclamation-triangle"></i> ' + e.message + '</span>');
                     }
                 },
                 error: function (i) {

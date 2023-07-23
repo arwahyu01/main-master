@@ -1,53 +1,53 @@
-{!! Form::open(['id'=>'form-create-'.$page->code, 'route' => [$page->url.'.store'], 'class' => 'form form form-horizontal', 'method' => 'post','files' => TRUE]) !!}
+{{ html()->form('POST', route($page->url.'.store'))->id('form-create-'.$page->code)->acceptsFiles()->class('form form-horizontal')->open() }}
 <div class="panel shadow-sm">
     <div class="panel-body">
         <div class='form-group'>
-            {!! Form::label('title', 'Title / Group Name', array('class' => 'control-label')) !!}
+            {!! html()->label('title')->text('Title / Group Name')->class('control-label') !!}
             <span class="text-danger">*</span>
-            {!! Form::text('title',NULL,['class'=>'form-control','id'=>'title','placeholder'=>'Write Here ...']) !!}
+            {!! html()->text('title')->placeholder('Type title here')->class('form-control')->id('title') !!}
         </div>
         <div class='form-group'>
-            {!! Form::label('menu_id', 'Menu', array('class' => 'control-label')) !!}
+            {!! html()->label('menu_id')->text('Menu')->class('control-label') !!}
             <span class="text-danger">*</span>
-            {!! Form::select('menu_id',$menu,NULL,['class'=>'form-control select2','id'=>'menu_id','placeholder'=>'Choose Menu']) !!}
+            {!! html()->select('menu_id',$menu)->class('form-control select2')->id('menu_id')->placeholder('Choose Menu') !!}
         </div>
         <div class='form-group'>
-            {!! Form::label('description', 'Description', array('class' => 'control-label')) !!}
-            {!! Form::textarea('description',NULL,['class'=>'form-control hide','id'=>'description','placeholder'=>'Write Here ...']) !!}
+            {!! html()->label('description')->text('Description')->class('control-label') !!}
+            {!! html()->textarea('description')->placeholder('Type description here')->class('form-control')->id('description') !!}
         </div>
         <div class='form-group'>
-            {!! Form::label('file', 'Upload File,  ', array('class' => 'control-label')) !!}
-            <span class="text-danger"> Allowed : pdf, video (mp4), image (jpg, png) </span><br>
-            {!! Form::file('file',NULL,['class'=>'form-control','id'=>'file',"accept"=>"application/pdf,video/*,image/*"]) !!}
+            {!! html()->label('file')->text('Upload File')->class('control-label') !!}
+            <span class="text-danger">Allowed : pdf, video (mp4), image (jpg, png)</span><br
+            {!! html()->file('file')->class('form-control')->id('file')->accept('application/pdf,video/*,image/*') !!}
         </div>
         <div class="row">
             <div class="col-auto">
                 <div class='form-group'>
-                    {!! Form::label('visitors', 'Visitors', array('class' => 'control-label')) !!}
-                    {!! Form::number('visitors',0,['class'=>'form-control','id'=>'visitors']) !!}
+                    {!! html()->label('Visitors', 'visitors')->class('control-label') !!}
+                    {!! html()->number('visitors',0)->class('form-control')->id('visitors') !!}
                 </div>
             </div>
             <div class="col-auto">
                 <div class='form-group'>
-                    {!! Form::label('like', 'Like', array('class' => 'control-label')) !!}
-                    {!! Form::number('like',0,['class'=>'form-control','id'=>'like']) !!}
+                    {!! html()->label('Like', 'like')->class('control-label') !!}
+                    {!! html()->number('like',0)->class('form-control')->id('like') !!}
                 </div>
             </div>
             <div class="col-auto">
                 <div class='form-group'>
-                    {!! Form::label('dislike', 'Dislike', array('class' => 'control-label')) !!}
-                    {!! Form::number('dislike',0,['class'=>'form-control','id'=>'dislike']) !!}
+                    {!! html()->label('Dislike', 'dislike')->class('control-label') !!}
+                    {!! html()->number('dislike',0)->class('form-control')->id('dislike') !!}
                 </div>
             </div>
         </div>
         <div class='form-group'>
-            <input type="checkbox" name="publish" id="md_checkbox" value="1" class="filled-in chk-col-primary">
-            <label for="md_checkbox">Publish</label>
+            {!! html()->checkbox('publish',false)->id('md_checkbox')->class('filled-in chk-col-primary') !!}
+            {!! html()->label('Publish', 'md_checkbox')->class('control-label') !!}
         </div>
     </div>
 </div>
-{!! Form::hidden('table-id','datatable',['id'=>'table-id']) !!}
-{!! Form::close() !!}
+{!! html()->hidden('table-id','datatable')->id('table-id') !!}
+{!! html()->form()->close() !!}
 <style>
     .select2-container {
         z-index: 9999 !important;

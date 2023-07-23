@@ -91,6 +91,7 @@ class FaqController extends Controller
             if ($request->hasFile('file')) {
                 $data->file()->create([
                     'data' => [
+                        'name'=>$request->file('file')->getClientOriginalName(),
                         'disk' => config('filesystems.default'),
                         'target' => Storage::putFile($data->folder, $request->file('file')),
                     ],
@@ -138,6 +139,7 @@ class FaqController extends Controller
                 }
                 $data->file()->create([
                     'data' => [
+                        'name'=>$request->file('file')->getClientOriginalName(),
                         'disk' => config('filesystems.default'),
                         'target' => Storage::putFile($data->folder, $request->file('file')),
                     ],

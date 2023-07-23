@@ -33,7 +33,7 @@
                             <div class="box-body">
                                 <div class="panel-container show">
                                     <div class="panel-content">
-                                        {!! Form::open(['id'=>'form-'.time(), 'route' => [$page->url.'.sorted'], 'class' => 'form form-horizontal', 'method' => 'post', 'files' => 'true']) !!}
+                                        {!! html()->form('POST', route($page->url.'.sorted'))->id('form-'.time())->acceptsFiles()->class('form form-horizontal')->open() !!}
                                         <div class="alert alert-success mb-0" role="alert">
                                             <div class="d-flex align-items-center">
                                                 <div class="alert-icon width-3">
@@ -42,7 +42,7 @@
                                                       </span>
                                                 </div>
                                                 <div class="flex-1">
-                                                    <span class="h5 m-0 fw-700"><i class="{!! $page->icon !!}"></i> List menu {!! config('master.app.profile.name') !!} !</span>
+                                                    <span class="h5 m-0 fw-700"><i class="{!! $page->icon !!}"></i> List Menu {!! config('master.app.profile.name') !!} !</span>
                                                     Susun menu dengan benar.
                                                 </div>
                                             </div>
@@ -60,9 +60,9 @@
                                                         <div class="list">
                                                             {{--  Nestable Data --}}
                                                         </div>
-                                                        <p>
-                                                            {!! Form::hidden('sort', null, array('id' => 'nestable-output', 'class' => 'form-control', 'placeholder' => 'nestable-output','readonly'=>'readonly')) !!}
-                                                        </p>
+                                                        <div>
+                                                            {!! html()->textarea('sort')->id('nestable-output')->style('display:none')->class('form-control')->placeholder('Nestable Output') !!}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -72,8 +72,8 @@
                                                 <i class="fa fa-save"></i> Simpan
                                             </a>
                                         </div>
-                                        {!! Form::hidden('function', 'sidebarMenu()' , ['id' => 'function']) !!}
-                                        {!! Form::close() !!}
+                                        {!! html()->hidden('function','sidebarMenu()')->id('function') !!}
+                                        {!! html()->form()->close() !!}
                                     </div>
                                 </div>
                             </div>
