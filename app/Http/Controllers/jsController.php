@@ -14,7 +14,7 @@ class jsController extends Controller
         }
         $data['url'] = $page;
         $layout = config('master.app.view.'.$layout);
-        $file=str_replace('.js','',$file);
+        $file=Str::before($file,'.js');
         return response()->view("$layout.$page.$file",$data)->header('Content-Type','application/javascript');
     }
 }

@@ -7,25 +7,35 @@
             "access-group",
             "access-menu",
             "faq",
-            "question",
             "pengumuman",
             "dashboard",
-            "user"
+            "notification",
+            "user",
+            "question",
+            "hidden-menu"
         ]
     },
     {
         "admin": [
-            "master",
+            null,
+            null,
+            "pengumuman",
+            null,
+            null,
+            "notification",
+            "user",
             "question",
-            "dashboard",
-            "user"
+            "hidden-menu"
         ]
     },
     {
         "user": [
-            "dashboard",
-            "question",
-            "user"
+            null,
+            null,
+            null,
+            "notification",
+            "user",
+            "hidden-menu"
         ]
     }
 ]

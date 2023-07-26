@@ -23,7 +23,7 @@
                         <div class="box">
                             <div class="box-header">
                                 <h4 class="box-title">List {!! $page->title ?? 'Page Name' !!}</h4>
-                                @if($user->level->canAccess('create'))
+                                @if($user->create)
                                     <button type="button" class="btn-action pull-right btn btn-success btn-sm" data-title="Tambah" data-action="create" data-url="{!! $page->url ?? '' !!}">
                                         <span class="fa fa-plus-circle"></span> Tambah
                                     </button>

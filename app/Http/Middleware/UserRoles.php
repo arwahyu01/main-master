@@ -21,6 +21,6 @@ class UserRoles
                 return $next($request);
             }
         }
-        return abort(403,'Page Not Found');
+        abort(403,'Page Not Found');
     }
 }

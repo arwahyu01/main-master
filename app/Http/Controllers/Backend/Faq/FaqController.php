@@ -7,7 +7,6 @@ use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 
 class FaqController extends Controller
 {
@@ -24,20 +23,20 @@ class FaqController extends Controller
 
     public function data()
     {
-        $data=$this->model::all();
+        $data = $this->model::all();
         return datatables()->of($data)
             ->addColumn('action', function ($data) {
-                $button ='';
-                if(Auth::user()->read){
-                    $button .= '<button type="button" class="btn-action btn btn-sm btn-outline" data-title="Detail" data-action="show" data-url="'.$this->url.'" data-id="'.$data->id.'" title="Tampilkan"><i class="fa fa-eye text-info"></i></button>';
+                $button = '';
+                if (Auth::user()->read) {
+                    $button .= '<button type="button" class="btn-action btn btn-sm btn-outline" data-title="Detail" data-action="show" data-url="' . $this->url . '" data-id="' . $data->id . '" title="Tampilkan"><i class="fa fa-eye text-info"></i></button>';
                 }
-                if(Auth::user()->create){
-                    $button.='<button class="btn-action btn btn-sm btn-outline" data-title="Edit" data-action="edit" data-url="'.$this->url.'" data-id="'.$data->id.'" title="Edit"> <i class="fa fa-edit text-warning"></i> </button> ';
+                if (Auth::user()->create) {
+                    $button .= '<button class="btn-action btn btn-sm btn-outline" data-title="Edit" data-action="edit" data-url="' . $this->url . '" data-id="' . $data->id . '" title="Edit"> <i class="fa fa-edit text-warning"></i> </button> ';
                 }
-                if(Auth::user()->delete){
-                    $button.='<button class="btn-action btn btn-sm btn-outline" data-title="Delete" data-action="delete" data-url="'.$this->url.'" data-id="'.$data->id.'" title="Delete"> <i class="fa fa-trash text-danger"></i> </button>';
+                if (Auth::user()->delete) {
+                    $button .= '<button class="btn-action btn btn-sm btn-outline" data-title="Delete" data-action="delete" data-url="' . $this->url . '" data-id="' . $data->id . '" title="Delete"> <i class="fa fa-trash text-danger"></i> </button>';
                 }
-                return "<div class='btn-group'>".$button."</div>";
+                return "<div class='btn-group'>" . $button . "</div>";
             })
             ->addIndexColumn()
             ->rawColumns(['action'])

@@ -8,7 +8,6 @@ use App\support\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Validator;
 
 class MenuController extends Controller
 {
@@ -141,30 +140,6 @@ class MenuController extends Controller
                 }
             }
         }
-    }
-
-    public function extract()
-    {
-        $data=$this->model::orderBy('parent_id', 'asc')->orderBy('sort', 'asc')->get();
-        foreach ($data as $menu) {
-            $array[]=[
-                'parent_id'=>$menu->parent_id,
-                'title'=>$menu->title,
-                'subtitle'=>$menu->subtitle,
-                'code'=>$menu->code,
-                'model'=>$menu->model,
-                'icon'=>$menu->icon,
-                'type'=>$menu->type,
-                'show'=>$menu->show,
-                'active'=>$menu->active,
-                'sort'=>$menu->sort,
-                'id'=>$menu->id,
-            ];
-        }
-        $row=[
-            'menu'=>$array, 'access_root'=>$this->model::pluck('code')->toArray(),
-        ];
-        return response()->json($row);
     }
 
     public function listMenu()

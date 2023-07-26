@@ -129,5 +129,32 @@
         "active": true,
         "sort": 3,
         "children": []
+    },
+    {
+        "title": "Hidden Menu",
+        "subtitle": null,
+        "code": "hidden-menu",
+        "model": "",
+        "url": "hidden-menu",
+        "icon": "fa fa-eye-slash",
+        "type": "backend",
+        "show": false,
+        "active": true,
+        "sort": 5,
+        "children": [
+            {
+                "title": "Notification",
+                "subtitle": "All Notification",
+                "code": "notification",
+                "model": "Notification",
+                "url": "notification",
+                "icon": "fa fa-bullhorn",
+                "type": "backend",
+                "show": true,
+                "active": true,
+                "sort": 1,
+                "children": []
+            }
+        ]
     }
 ]

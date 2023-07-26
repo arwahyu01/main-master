@@ -21,13 +21,10 @@ class QuestionController extends Controller
         $faq = Faq::whereHas('menu', function ($query) use ($page) {
             $query->where('code', $page);
         })->select('faqs.title','faqs.id')->paginate(10);
-        if($faq->isNotEmpty()){
-            $data = $faq;
-        }else{
-            $faq = Faq::orderBy('visitors','desc')->select('faqs.title','faqs.id')->paginate(10);
-            $data = $faq;
+        if(!$faq->isNotEmpty()) {
+            $faq = Faq::orderBy('visitors', 'desc')->select('faqs.title', 'faqs.id')->paginate(10);
         }
-        return response()->json($data,200);
+        return $this->response($faq);
     }
 
     public function show($id)
@@ -91,6 +88,6 @@ class QuestionController extends Controller
             }
             return response()->json($response ?? ['status'=>false, 'message'=>'Terjadi kesalahan, silahkan coba lagi'], 200);
         }
-        return abort(404);
+        abort(404);
     }
 }

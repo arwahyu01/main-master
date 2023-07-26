@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 class NotificationController extends Controller
 {
@@ -22,7 +21,7 @@ class NotificationController extends Controller
 
     public function data()
     {
-        $data=$this->model::filterByUser();
+        $data = $this->model::filterByUser();
         return datatables()->of($data)
             ->addColumn('title', function ($data) {
                 return $data->data['title'];
@@ -31,23 +30,23 @@ class NotificationController extends Controller
                 return $data->data['content'];
             })
             ->addColumn('status', function ($data) {
-                return config('template.notification.'.($data->status ? 'read' : 'unread'));
+                return config('template.notification.' . ($data->status ? 'read' : 'unread'));
             })
             ->addColumn('action', function ($data) {
-                $button ='';
-                if(Auth::user()->level->canAccess('read')){
-                    $button .= '<button type="button" class="btn-action btn btn-sm btn-outline" data-title="Detail" data-action="show" data-url="'.$this->url.'" data-id="'.$data->id.'" title="Tampilkan"><i class="fa fa-eye text-info"></i></button>';
+                $button = '';
+                if (auth()->user()->read) {
+                    $button .= '<button type="button" class="btn-action btn btn-sm btn-outline" data-title="Detail" data-action="show" data-url="' . $this->url . '" data-id="' . $data->id . '" title="Tampilkan"><i class="fa fa-eye text-info"></i></button>';
                 }
-                if(Auth::user()->level->canAccess('update')){
-                    $button.='<button class="btn-action btn btn-sm btn-outline" data-title="Edit" data-action="edit" data-url="'.$this->url.'" data-id="'.$data->id.'" title="Edit"> <i class="fa fa-edit text-warning"></i> </button> ';
+                if (auth()->user()->create) {
+                    $button .= '<button class="btn-action btn btn-sm btn-outline" data-title="Edit" data-action="edit" data-url="' . $this->url . '" data-id="' . $data->id . '" title="Edit"> <i class="fa fa-edit text-warning"></i> </button> ';
                 }
-                if(Auth::user()->level->canAccess('delete')){
-                    $button.='<button class="btn-action btn btn-sm btn-outline" data-title="Delete" data-action="delete" data-url="'.$this->url.'" data-id="'.$data->id.'" title="Delete"> <i class="fa fa-trash text-danger"></i> </button>';
+                if (auth()->user()->delete) {
+                    $button .= '<button class="btn-action btn btn-sm btn-outline" data-title="Delete" data-action="delete" data-url="' . $this->url . '" data-id="' . $data->id . '" title="Delete"> <i class="fa fa-trash text-danger"></i> </button>';
                 }
-                return "<div class='btn-group'>".$button."</div>";
+                return "<div class='btn-group'>" . $button . "</div>";
             })
             ->addIndexColumn()
-            ->rawColumns(['action','content','status','title'])
+            ->rawColumns(['action', 'content', 'status', 'title'])
             ->make(TRUE);
     }
 
