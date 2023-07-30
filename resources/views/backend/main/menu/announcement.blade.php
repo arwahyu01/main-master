@@ -1,5 +1,5 @@
 @if($page->pengumuman()->count() > 0)
-    <div id="content-announcement" class="content">
+    <div id="content-announcement" class="content mb-0">
         @foreach($page->pengumuman as $pengumuman)
             <div id="alert-content-{!! $pengumuman->id !!}" class="box box-inverse bg-{!! config('master.content.pengumuman.color.'.$pengumuman->urgency) !!}">
                 <div class="box-header with-border">

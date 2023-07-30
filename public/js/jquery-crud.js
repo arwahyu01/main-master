@@ -148,3 +148,36 @@ $(window.document).on('click', '.submit-data', function (e) {
         });
     }
 });
+
+$(window.document).on('click', '.delete-file', function (e) {
+    e.preventDefault();
+    let btn = $(this);
+    swal({
+        title: btn.data('title'),
+        text: btn.data('message'),
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, Delete!",
+        cancelButtonText: "No, Cancel!",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }, function (isConfirm) {
+        if (isConfirm) {
+            $.ajax({
+                url: btn.data('url'),
+                success: function (data) {
+                    if (data.status === true) {
+                        $('#' + btn.data('id')).remove();
+                        swal("Deleted!", data.message, "success");
+                    }
+                },
+                error: function (e) {
+                    swal("Error!", e.responseJSON.message, "error");
+                }
+            });
+        } else {
+            swal.close();
+        }
+    });
+});

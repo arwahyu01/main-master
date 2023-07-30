@@ -32,7 +32,17 @@ class File extends Model
 
     public function getFileNameAttribute() : string
     {
-        return Str::slug($this->data['name'] ?? $this->target);
+        return $this->data['name'] ?? $this->target;
+    }
+
+    public function getNameAttribute() : string
+    {
+        return Arr::last(Str::of($this->file_name)->explode('/')->toArray());
+    }
+
+    public function getNameAliasAttribute() : string
+    {
+        return Str::slug(preg_replace('/\\.[^.\\s]{3,4}$/', '-', $this->name));
     }
 
     public function getTargetAttribute() : string
@@ -43,11 +53,6 @@ class File extends Model
     public function getDiskAttribute() : string
     {
         return $this->data['disk'] ?? config('filesystems.default');
-    }
-
-    public function getNameAttribute() : string
-    {
-        return Arr::last(Str::of($this->file_name)->explode('/')->toArray());
     }
 
     public function getPathAttribute() : string
@@ -62,7 +67,7 @@ class File extends Model
 
     public function getExtensionAttribute() : string
     {
-        return Str::of($this->name)->explode('.')->last();
+        return Str::of($this->file_name)->explode('.')->last();
     }
 
     public function getSizeAttribute() : string
@@ -84,11 +89,6 @@ class File extends Model
         return Storage::disk($this->disk)->mimeType($this->target);
     }
 
-    public function getNameAliasAttribute() : string
-    {
-        return Str::slug(preg_replace('/\\.[^.\\s]{3,4}$/', '', $this->name));
-    }
-
     public function getModelNameAttribute() : string
     {
         return Str::of(class_basename($this->fileable_type))->snake()->plural();
@@ -101,7 +101,7 @@ class File extends Model
 
     public function getLinkDownloadAttribute() : string
     {
-        return url(config('master.app.url.backend')."/file/download/{$this->id}/{$this->name_alias}-".uniqid());
+        return url(config('master.app.url.backend')."/file/download/{$this->id}/{$this->name_alias}-".uniqid().'.'.$this->extension);
     }
 
     public function getLinkDeleteAttribute() : string
@@ -109,7 +109,7 @@ class File extends Model
         return url(config('master.app.url.backend')."/file/delete/{$this->id}/{$this->name_alias}-".uniqid());
     }
 
-    public function exists() : bool
+    public function getExistsAttribute() : bool
     {
         return Storage::disk($this->disk)->exists($this->target);
     }

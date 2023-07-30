@@ -36,7 +36,9 @@
         <div class='form-group'>
             {!! html()->label('File Pendukung','file')->class('control-label') !!}
             <span class="text-danger">*</span>
-            {!! html()->file('file')->class('form-control')->id('file')->placeholder('Ketik Disini') !!}
+            <div class="file-loading">
+                {!! html()->file('file[]')->id('file')->class('file-drag-drop')->multiple()->data('overwrite-initial',false)->data('min-file-count',1) !!}
+            </div>
         </div>
         <div class='form-group'>
             {!! html()->label('Bagian dari pengumuman lain','parent_id')->class('control-label') !!}
@@ -51,7 +53,11 @@
 </div>
 {!! html()->hidden('table-id','datatable')->id('table-id') !!}
 {!! html()->form()->close() !!}
+<link href="{{ url($template.'/css/fileinput.css') }}" rel="stylesheet">
 <style>
+    .fileinput-remove, .fileinput-upload, .file-upload-indicator, .file-actions {
+        display: none;
+    }
     .select2-container {
         z-index: 9999 !important;
         width: 100% !important;
@@ -61,6 +67,7 @@
         max-width: 1000px !important;
     }
 </style>
+<script src="{{ url($template.'/js/pages/fileinput.js') }}"></script>
 <script>
     $('#menu_id, #parent_id').select2().parent().css('z-index', 9999)
     $('.modal-title').html('<i class="fa fa-plus-circle"></i> Tambah Data {!! $page->title !!}');
@@ -82,4 +89,17 @@
     noteModal.style.zIndex = 9999;
     noteModal.querySelector('.checkbox').style.display = 'none';
     noteModal.querySelector('.note-modal-content').style.padding = '3px';
+
+    $(".file-drag-drop").fileinput({
+        theme: 'fa',
+        uploadUrl: "/#",
+        allowedFileExtensions:['jpg','jpeg','png','pdf','doc','docx','xls','xlsx'],
+        overwriteInitial: false,
+        maxFileSize: 2048,
+        maxFilesNum: 10,
+        slugCallback: function (filename) {
+            return filename.replace('(', '_').replace(']', '_');
+        },
+        initialPreviewAsData: true,
+    });
 </script>

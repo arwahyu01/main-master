@@ -59,18 +59,20 @@ class PengumumanController extends Controller
             'urgency' => 'required',
             'publish' => 'nullable',
             'parent_id' => 'nullable',
-            'file' => 'nullable|mimes:jpg,jpeg,png,pdf,doc,docx,xls,xlsx|max:2048',
+            'file.*' => 'nullable|mimes:jpg,jpeg,png,pdf,doc,docx,xls,xlsx|max:2048',
         ]);
 
         if ($pengumuman = $this->model::create($request->all())) {
             if ($request->hasFile('file')) {
-                $pengumuman->file()->create([
+                foreach ($request->file('file') as $file) {
+                    $pengumuman->file()->create([
                     'data' => [
-                        'name' => $request->file('file')->getClientOriginalName(),
+                        'name' => $file->getClientOriginalName(),
                         'disk' => config('filesystems.default'),
-                        'target' => Storage::disk(config('filesystems.default'))->putFile($this->code . '/' . date('Y') . '/' . date('m') . '/' . date('d'), $request->file('file')),
+                        'target' => Storage::disk(config('filesystems.default'))->putFile($this->code . '/' . date('Y') . '/' . date('m') . '/' . date('d'), $file),
                     ]
                 ]);
+                }
             }
             $users = $request->user()->all_user_id;
             $this->help::sendNotification($pengumuman, $users, [
@@ -112,12 +114,23 @@ class PengumumanController extends Controller
             'urgency' => 'required',
             'publish' => 'nullable',
             'parent_id' => 'nullable',
-            'file' => 'nullable|mimes:jpg,jpeg,png,pdf,doc,docx,xls,xlsx|max:2048',
+            'file.*' => 'nullable|mimes:jpg,jpeg,png,pdf,doc,docx,xls,xlsx|max:2048',
         ]);
 
         $request->has('publish') ? $request->merge(['publish' => 1]) : $request->merge(['publish' => 0]);
         $data = $this->model::find($id);
         if ($data->update($request->all())) {
+            if ($request->hasFile('file')) {
+                foreach ($request->file('file') as $file) {
+                    $data->file()->create([
+                    'data' => [
+                        'name' => $file->getClientOriginalName(),
+                        'disk' => config('filesystems.default'),
+                        'target' => Storage::disk(config('filesystems.default'))->putFile($this->code . '/' . date('Y') . '/' . date('m') . '/' . date('d'), $file),
+                    ]
+                ]);
+                }
+            }
             $response = ['status' => TRUE, 'message' => 'Data berhasil disimpan'];
         }
         return response()->json($response ?? ['status' => FALSE, 'message' => 'Data gagal disimpan']);

@@ -24,7 +24,7 @@ class QuestionController extends Controller
         if(!$faq->isNotEmpty()) {
             $faq = Faq::orderBy('visitors', 'desc')->select('faqs.title', 'faqs.id')->paginate(10);
         }
-        return $this->response($faq);
+        return response()->json($faq);
     }
 
     public function show($id)

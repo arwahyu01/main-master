@@ -43,9 +43,14 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label>File Pendukung :</label>
-                    @if($data->file)
-                        <a href="{!! $data->file->link_download.'?id='.uniqid() !!}" download="{!! $data->file->link_download.'?id='.uniqid() !!}"
-                           target="_blank">{!! $data->file->name !!}</a>
+                     @if(!$data->file->isEmpty())
+                        <ul>
+                            @foreach($data->file as $file)
+                                <li>
+                                    <span class="fa fa-download"></span> <a href="{!!  $file->link_download !!}" target="_blank">{!!  $file->file_name !!}</a>
+                                </li>
+                            @endforeach
+                        </ul>
                     @else
                         <span class="badge badge-danger">Tidak ada file</span>
                     @endif
