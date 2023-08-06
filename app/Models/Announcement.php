@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
-class Pengumuman extends Model
+class Announcement extends Model
 {
     use HasFactory, HasUuids, SoftDeletes;
 
@@ -36,7 +36,7 @@ class Pengumuman extends Model
 
     public function getLinkAttribute() : string
     {
-        return url(config('master.app.url.backend')."/detail-pengumuman/{$this->id}/".Str::slug(Str::replace('/', '-', $this->title)));
+        return url(config('master.app.url.backend')."/announcement-detail/{$this->id}/".Str::slug(Str::replace('/', '-', $this->title)));
     }
 
     public function getDaysLeftAttribute() : int

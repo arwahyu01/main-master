@@ -4,7 +4,7 @@ Route::group(['prefix'=>config('master.app.url.backend')], function () {
     //public route
     Route::resource('dashboard', "Dashboard\DashboardController")->name('index', 'dashboard');
     Route::get('/list-menu', "Menu\MenuController@listMenu")->name('menu.list-menu');
-    Route::get('detail-pengumuman/{id}/{slug}', "Pengumuman\PengumumanController@detail")->name('pengumuman');
+    Route::get('announcement-detail/{id}/{slug}', "Announcement\AnnouncementController@detail")->name('announcement');
     Route::get('get-notification', 'Notification\NotificationController@getNotification');
     Route::get('clear-notification', 'Notification\NotificationController@markAsRead');
     Route::post('logout','Auth\AuthController@logout')->name('logout');
@@ -36,7 +36,6 @@ Route::group(['prefix'=>config('master.app.url.backend')], function () {
         Route::prefix('menu')->as('menu')->group(function () {
             Route::get('/data', "Menu\MenuController@data");
             Route::get('delete/{id}', "Menu\MenuController@delete");
-            Route::get('convert-menu', "Menu\MenuController@convertMenuToJson");;
         });
         Route::resource('menu', "Menu\MenuController");
         //end-menu
@@ -68,13 +67,13 @@ Route::group(['prefix'=>config('master.app.url.backend')], function () {
         });
         Route::resource('faq', "Faq\FaqController");
         //end-faq
-    	//pengumuman
-		Route::prefix('pengumuman')->as('pengumuman')->group(function () {
-			Route::get('data', 'Pengumuman\PengumumanController@data');
-			Route::get('delete/{id}', 'Pengumuman\PengumumanController@delete');
+    	//announcement
+		Route::prefix('announcement')->as('announcement')->group(function () {
+			Route::get('data', 'Announcement\AnnouncementController@data');
+			Route::get('delete/{id}', 'Announcement\AnnouncementController@delete');
 		});
-		Route::resource('pengumuman', 'Pengumuman\PengumumanController');
-		//end-pengumuman
+		Route::resource('announcement', 'Announcement\AnnouncementController');
+		//end-announcement
         //notification
 		Route::prefix('notification')->as('notification')->group(function () {
 			Route::get('data', 'Notification\NotificationController@data');

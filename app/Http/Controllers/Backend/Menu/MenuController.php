@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\AccessGroup;
 use App\support\Helper;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
 
 class MenuController extends Controller
 {
@@ -145,51 +143,9 @@ class MenuController extends Controller
     public function listMenu()
     {
         $menu=$this->model::with(['accessChildren'])->whereHas('access_menu', function ($query) {
-            $query->where('access_group_id', Auth::user()->access_group_id);
+            $query->where('access_group_id', auth()->user()->access_group_id);
         })->whereNull('parent_id')->show()->sort()->get();
         return response()->json(['menu'=>$menu], 200)->header('Content-Type', 'application/json');
-    }
-
-    public function convertMenuToJson()
-    {
-        // export menu
-        $menu = $this->model::with(['children'])->whereNull('parent_id')->orderBy('created_at','asc')->get();
-        $menu = $this->convertMenu($menu);
-        File::makeDirectory(config_path('seeders'), 0777, true, true);
-        File::put(config_path('seeders/menu.json'), json_encode($menu, JSON_PRETTY_PRINT));
-
-        // export access group
-        $accessGroup = AccessGroup::all();
-        foreach ($accessGroup as $group){
-            $data[] = [$group->code => $group->access_menu->pluck('menu.code')->toArray()];
-        }
-        File::put(config_path('seeders/access-group.json'), json_encode($data ?? [], JSON_PRETTY_PRINT));
-
-        $response = ['status'=>TRUE, 'message'=>'Menu berhasil diexport', 'files'=>collect(File::files(config_path('seeders')))->map(function ($item) {
-            return $item->getPathname();
-        })];
-
-        return response()->json($response)->header('Content-Type', 'application/json');
-    }
-
-    private function convertMenu($menu)
-    {
-        foreach ($menu as $dt) {
-            $data[]=[
-                'title'=>$dt->title,
-                'subtitle'=>$dt->subtitle,
-                'code'=>$dt->code,
-                'model'=>collect(explode('\\', $dt->model))->last(),
-                'url'=>$dt->url,
-                'icon'=>$dt->icon,
-                'type'=>$dt->type,
-                'show'=>$dt->show,
-                'active'=>$dt->active,
-                'sort'=>$dt->sort,
-                'children'=>$this->convertMenu($dt->children),
-            ];
-        }
-        return $data ?? [];
     }
 }
 

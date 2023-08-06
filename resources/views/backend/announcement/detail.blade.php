@@ -18,7 +18,7 @@
                                 </div>
                                 <div class="urgency">
                                     <span class="fa fa-exclamation-triangle"></span> Sifat Pengumuman :
-                                    <span class="badge badge-{!! config('master.content.pengumuman.color.'.$data->urgency) !!}">{!! config('master.content.pengumuman.status.'.$data->urgency) !!}</span>
+                                    <span class="badge badge-{!! config('master.content.announcement.color.'.$data->urgency) !!}">{!! config('master.content.announcement.status.'.$data->urgency) !!}</span>
                                 </div>
                                 <div class="box-comments p-10 mt-3">
                                     {!! $data->content !!}

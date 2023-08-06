@@ -77,11 +77,11 @@
                 "children": []
             },
             {
-                "title": "Pengumuman",
-                "subtitle": "Kelola Pengumuman",
-                "code": "pengumuman",
-                "model": "Pengumuman",
-                "url": "pengumuman",
+                "title": "Announcement",
+                "subtitle": "Manage Announcement",
+                "code": "announcement",
+                "model": "Announcement",
+                "url": "announcement",
                 "icon": "fa fa-bullhorn",
                 "type": "backend",
                 "show": true,

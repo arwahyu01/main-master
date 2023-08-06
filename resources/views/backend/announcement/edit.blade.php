@@ -57,10 +57,10 @@
         <div class='form-group'>
             {!! html()->label('Tingkat Kepentingan','urgency')->class('control-label') !!}
             <span class="text-danger">*</span>
-            {!! html()->select('urgency',config('master.content.pengumuman.status'),$data->urgency)->class('form-select')->id('urgency')->placeholder('Pilih Urgensi') !!}
+            {!! html()->select('urgency',config('master.content.announcement.status'),$data->urgency)->class('form-select')->id('urgency')->placeholder('Pilih Urgensi') !!}
         </div>
         <div class='form-group'>
-            {!! html()->label('Bagian dari pengumuman lain','parent_id')->class('control-label') !!}
+            {!! html()->label('Bagian dari announcement lain','parent_id')->class('control-label') !!}
             {!! html()->select('parent_id',$parent,$data->parent_id)->class('form-select form-control select2')->id('parent_id')->placeholder('Pilih Pengumuman') !!}
         </div>
         <div class='form-group'>

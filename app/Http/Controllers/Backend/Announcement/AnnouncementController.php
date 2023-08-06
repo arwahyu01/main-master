@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Pengumuman;
+namespace App\Http\Controllers\Backend\Announcement;
 
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class PengumumanController extends Controller
+class AnnouncementController extends Controller
 {
     public function index() : object
     {
@@ -27,6 +27,9 @@ class PengumumanController extends Controller
     {
         $data=$this->model::with('menu');
         return datatables()->of($data)
+            ->editColumn('urgency', function ($data) {
+                return config('master.content.announcement.status')[$data->urgency];
+            })
             ->editColumn('publish', function ($data) {
                 return $data->publish ? '<span class="badge badge-success">Ya</span>' : '<span class="badge badge-danger">Tidak</span>';
             })
@@ -44,7 +47,7 @@ class PengumumanController extends Controller
                 return "<div class='btn-group'>".$button."</div>";
             })
             ->addIndexColumn()
-            ->rawColumns(['action','publish'])
+            ->rawColumns(['action','publish','urgency'])
             ->make(TRUE);
     }
 
@@ -62,10 +65,10 @@ class PengumumanController extends Controller
             'file.*' => 'nullable|mimes:jpg,jpeg,png,pdf,doc,docx,xls,xlsx|max:2048',
         ]);
 
-        if ($pengumuman = $this->model::create($request->all())) {
+        if ($announcement = $this->model::create($request->all())) {
             if ($request->hasFile('file')) {
                 foreach ($request->file('file') as $file) {
-                    $pengumuman->file()->create([
+                    $announcement->file()->create([
                     'data' => [
                         'name' => $file->getClientOriginalName(),
                         'disk' => config('filesystems.default'),
@@ -75,12 +78,12 @@ class PengumumanController extends Controller
                 }
             }
             $users = $request->user()->all_user_id;
-            $this->help::sendNotification($pengumuman, $users, [
+            $this->help::sendNotification($announcement, $users, [
                 'title' => 'Pengumuman Baru',
-                'link' => $pengumuman->link,
+                'link' => $announcement->link,
                 'icon' => 'fa fa-bullhorn',
                 'color' => 'text-info',
-                'content' => $pengumuman->title
+                'content' => $announcement->title
             ]);
             $response = ['status' => TRUE, 'message' => 'Data berhasil disimpan'];
         }

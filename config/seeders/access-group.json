@@ -7,32 +7,25 @@
             "access-group",
             "access-menu",
             "faq",
-            "pengumuman",
             "dashboard",
             "notification",
             "user",
             "question",
-            "hidden-menu"
+            "hidden-menu",
+            "announcement"
         ]
     },
     {
         "admin": [
-            null,
-            null,
-            "pengumuman",
-            null,
-            null,
             "notification",
             "user",
             "question",
-            "hidden-menu"
+            "hidden-menu",
+            "announcement"
         ]
     },
     {
         "user": [
-            null,
-            null,
-            null,
             "notification",
             "user",
             "hidden-menu"

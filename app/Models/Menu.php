@@ -32,9 +32,9 @@ class Menu extends Model
         return $this->hasMany(Menu::class, 'parent_id')->sort();
     }
 
-    public function pengumuman() : object
+    public function announcement() : object
     {
-        return $this->hasMany(Pengumuman::class, 'menu_id')->whereDate('end', '>=', date('Y-m-d'))->orderBy('start', 'desc');
+        return $this->hasMany(Announcement::class, 'menu_id')->whereDate('end', '>=', date('Y-m-d'))->orderBy('start', 'desc');
     }
 
     public function accessChildren() : object

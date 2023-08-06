@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pengumumen', function (Blueprint $table) {
+        Schema::create('announcements', function (Blueprint $table) {
             $table->uuid("id")->primary();
 			$table->foreignUuid("menu_id")->nullable()->constrained();
 			$table->string("title")->nullable();
@@ -27,8 +27,8 @@ return new class extends Migration
 			$table->softDeletes();
         });
 
-        Schema::table('pengumumen', function (Blueprint $table) {
-            $table->foreign("parent_id")->references("id")->on("pengumumen")->onDelete("cascade");
+        Schema::table('announcements', function (Blueprint $table) {
+            $table->foreign("parent_id")->references("id")->on("announcements")->onDelete("cascade");
         });
     }
 
@@ -39,6 +39,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pengumumen');
+        Schema::dropIfExists('announcements');
     }
 };

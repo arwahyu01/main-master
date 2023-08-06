@@ -43,7 +43,7 @@ return [
         ]
     ],
     'content'=>[
-        'pengumuman'=>[
+        'announcement'=>[
             'status'=>[
                 'sangat_penting'=>'Sangat Penting',
                 'penting'=>'Penting',

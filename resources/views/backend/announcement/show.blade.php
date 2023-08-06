@@ -23,7 +23,7 @@
                 <div class="form-group">
                     <label>Tingkat Kepentingan :</label>
                     <span
-                        class="badge badge-{!!  config('master.content.pengumuman.color.'.$data->urgency) !!}">{!!  config('master.content.pengumuman.status.'.$data->urgency) !!}</span>
+                        class="badge badge-{!!  config('master.content.announcement.color.'.$data->urgency) !!}">{!!  config('master.content.announcement.status.'.$data->urgency) !!}</span>
                 </div>
             </div>
             <div class="col-md-6">
@@ -60,7 +60,7 @@
                 <div class="form-group">
                     <label>Relasi :</label>
                     @if($data->parent)
-                        <a href="#" type="button" class="btn-action" data-title="Detail" data-action="show" data-url="pengumuman" data-id="{!! $data->parent_id !!}" title="Tampilkan"> {!! $data->parent->title !!}</a>
+                        <a href="#" type="button" class="btn-action" data-title="Detail" data-action="show" data-url="announcement" data-id="{!! $data->parent_id !!}" title="Tampilkan"> {!! $data->parent->title !!}</a>
                     @else
                         -
                     @endif
