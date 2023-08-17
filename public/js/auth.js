@@ -105,4 +105,35 @@ $(function () {
             });
         }
     });
+
+    let email_input = $('#email');
+    let password_input = $('#password');
+    let form_login = $('#login-form');
+    email_input.on('focus', () => headerIconChanger('looking.png'));
+    password_input.on('focus', () => headerIconChanger('close.png'));
+    form_login.on('mouseover', () => headerIconChanger('standby.png'));
+
+    $('.show-hide-password').on('click', function () {
+        let input = $(this).parent().find('input');
+        let icon = $(this).find('i');
+        if (input.attr('type') === 'password') {
+            input.attr('type', 'text');
+            icon.removeClass('fa-eye-slash').addClass('fa-eye');
+            headerIconChanger('peeking.png')
+        } else {
+            input.attr('type', 'password');
+            icon.removeClass('fa-eye').addClass('fa-eye-slash');
+            headerIconChanger('close.png')
+        }
+    })
+
+    const headerIconChanger = (image) => {
+        let src = $('#header-image-vector');
+        if(src.length === 0) return;
+        let url = src.attr('src').split('/');
+        if (url[url.length - 1] !== image) {
+            url[url.length - 1] = image;
+            src.attr('src', url.join('/'));
+        }
+    }
 })

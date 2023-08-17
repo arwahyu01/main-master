@@ -37,6 +37,7 @@ return [
             'logo_dark'=>'/images/logo-dark-text.png',
             'favicon'=>'/images/favicon.ico',
             'background'=>'/images/auth-bg/bg-1.jpg',
+            'header_animation'=>'on', // turn on/off header animation
         ],
         'level'=>[
             'read', 'create', 'update', 'delete' // level of access for user role and permission module

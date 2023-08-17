@@ -7,10 +7,31 @@
                 <div class="row justify-content-center g-0">
                     <div class="col-lg-5 col-md-5 col-12">
                         <div class="bg-white rounded10 shadow-lg">
-                            <div class="content-top-agile p-20 pb-0">
-                                <h2 class="text-primary">{!! config('master.app.profile.name') !!}</h2>
-                                <p class="mb-0">Sign in to continue to {!! config('master.app.profile.short_name') !!}.</p>
-                            </div>
+                            <div class="row p-20 pb-0">
+                                @if(config('master.app.web.header_animation') == 'on')
+                                    <div class="col-md-4 col-lg-4 align-items-center hidden-lg-down me-0">
+                                        <img id="header-image-vector" class="pull-right p-5 w-90"
+                                             src="{!! url(config('master.app.web.template').'/assets/vector/sleeping.png') !!}"
+                                             alt="avatar">
+                                    </div>
+                                    <div class="col-md-8 col-lg-8 col-12 pull-left hidden-lg-down ms-0">
+                                        <h1 class="text-primary">{!! config('master.app.profile.name') !!}</h1>
+                                        <p class="mb-0">Sign in to continue
+                                            to {!! config('master.app.profile.short_name') !!}.</p>
+                                    </div>
+                                    <div class="col-12 content-top-agile hidden-lg-up">
+                                        <h2 class="text-primary">{!! config('master.app.profile.name') !!}</h2>
+                                        <p class="mb-0">Sign in to continue
+                                            to {!! config('master.app.profile.short_name') !!}.</p>
+                                    </div>
+                                @else
+                                    <div class="col-12 content-top-agile">
+                                        <h2 class="text-primary">{!! config('master.app.profile.name') !!}</h2>
+                                        <p class="mb-0">Sign in to continue
+                                            to {!! config('master.app.profile.short_name') !!}.</p>
+                                    </div>
+                                @endif
+                                </div>
                             <div class="p-40">
                                 <form method="post" name="login-form" id="login-form">
                                     <div class="form-group">
@@ -21,8 +42,9 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="input-group mb-3">
-                                            <span class="input-group-text  bg-transparent"><i class="ti-lock"></i></span>
+                                            <span class="input-group-text bg-transparent"><i class="ti-lock"></i></span>
                                             <input name="password" type="password" id="password" class="form-control ps-15 bg-transparent" placeholder="Password" autocomplete="off" required>
+                                            <span class="input-group-text show-hide-password bg-transparent"><i class="fa fa-eye-slash"></i></span>
                                         </div>
                                         <span class="info-login"></span>
                                     </div>

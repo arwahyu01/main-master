@@ -76,7 +76,7 @@
                             <div class="dropdown-divider"></div>
                         </li>
                         <li class="user-body">
-                            <a class="dropdown-item" href="#" onclick="logout()"><i class="ti-lock text-muted me-2"></i> Logout</a>
+                            <a class="dropdown-item" href="#" onclick="logout()"><i class="ti-lock text-muted me-2"></i> Sign Out</a>
                         </li>
                     </ul>
                 </li>

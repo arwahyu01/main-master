@@ -9,7 +9,7 @@
     </section>
     <div class="sidebar-footer">
         <a href="javascript:void(0)"></a>
-        <a href="javascript:void(0)" onclick="logout()" class="link" data-bs-toggle="tooltip" title="Logout">
+        <a href="javascript:void(0)" onclick="logout()" class="link" data-bs-toggle="tooltip" title="Sign Out">
             <span class="icon-Lock-overturning"><span class="path1"></span><span class="path2"></span></span>
         </a>
         <a href="javascript:void(0)"></a>
