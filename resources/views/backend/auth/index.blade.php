@@ -10,7 +10,7 @@
     <title>@stack('title',config('master.app.profile.name'))</title>
     <link rel="icon" href="{{ url(config('master.app.profile.template').config('master.app.profile.favicon'))}}">
     <link rel="stylesheet" href="{{ url(config('master.app.web.template').'/assets/vendor_components/bootstrap/dist/css/bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ url(config('master.app.web.template').'/css/style.css') }}">
+    <link rel="stylesheet" href="{{ url(config('master.app.web.template').'/css/custom.css') }}">
 </head>
 <body class="hold-transition theme-primary bg-img" style="background-image: url({{ url(config('master.app.web.template').config('master.app.web.background'))}})">
 @yield('content')
