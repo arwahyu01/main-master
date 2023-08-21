@@ -7,11 +7,9 @@
             </div>
         </div>
     </section>
-    <div class="sidebar-footer">
-        <a href="javascript:void(0)"></a>
-        <a href="javascript:void(0)" onclick="logout()" class="link" data-bs-toggle="tooltip" title="Sign Out">
-            <span class="icon-Lock-overturning"><span class="path1"></span><span class="path2"></span></span>
-        </a>
-        <a href="javascript:void(0)"></a>
+    <div class="sidebar-footer p-2">
+        <div onclick="logout()" class="border-0 bg-transparent link text-center" style="width: 100%;" data-bs-toggle="tooltip" title="Sign Out">
+            <span class="icon-Lock-overturning fs-20 text-white"><span class="path1"></span><span class="path2"></span></span>
+        </div>
     </div>
 </aside>

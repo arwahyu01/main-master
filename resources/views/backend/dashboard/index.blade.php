@@ -10,7 +10,7 @@
                             <div class="box-body p-xl-0">
                                 <div class="row align-items-center">
                                     <div class="col-12 col-lg-3">
-                                        <img src="{{ url($template."/images/svg-icon/color-svg/custom-14.svg") }}" alt="">
+                                        <img src="{{ url($template."/images/svg-icon/color-svg/custom-14.svg") }}" alt="" width="274" height="150">
                                     </div>
                                     <div class="col-12 col-lg-9">
                                         <h2>Hello {!! $user->name !!}, Welcome Back!</h2>

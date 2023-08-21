@@ -1,12 +1,12 @@
 <header class="main-header">
     <div class="d-flex align-items-center logo-box justify-content-start">
-        <a href="#" class="waves-effect waves-light nav-link d-none d-md-inline-block mx-10 push-btn bg-transparent text-white" data-toggle="push-menu" role="button">
+        <a href="#" title="{!! config('master.app.profile.name') !!}" class="waves-effect waves-light nav-link d-none d-md-inline-block mx-10 push-btn bg-transparent text-white" data-toggle="push-menu" role="button">
             <i class="icon-Align-left"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
         </a>
         <a href="#" class="logo">
             <div class="logo-lg">
-                <i class="light-logo"><img src="{{ url($template).config('master.app.web.logo_light')}}" alt="logo"></i>
-                <i class="dark-logo"><img src="{{ url($template).config('master.app.web.logo_dark')}}" alt="logo"></i>
+                <i class="light-logo"><img src="{{ url($template).config('master.app.web.logo_light')}}" alt="logo" width="140" height="21"></i>
+                <i class="dark-logo"><img src="{{ url($template).config('master.app.web.logo_dark')}}" alt="logo" width="140" height="21"></i>
             </div>
         </a>
     </div>
@@ -31,9 +31,9 @@
                     <div class="app-menu">
                         <div class="search-bx mx-5">
                             <div class="input-group">
-                                <input type="search" class="form-control search-menu" placeholder="Search" aria-label="Search" aria-describedby="button-addon2">
+                                <input type="search" class="form-control search-menu" placeholder="Search" aria-label="Search" aria-describedby="button-addon2" name="search_menu">
                                 <div class="input-group-append">
-                                    <button class="btn" type="button" id="button-addon3"><i class="ti-search"></i></button>
+                                    <button class="btn" type="button" id="button-addon3" title="Search"><i class="ti-search"></i></button>
                                 </div>
                             </div>
                         </div>
