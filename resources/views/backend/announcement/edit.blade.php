@@ -4,29 +4,29 @@
         <div class='form-group'>
             {!! html()->label('Target Menu','menu_id')->class('control-label') !!}
             <span class="text-danger">*</span>
-            {!! html()->select('menu_id',$menu,$data->menu_id)->class('form-control select2')->id('menu_id')->placeholder('Pilih Menu') !!}
+            {!! html()->select('menu_id',$menu,$data->menu_id)->class('form-control select2')->id('menu_id')->placeholder('Pilih Menu')->required() !!}
         </div>
         <div class='form-group'>
             {!! html()->label('Judul Pengumuman','title')->class('control-label') !!}
             <span class="text-danger">*</span>
-            {!! html()->text('title',$data->title)->placeholder('Ketik Disini')->class('form-control')->id('title') !!}
+            {!! html()->text('title',$data->title)->placeholder('Ketik Disini')->class('form-control')->id('title')->required() !!}
         </div>
         <div class="row">
             <div class='form-group col-md-6'>
                 {!! html()->label('Tanggal Mulai','start')->class('control-label') !!}
                 <span class="text-danger">*</span>
-                {!! html()->date('start',$data->start)->class('form-control')->id('start') !!}
+                {!! html()->date('start',$data->start)->class('form-control')->id('start')->required() !!}
             </div>
             <div class='form-group col-md-6'>
                 {!! html()->label('Tanggal Selesai','end')->class('control-label') !!}
                 <span class="text-danger">*</span>
-                {!! html()->date('end',$data->end)->class('form-control')->id('end') !!}
+                {!! html()->date('end',$data->end)->class('form-control')->id('end')->required() !!}
             </div>
         </div>
         <div class='form-group'>
             {!! html()->label('Isi Pengumuman','content')->class('control-label') !!}
             <span class="text-danger">*</span>
-            {!! html()->textarea('content',$data->content)->class('form-control')->id('content')->placeholder('Ketik Disini') !!}
+            {!! html()->textarea('content',$data->content)->class('form-control')->id('content')->placeholder('Ketik Disini')->required() !!}
         </div>
         @if(!$data->file->isEmpty())
             <div class="form-group">
@@ -51,13 +51,13 @@
             {!! html()->label('File Pendukung','file')->class('control-label') !!}
             <span class="text-danger">*</span>
             <div class="file-loading">
-                {!! html()->file('file[]')->id('file')->class('file-drag-drop')->multiple()->data('overwrite-initial',false)->data('min-file-count',1) !!}
+                {!! html()->file('file[]')->id('file')->class('file-drag-drop')->multiple()->data('overwrite-initial',false)->data('min-file-count',1)->required() !!}
             </div>
         </div>
         <div class='form-group'>
             {!! html()->label('Tingkat Kepentingan','urgency')->class('control-label') !!}
             <span class="text-danger">*</span>
-            {!! html()->select('urgency',config('master.content.announcement.status'),$data->urgency)->class('form-select')->id('urgency')->placeholder('Pilih Urgensi') !!}
+            {!! html()->select('urgency',config('master.content.announcement.status'),$data->urgency)->class('form-select')->id('urgency')->placeholder('Pilih Urgensi')->required() !!}
         </div>
         <div class='form-group'>
             {!! html()->label('Bagian dari announcement lain','parent_id')->class('control-label') !!}
@@ -66,7 +66,6 @@
         <div class='form-group'>
             {!! html()->checkbox('publish',$data->publish,1)->id('md_checkbox')->class('filled-in chk-col-primary') !!}
             {!! html()->label('Tampilkan Pengumuman','md_checkbox')->class('control-label') !!}
-            <span class="text-danger">*</span>
         </div>
     </div>
 </div>

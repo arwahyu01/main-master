@@ -1,10 +1,8 @@
 $(function () {
     const _token = $('meta[name="csrf-token"]').attr('content');
 
-    $(document).keyup(function (e) {
-        if (e.keyCode === 13) {
-            $('#go-login').click();
-        }
+    $(document).keypress(function (e) {
+        if (e.key === 'Enter') $('#go-login').click();
     });
 
     $('#go-login').on('click', function () {
@@ -14,7 +12,7 @@ $(function () {
         if (password.value !== '' && email.value !== '') {
             $(this).html('<i class="fa fa-spinner fa-spin"></i> Loading...');
             $('.form-control').removeClass('is-invalid');
-            let form = new FormData(document.getElementById('login-form'));
+            const form = new FormData(document.getElementById('login-form'));
             form.append('_token', `${_token}`);
             form.append('device_name', "web");
             form.set('password', btoa(form.get('password')));
@@ -43,7 +41,7 @@ $(function () {
                 },
                 error: function (i) {
                     $('#go-login').html('SIGN IN');
-                    let error = JSON.parse(i.responseText);
+                    const error = JSON.parse(i.responseText);
                     if (error.data !== null) {
                         $.each(error.data, function (i, j) {
                             $('#' + i).addClass('is-invalid');
@@ -66,13 +64,13 @@ $(function () {
     });
 
     $('#register-me').on('click', function () {
-        let pass_info = $('.pass-info');
+        const pass_info = $('.pass-info');
         if (document.getElementsByName('password')[0].value !== document.getElementsByName('validate_password')[0].value) {
             pass_info.html('<span class="text-danger"><i class="fa fa-exclamation-triangle"></i> Passwords do not match</span>');
         } else {
-            let form = new FormData(document.getElementById('form-register'));
-            let pass1 = btoa(form.get('password'));
-            let pass2 = btoa(form.get('validate_password'));
+            const form = new FormData(document.getElementById('form-register'));
+            const pass1 = btoa(form.get('password'));
+            const pass2 = btoa(form.get('validate_password'));
             form.append('_token', `${_token}`);
             form.set('password', pass1);
             form.set('validate_password', pass2);
@@ -92,7 +90,7 @@ $(function () {
                     }
                 },
                 error: function (i) {
-                    let error = JSON.parse(i.responseText);
+                    const error = JSON.parse(i.responseText);
                     if (error.data !== null) {
                         $.each(error.data, function (i, j) {
                             $('#' + i).addClass('is-invalid');
@@ -114,8 +112,8 @@ $(function () {
     form_login.on('mouseover', () => headerIconChanger('standby.png'));
 
     $('.show-hide-password').on('click', function () {
-        let input = $(this).parent().find('input');
-        let icon = $(this).find('i');
+        const input = $(this).parent().find('input');
+        const icon = $(this).find('i');
         if (input.attr('type') === 'password') {
             input.attr('type', 'text');
             icon.removeClass('fa-eye-slash').addClass('fa-eye');
@@ -128,9 +126,9 @@ $(function () {
     })
 
     const headerIconChanger = (image) => {
-        let src = $('#header-image-vector');
+        const src = $('#header-image-vector');
         if(src.length === 0) return;
-        let url = src.attr('src').split('/');
+        const url = src.attr('src').split('/');
         if (url[url.length - 1] !== image) {
             url[url.length - 1] = image;
             src.attr('src', url.join('/'));

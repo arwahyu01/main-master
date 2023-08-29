@@ -5,6 +5,7 @@ Route::group(['prefix'=>config('master.app.url.backend')], function () {
     Route::resource('dashboard', "Dashboard\DashboardController")->name('index', 'dashboard');
     Route::get('/list-menu', "Menu\MenuController@listMenu")->name('menu.list-menu');
     Route::get('announcement-detail/{id}/{slug}', "Announcement\AnnouncementController@detail")->name('announcement');
+    Route::get('sidebar-notification', 'Notification\NotificationController@getSideBarNotification');
     Route::get('get-notification', 'Notification\NotificationController@getNotification');
     Route::get('clear-notification', 'Notification\NotificationController@markAsRead');
     Route::post('logout','Auth\AuthController@logout')->name('logout');

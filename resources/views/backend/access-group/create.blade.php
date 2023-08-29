@@ -3,11 +3,11 @@
     <div class="panel-body">
         <div class='form-group'>
             {!! html()->label()->class('control-label')->for('name')->text('Name') !!}
-            {!! html()->text('name')->placeholder('Type name here')->class('form-control')->id('name') !!}
+            {!! html()->text('name')->placeholder('Type name here')->class('form-control')->id('name')->required() !!}
         </div>
         <div class='form-group'>
             {!! html()->label()->class('control-label')->for('code')->text('Code') !!}
-            {!! html()->text('code')->placeholder('Type code here')->class('form-control')->id('code') !!}
+            {!! html()->text('code')->placeholder('Type code here')->class('form-control')->id('code')->required() !!}
         </div>
     </div>
 </div>

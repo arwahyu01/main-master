@@ -98,4 +98,37 @@ class NotificationController extends Controller
         $notification->markAsRead(Auth::id());
         return response()->json(['status'=>true],200);
     }
+
+    public function getSideBarNotification(Request $request)
+    {
+        $user = $request->user();
+        try {
+            $response['sidebar_notification'] = [
+                'announcement' => 5,
+                'user' => 3,
+                'level' => 4
+            ];
+
+            foreach ($response['sidebar_notification'] as $code => $total) {
+                $response = $this->menuRecursive($response, $this->help->menu($code)->parent, $total);
+            }
+
+        } catch (\Exception $e) {
+            return response()->json(['status' => false, 'message' => $e->getMessage()], 500);
+        }
+        return response()->json($response);
+    }
+
+    private function menuRecursive(mixed $response, $menu = null, $total = 0)
+    {
+        if (!is_null($menu)) {
+            if (array_key_exists($menu->code, $response['sidebar_notification'])) {
+                $response['sidebar_notification'][$menu->code] += $total;
+            } else {
+                $response['sidebar_notification'] += [$menu->code => $total];
+            }
+            $this->menuRecursive($response, $menu->parent, $total);
+        }
+        return $response;
+    }
 }

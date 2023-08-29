@@ -5,18 +5,18 @@
             <div class="col-md-6 form-group">
                 {!! html()->label('First Name','first_name')->class('control-label') !!}
                 <span class="text-danger">*</span>
-                {!! html()->text('first_name',$data->first_name)->placeholder('Type first name here')->class('form-control')->id('first_name') !!}
+                {!! html()->text('first_name',$data->first_name)->placeholder('Type first name here')->class('form-control')->id('first_name')->required() !!}
             </div>
             <div class="col-md-6 form-group">
                 {!! html()->label('Last Name','last_name')->class('control-label') !!}
                 <span class="text-danger">*</span>
-                {!! html()->text('last_name',$data->last_name)->placeholder('Type last name here')->class('form-control')->id('last_name') !!}
+                {!! html()->text('last_name',$data->last_name)->placeholder('Type last name here')->class('form-control')->id('last_name')->required() !!}
             </div>
         </div>
         <div class="form-group">
             {!! html()->label('Email','email')->class('control-label') !!}
             <span class="text-danger">*</span>
-            {!! html()->text('email',$data->email)->placeholder('Type email here')->class('form-control')->id('email') !!}
+            {!! html()->text('email',$data->email)->placeholder('Type email here')->class('form-control')->id('email')->required() !!}
         </div>
         @if($data->id == $user->id)
             <div class="form-group row">
@@ -35,12 +35,12 @@
                 <div class="col-md-6">
                     {!! html()->label('Level','level_id')->class('control-label') !!}
                     <span class="text-danger">*</span>
-                    {!! html()->select('level_id',$level,$data->level_id)->class('form-control select2')->id('level_id') !!}
+                    {!! html()->select('level_id',$level,$data->level_id)->class('form-control select2')->id('level_id')->required() !!}
                 </div>
                 <div class="col-md-6">
                     {!! html()->label('Access Group','access_group_id')->class('control-label') !!}
                     <span class="text-danger">*</span>
-                    {!! html()->select('access_group_id',$access_group,$data->access_group_id)->class('form-control select2')->id('access_group_id') !!}
+                    {!! html()->select('access_group_id',$access_group,$data->access_group_id)->class('form-control select2')->id('access_group_id')->required() !!}
                 </div>
             </div>
         @endif

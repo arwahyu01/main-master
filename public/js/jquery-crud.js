@@ -1,38 +1,38 @@
 $(window.document).on('click', '.btn-action', function (e) {
     e.preventDefault();
-    let id = $(this).data('id') ?? null; // Get id from data-id attribute
-    let url = $(this).data('url') ?? window.location.href; // Get url from data-url attribute or current url
-    let action = $(this).data('action') ?? ''; // Get action from data-action attribute
-    let title = $(this).data('title') ?? null; // Get title from data-title attribute
-    let modalId = $(this).data('modalId') ?? 'modal-master'; // Get modalId from data-modal-id attribute
-    let bgClass = $(this).data('bgClass') ?? 'bg-default'; // Get bgClass from data-bg-class attribute
 
-    if (action === 'create') {
-        url = `${url}/create`;
-    } else if (action === 'edit') {
-        url = `${url}/${id}/edit`;
-    } else if (action === 'delete') {
-        url = `${url}/delete/${id}`;
-    } else if (action === 'show') {
-        url = `${url}/${id}`;
-    }
-
-    $.loadModal({
-        url: url,
-        id: `${modalId}`,
+    const id = $(this).data('id') ?? '';
+    const url = $(this).data('url') ?? window.location.href;
+    const action = $(this).data('action') ?? '';
+    const title = $(this).data('title') ?? '';
+    const modalId = $(this).data('modalId') ?? 'modal-master';
+    const bgClass = $(this).data('bgClass') ?? 'bg-default';
+    const actionUrls = {
+        'create': 'create',
+        'edit': `${id}/edit`,
+        'delete': `delete/${id}`,
+        'show': `${id}`
+    };
+    const urlExtension = actionUrls[action] || '';
+    const modalOptions = {
+        url: urlExtension ? `${url}/${urlExtension}` : url,
+        id: modalId,
         dlgClass: 'fade',
-        bgClass: `${bgClass}`,
-        title: `${title}`,
+        bgClass: bgClass,
+        title: title,
         width: 'whatever',
-        modal: {keyboard: false, backdrop: 'static'},
+        modal: {
+            keyboard: false,
+            backdrop: 'static',
+        },
         ajax: {
             dataType: 'html',
             method: 'GET',
             cache: false,
-            beforeSend: function () {
+            beforeSend() {
                 $.showLoading();
             },
-            success: function () {
+            success() {
                 $.hideLoading();
                 $(`#${modalId}`).modal('show');
             },
@@ -41,81 +41,82 @@ $(window.document).on('click', '.btn-action', function (e) {
                 $.showError(xhr.status + ' ' + xhr.statusText);
             }
         },
-    });
+    };
+
+    $.loadModal(modalOptions);
 });
 
 $(window.document).on('click', '.submit-data', function (e) {
-    e.preventDefault()
-    let btnSubmit = $(this);
-    let textBtn = btnSubmit.text();
-    let parent = $(this).parents('.modal').length ? $(this).parents('.modal') : $(this).parents();
-    let formId = parent.find('form').attr('id');
-    let progress = $('.progress-bar');
-    let dismiss = parent.find('[data-bs-dismiss]');
+    e.preventDefault();
 
-    $(`#${formId}`).ajaxForm({
+    const btnSubmit = e.target;
+    const textBtn = btnSubmit.innerText;
+    const parent = $(this).parents('.modal').length ? $(this).parents('.modal') : $(this).parents();
+    const form = btnSubmit.form ?? parent.find('form');
+    const formId = form.id ?? form.attr('id');
+    const progress = $('.progress-bar');
+    const dismiss = parent.find('[data-bs-dismiss]');
+    clearError();
+
+    if (!formValidate([formId])) {
+        return false;
+    }
+    $('#'+formId).ajaxForm({
         dataType: 'json',
         uploadProgress: function (event, position, total, percentComplete) {
-            let percentVal = percentComplete + '%';
+            const percentVal = percentComplete + '%';
             progress.width(percentVal);
-            if (percentComplete === 100) {
-                progress.html('Mohon tunggu...');
-            } else {
-                progress.html(percentVal);
-            }
+            progress.html(percentComplete === 100 ? 'Please Wait ...' : percentVal);
         },
         beforeSubmit: function () {
             progress.width('0%');
             progress.html('0% Complete');
-            dismiss.attr('disabled', true);
+            dismiss.prop('disabled', true);
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Processing...';
             $('.progress').show();
-            $('.form-control').removeClass('is-invalid border border-danger');
-            $('.invalid-feedback, .alert-danger').remove();
-            btnSubmit.attr('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Memproses...');
         },
         success: function (response, status, xhr, $form) {
             $('.progress').hide();
-            btnSubmit.attr('disabled', false).html('<i class="fa fa-save"></i> ' + textBtn);
-            dismiss.removeAttr('disabled');
+            btnSubmit.disabled = false;
+            btnSubmit.innerHTML = '<i class="fa fa-save"></i> ' + textBtn;
+            dismiss.prop('disabled', false);
+
             if (response.status === true) {
-                const _targetTable = $form.find('input[name="table-id"]').val() ?? null;
-                const _targetFunction = $form.find('input[name="function"]').val() ?? null;
-                const _redirect = $form.find('input[name="redirect"]').val() ?? null;
+                const _targetTable = $form.find('input[name="table-id"]').val();
+                const _targetFunction = $form.find('input[name="function"]').val();
+                const _redirect = $form.find('input[name="redirect"]').val() || '';
 
                 swal({
-                    title: response.title ?? "Good job!",
+                    title: response.title || 'Good job!',
                     text: response.message,
-                    icon: "success",
-                    type: "success",
+                    type: 'success',
                     timer: 2000,
                     showConfirmButton: false
                 });
 
-                if (_targetTable !== null) {
-                    let tables = _targetTable.split(',');
-                    $.each(tables, function (index, value) {
-                        $(`#${value}`).DataTable().ajax.reload();
+                if (_targetTable) {
+                    _targetTable.split(',').forEach((tableId) => {
+                        $(`#${tableId}`).DataTable().ajax.reload();
                     });
                 }
-                if (_targetFunction !== null) {
-                    let functions = _targetFunction.split(',');
-                    $.each(functions, function (index, value) {
-                        window.eval?.(value) // Call target function
+                if (_targetFunction) {
+                    _targetFunction.split(',').forEach((func) => {
+                        window.eval?.(func);
                     });
                 }
-                if (_redirect !== null) {
-                    window.location.href = _redirect ?? ''; // Redirect to url
+                if (_redirect) {
+                    window.location.href = _redirect;
                 }
-                $('.modal').modal('hide'); // Hide modal
+                $('.modal').modal('hide');
             } else {
-                if (response.hasOwnProperty('errors')) {
-                    _errorBuilder(response.data);
+                if (response.hasOwnProperty('data')) {
+                    errorBuilder(response.data);
                 } else {
                     swal({
-                        title: response.title ?? "Oops!",
+                        title: response.title || 'Oops!',
                         text: response.message,
-                        icon: "error",
-                        type: "error",
+                        type: 'error',
                         timer: 2500,
                         showConfirmButton: false
                     });
@@ -123,61 +124,65 @@ $(window.document).on('click', '.submit-data', function (e) {
             }
         },
         error: function (xhr) {
-            if(xhr.status === 422) {
-                _errorBuilder(xhr.responseJSON.errors);
-            }else{
-                swal({
-                    title: "Oops!",
-                    text: xhr.status + ' ' + xhr.statusText,
-                    icon: "error",
-                    type: "error",
-                    timer: 2500,
-                    showConfirmButton: false
-                });
-            }
+            errorBuilder(xhr);
             $('.progress').hide();
-            btnSubmit.attr('disabled', false).html('<i class="fa fa-save"></i> ' + textBtn);
-            dismiss.removeAttr('disabled');
-            $('.message').html(`<div class="alert alert-danger fade show mt-3"><b>Error!</b> ${xhr.status} ${xhr.responseJSON.message}.</div>`)
+            dismiss.prop('disabled', false);
+            btnSubmit.innerHTML = '<i class="fa fa-save"></i> ' + textBtn;
         }
     }).submit();
-
-    const _errorBuilder = function (errors) {
-        $.each(errors, function (index, value) {
-            $(`#${index}`).addClass('is-invalid border border-danger').parent().append(`<span class="invalid-feedback" role="alert"><strong>${value}</strong></span>`);
-        });
-    }
 });
 
-$(window.document).on('click', '.delete-file', function (e) {
-    e.preventDefault();
-    let btn = $(this);
-    swal({
-        title: btn.data('title'),
-        text: btn.data('message'),
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yes, Delete!",
-        cancelButtonText: "No, Cancel!",
-        closeOnConfirm: false,
-        closeOnCancel: false
-    }, function (isConfirm) {
-        if (isConfirm) {
-            $.ajax({
-                url: btn.data('url'),
-                success: function (data) {
-                    if (data.status === true) {
-                        $('#' + btn.data('id')).remove();
-                        swal("Deleted!", data.message, "success");
-                    }
-                },
-                error: function (e) {
-                    swal("Error!", e.responseJSON.message, "error");
-                }
-            });
-        } else {
-            swal.close();
+const errorBuilder = (error, targetClass = 'modal-message') => {
+    const errorValidation = (errors) => {
+        for (const [index, value] of Object.entries(errors)) {
+            const element = document.getElementById(index);
+            if (element) {
+                const isSelect2 = $(element).hasClass('select2-hidden-accessible');
+                const targetElement = isSelect2
+                    ? ($(element).next().find('.select2-selection')[0] || element)
+                    : (['radio', 'checkbox'].includes($(element).attr('type')) ? ($(element).parent()[0] || element) : element);
+
+                targetElement.classList.add('is-invalid', 'border', 'border-danger');
+                targetElement.insertAdjacentHTML('afterend', `<span class="invalid-feedback" role="alert"><b>${value}</b></span>`);
+                if (index === Object.keys(errors)[0]) targetElement.focus();
+            }
         }
+    };
+
+    const errorMessage = (message) => {
+        $(`.${targetClass}`).html(`<div class="error-msg alert alert-danger text-white form-group m-15"><b>Opps!</b> ${message}</div>`);
+    };
+
+    if (error?.responseJSON?.errors) {
+        errorValidation(error.responseJSON.errors);
+    } else if (error?.responseJSON?.message) {
+        errorMessage(error.responseJSON.message);
+    } else if (error?.message) {
+        errorMessage(error.message);
+    } else {
+        errorValidation(error);
+    }
+};
+
+const clearError = (targetClass = 'error-msg') => {
+    $(`.invalid-feedback, .alert-danger, .${targetClass}`).remove();
+    $('.is-invalid').removeClass('is-invalid border-danger');
+}
+
+const formValidate = (formIds) => {
+    let isValid = true;
+    let errors = {};
+
+    formIds.forEach(formId => {
+        $(`#${formId} [required]`).each(function () {
+            const field = $(this);
+            if (!field.val() || (['radio', 'checkbox'].includes(field.attr('type')) && !field.is(':checked'))) {
+                errors[field.attr('id')] = 'This field is required.';
+                isValid = false;
+            }
+        });
     });
-});
+
+    if (!isValid) errorBuilder(errors);
+    return isValid;
+}
