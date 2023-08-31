@@ -17,19 +17,17 @@ class LevelController extends Controller
         return view($this->view.'.create');
     }
 
-    public function data()
+    public function data(Request $request)
     {
+        $user=$request->user();
         $data=$this->model::all();
         return datatables()->of($data)
-            ->addColumn('action', function ($data) {
+            ->addColumn('action', function ($data) use ($user) {
                 $button ='';
-                if(auth()->user()->read){
-                    $button .= '<button type="button" class="btn-action btn btn-sm btn-outline" data-title="Detail" data-action="show" data-url="'.$this->url.'" data-id="'.$data->id.'" title="Tampilkan"><i class="fa fa-eye text-info"></i></button>';
-                }
-                if(auth()->user()->update){
+                if($user->update){
                     $button.='<button class="btn-action btn btn-sm btn-outline" data-title="Edit" data-action="edit" data-url="'.$this->url.'" data-id="'.$data->id.'" title="Edit"> <i class="fa fa-edit text-warning"></i> </button> ';
                 }
-                if(auth()->user()->delete){
+                if($user->delete){
                     $button.='<button class="btn-action btn btn-sm btn-outline" data-title="Delete" data-action="delete" data-url="'.$this->url.'" data-id="'.$data->id.'" title="Delete"> <i class="fa fa-trash text-danger"></i> </button>';
                 }
                 return "<div class='btn-group'>".$button."</div>";
@@ -50,7 +48,7 @@ class LevelController extends Controller
             })
             ->addIndexColumn()
             ->rawColumns(['action','access'])
-            ->make(TRUE);
+            ->make();
     }
 
     public function store(Request $request)

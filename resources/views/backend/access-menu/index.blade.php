@@ -27,8 +27,8 @@
                                     <thead>
                                     <tr>
                                         <th class="w-0">No</th>
-                                        <th>Access Group</th>
-                                        <th class="text-center w-0">Action</th>
+                                        <th>Akses Grup</th>
+                                        <th class="text-center w-0">Aksi</th>
                                     </tr>
                                     </thead>
                                     <tbody>

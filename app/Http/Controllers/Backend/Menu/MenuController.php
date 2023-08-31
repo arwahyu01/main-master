@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Backend\Menu;
 
 use App\Http\Controllers\Controller;
 use App\Models\AccessGroup;
-use App\support\Helper;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
@@ -23,7 +22,7 @@ class MenuController extends Controller
     public function create()
     {
         $data=[
-            'model'=>Helper::listFile(app_path('/Models'), ['php']),
+            'model'=>$this->help::listFile(app_path('/Models'), ['php']),
             'access_group'=>AccessGroup::pluck('name', 'id'),
         ];
         return view($this->view.'.create', $data);
@@ -66,7 +65,7 @@ class MenuController extends Controller
     public function edit($id)
     {
         $result=[
-            'model'=>Helper::listFile(app_path('/Models'), ['php']),
+            'model'=>$this->help::listFile(app_path('/Models'), ['php']),
             'data'=>$this->model::find($id),
             'access_group'=>AccessGroup::pluck('name', 'id'),
         ];
@@ -140,12 +139,12 @@ class MenuController extends Controller
         }
     }
 
-    public function listMenu()
+    public function listMenu(Request $request)
     {
-        $menu=$this->model::with(['accessChildren'])->whereHas('access_menu', function ($query) {
-            $query->where('access_group_id', auth()->user()->access_group_id);
+        $menu=$this->model::with(['accessChildren'])->whereHas('access_menu', function ($query) use ($request) {
+            $query->where('access_group_id', $request->user()->access_group_id);
         })->whereNull('parent_id')->show()->sort()->get();
-        return response()->json(['menu'=>$menu], 200)->header('Content-Type', 'application/json');
+        return response()->json(['menu'=>$menu])->header('Content-Type', 'application/json');
     }
 }
 

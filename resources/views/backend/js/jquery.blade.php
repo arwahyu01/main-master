@@ -1,8 +1,6 @@
 {{--<script>--}}
     $(function () {
         sidebarMenu();
-        getNotification();
-        sidebarNotification();
         $('.search-menu').on('input', function () {
             let keyword = $(this).val();
             let filter = $('.filtered');
@@ -71,12 +69,14 @@
                     } else {
                         $('.all-menu').append(`
                                 <li class="text-light list-menu" data-key="${value.code.toLowerCase()}">
-                                    <a href="{!! url(config('master.app.url.backend')) !!}/${value.url}"><i class="${value.icon}"></i> <span class="${value.url}-notice">${value.title}</span></a>
+                                    <a href="{!! url(config('master.app.url.backend')) !!}/${value.url}"><i class="${value.icon}"></i> <span class="${value.code}-notice">${value.title}</span></a>
                                 </li>
                             `);
                     }
                 });
                 openActiveMenu();
+                getNotification();
+                sidebarNotification();
             },
             error: function (e) {
                 console.log('Error load menu : ', e.responseJSON.message);
@@ -85,13 +85,13 @@
 
         const menuChild = function (children, value) {
             let html = '<li class="treeview parent-menu">';
-            html += `<a href="#" class="text-light list-menu" data-key="${value.code.toLowerCase()}"><i class="${value.icon}"></i><span class="${value.url}-notice">${value.title}</span><span class="pull-right-container"><i class="fa fa-angle-right pull-right"></i></span></a>`;
+            html += `<a href="#" class="text-light list-menu" data-key="${value.code.toLowerCase()}"><i class="${value.icon}"></i><span class="${value.code}-notice">${value.title}</span><span class="pull-right-container"><i class="fa fa-angle-right pull-right"></i></span></a>`;
             html += '<ul class="treeview-menu">';
             $.each(children, function (index, child) {
                 if (child.access_children.length > 0) {
                     html += menuChild(child.access_children, child);
                 } else {
-                    html += `<li><a href="{!! url(config('master.app.url.backend')) !!}/${child.url}" class="list-menu" data-key="${child.code.toLowerCase()}"><i class="${child.icon}"></i><span class="${child.url}-notice">${child.title}</span></a></li>`;
+                    html += `<li><a href="{!! url(config('master.app.url.backend')) !!}/${child.url}" class="list-menu" data-key="${child.code.toLowerCase()}"><i class="${child.icon}"></i><span class="${child.code}-notice">${child.title}</span></a></li>`;
                 }
             });
             html += '</ul></li>';
@@ -190,13 +190,14 @@
 
     function logout() {
         swal({
-            title: 'Are you sure?',
-            text: "You will be logged out from the system!",
+            title: 'Apakah kamu yakin?',
+            text: "Kamu akan keluar dari aplikasi ini!",
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
+            cancelButtonText: 'Batal',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, logout!',
+            confirmButtonText: 'Ya, keluar!',
             dangerMode: true,
         }, function (willLogout) {
             if (willLogout) {

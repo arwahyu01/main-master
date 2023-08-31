@@ -15,6 +15,7 @@ return [
             'keywords'=>'Main Master, Laravel, CRUD',
             'author'=>'@arwahyupradana', // Your name or company
             'version'=>'1.0.0', // major.minor.patch
+            'laravel'=>'10.0', // Laravel version
         ],
         'root'=>[
             'backend'=>'App/Http/Controllers/Backend', // path to backend controller
@@ -33,8 +34,8 @@ return [
         'web'=>[
             'template'=>'eduadmin', // template for frontend view (default: eduadmin)
             'icon'=>'',
-            'logo_light'=>'/images/logo-light-text.png',
-            'logo_dark'=>'/images/logo-dark-text.png',
+            'logo_light'=>'/images/logo-main-master.png',
+            'logo_dark'=>'/images/logo-main-master.png',
             'favicon'=>'/images/favicon.ico',
             'background'=>'/images/auth-bg/bg-1.jpg',
             'header_animation'=>'on', // turn on/off header animation

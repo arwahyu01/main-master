@@ -1,3 +1,65 @@
+/*jshint esversion: 11 */
+const errorBuilder = (error, targetClass = 'modal-message') => {
+    const errorValidation = (errors) => {
+        for (const [index, value] of Object.entries(errors)) {
+            const element = document.getElementById(index);
+            if (element) {
+                const isSelect2 = $(element).hasClass('select2-hidden-accessible');
+                const targetElement = isSelect2 ? ($(element).next().find('.select2-selection')[0] || element)
+                    : (['radio', 'checkbox'].includes($(element).attr('type')) ? ($(element).parent()[0] || element) : element);
+
+                targetElement.classList.add('is-invalid', 'border', 'border-danger');
+                targetElement.insertAdjacentHTML('afterend', `<span class="invalid-feedback" role="alert"><b>${value}</b></span>`);
+                if (index === Object.keys(errors)[0]) targetElement.focus();
+            }
+        }
+    };
+
+    const errorMessage = (message) => {
+        $(`.${targetClass}`).html(`<div class="error-msg alert alert-danger text-white form-group m-15"><b>Opps!</b> ${message}</div>`);
+    };
+
+    if (error?.responseJSON?.errors) {
+        errorValidation(error.responseJSON.errors);
+    } else if (error?.responseJSON?.message) {
+        errorMessage(error.responseJSON.message);
+    } else if (error?.message) {
+        errorMessage(error.message);
+    } else {
+        errorValidation(error);
+    }
+};
+
+const clearError = (targetClass = 'error-msg') => {
+    $(`.invalid-feedback, .alert-danger, .${targetClass}`).remove();
+    $('.is-invalid').removeClass('is-invalid border-danger');
+};
+
+const formValidate = (formIds) => {
+    let isValid = true;
+    let errors = {};
+
+    formIds.forEach(formId => {
+        $(`#${formId} [required]`).each(function (e, field) {
+            if (!field.value || (['radio', 'checkbox'].includes(field.type) && !field.checked)) {
+                errors[field.id] = 'This field is required.';
+                isValid = false;
+            }
+        });
+    });
+
+    if (!isValid) errorBuilder(errors);
+    return isValid;
+};
+
+const targetFunction = _target => {
+    _target.split(',').forEach((func) => {
+        if (typeof window[func] === "function") {
+            window[func]();
+        }
+    });
+};
+
 $(window.document).on('click', '.btn-action', function (e) {
     e.preventDefault();
 
@@ -61,7 +123,7 @@ $(window.document).on('click', '.submit-data', function (e) {
     if (!formValidate([formId])) {
         return false;
     }
-    $('#'+formId).ajaxForm({
+    $('#' + formId).ajaxForm({
         dataType: 'json',
         uploadProgress: function (event, position, total, percentComplete) {
             const percentVal = percentComplete + '%';
@@ -100,11 +162,11 @@ $(window.document).on('click', '.submit-data', function (e) {
                         $(`#${tableId}`).DataTable().ajax.reload();
                     });
                 }
+
                 if (_targetFunction) {
-                    _targetFunction.split(',').forEach((func) => {
-                        window.eval?.(func);
-                    });
+                    targetFunction(_targetFunction);
                 }
+
                 if (_redirect) {
                     window.location.href = _redirect;
                 }
@@ -131,58 +193,3 @@ $(window.document).on('click', '.submit-data', function (e) {
         }
     }).submit();
 });
-
-const errorBuilder = (error, targetClass = 'modal-message') => {
-    const errorValidation = (errors) => {
-        for (const [index, value] of Object.entries(errors)) {
-            const element = document.getElementById(index);
-            if (element) {
-                const isSelect2 = $(element).hasClass('select2-hidden-accessible');
-                const targetElement = isSelect2
-                    ? ($(element).next().find('.select2-selection')[0] || element)
-                    : (['radio', 'checkbox'].includes($(element).attr('type')) ? ($(element).parent()[0] || element) : element);
-
-                targetElement.classList.add('is-invalid', 'border', 'border-danger');
-                targetElement.insertAdjacentHTML('afterend', `<span class="invalid-feedback" role="alert"><b>${value}</b></span>`);
-                if (index === Object.keys(errors)[0]) targetElement.focus();
-            }
-        }
-    };
-
-    const errorMessage = (message) => {
-        $(`.${targetClass}`).html(`<div class="error-msg alert alert-danger text-white form-group m-15"><b>Opps!</b> ${message}</div>`);
-    };
-
-    if (error?.responseJSON?.errors) {
-        errorValidation(error.responseJSON.errors);
-    } else if (error?.responseJSON?.message) {
-        errorMessage(error.responseJSON.message);
-    } else if (error?.message) {
-        errorMessage(error.message);
-    } else {
-        errorValidation(error);
-    }
-};
-
-const clearError = (targetClass = 'error-msg') => {
-    $(`.invalid-feedback, .alert-danger, .${targetClass}`).remove();
-    $('.is-invalid').removeClass('is-invalid border-danger');
-}
-
-const formValidate = (formIds) => {
-    let isValid = true;
-    let errors = {};
-
-    formIds.forEach(formId => {
-        $(`#${formId} [required]`).each(function () {
-            const field = $(this);
-            if (!field.val() || (['radio', 'checkbox'].includes(field.attr('type')) && !field.is(':checked'))) {
-                errors[field.attr('id')] = 'This field is required.';
-                isValid = false;
-            }
-        });
-    });
-
-    if (!isValid) errorBuilder(errors);
-    return isValid;
-}

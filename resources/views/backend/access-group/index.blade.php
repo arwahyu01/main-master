@@ -34,9 +34,9 @@
                                     <thead>
                                     <tr>
                                         <th class="w-0">No</th>
-                                        <th>Name</th>
-                                        <th>Code</th>
-                                        <th class="text-center w-0">Action</th>
+                                        <th>Nama Grup</th>
+                                        <th>Kode | Alias</th>
+                                        <th class="text-center w-0">Aksi</th>
                                     </tr>
                                     </thead>
                                     <tbody>

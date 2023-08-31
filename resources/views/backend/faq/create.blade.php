@@ -2,9 +2,9 @@
 <div class="panel shadow-sm">
     <div class="panel-body">
         <div class='form-group'>
-            {!! html()->label('title')->text('Title / Group Name')->class('control-label') !!}
+            {!! html()->label('title')->text('Judul / Nama Grup / Nama Faq')->class('control-label') !!}
             <span class="text-danger">*</span>
-            {!! html()->text('title')->placeholder('Type title here')->class('form-control')->id('title') !!}
+            {!! html()->text('title')->placeholder('Ketik disini ...')->class('form-control')->id('title') !!}
         </div>
         <div class='form-group'>
             {!! html()->label('menu_id')->text('Menu')->class('control-label') !!}
@@ -12,30 +12,33 @@
             {!! html()->select('menu_id',$menu)->class('form-control select2')->id('menu_id')->placeholder('Choose Menu') !!}
         </div>
         <div class='form-group'>
-            {!! html()->label('description')->text('Description')->class('control-label') !!}
-            {!! html()->textarea('description')->placeholder('Type description here')->class('form-control')->id('description') !!}
+            {!! html()->label('description')->text('Deskripsi')->class('control-label') !!}
+            {!! html()->textarea('description')->placeholder('Ketik disini ...')->class('form-control')->id('description') !!}
         </div>
         <div class='form-group'>
-            {!! html()->label('file')->text('Upload File')->class('control-label') !!}
-            <span class="text-danger">Allowed : pdf, video (mp4), image (jpg, png)</span><br
-            {!! html()->file('file')->class('form-control')->id('file')->accept('application/pdf,video/*,image/*') !!}
+            {!! html()->label('file')->text('Unggah File')->class('control-label') !!}
+            <span class="text-danger">Allowed : pdf, video (mp4), image (jpg, png)</span><br>
+            {!! html()->file('file')->class('form-control')->id('file')->accept('application/pdf,video/mp4,image/jpeg,image/png') !!}
         </div>
         <div class="row">
             <div class="col-auto">
                 <div class='form-group'>
                     {!! html()->label('Visitors', 'visitors')->class('control-label') !!}
+                    <span class="text-dark">(optional)</span>
                     {!! html()->number('visitors',0)->class('form-control')->id('visitors') !!}
                 </div>
             </div>
             <div class="col-auto">
                 <div class='form-group'>
                     {!! html()->label('Like', 'like')->class('control-label') !!}
+                    <span class="text-dark">(optional)</span>
                     {!! html()->number('like',0)->class('form-control')->id('like') !!}
                 </div>
             </div>
             <div class="col-auto">
                 <div class='form-group'>
                     {!! html()->label('Dislike', 'dislike')->class('control-label') !!}
+                    <span class="text-dark">(optional)</span>
                     {!! html()->number('dislike',0)->class('form-control')->id('dislike') !!}
                 </div>
             </div>

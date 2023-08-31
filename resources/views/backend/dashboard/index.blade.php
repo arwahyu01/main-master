@@ -13,9 +13,11 @@
                                         <img src="{{ url($template."/images/svg-icon/color-svg/custom-14.svg") }}" alt="" width="274" height="150">
                                     </div>
                                     <div class="col-12 col-lg-9">
-                                        <h2>Hello {!! $user->name !!}, Welcome Back!</h2>
+                                        <h2>Hai {!! $user->name !!}</h2>
                                         <p class="text-dark mb-0 fs-16">
-                                            Your course Overcoming the fear of public speaking was completed by 11 New users this week!
+                                            Selamat datang di {!! config('master.app.profile.name') !!}, CRUD Generator laravel {!! config('master.app.profile.laravel') !!} dengan mudah dan cepat.
+                                            <br>
+                                            Jika kamu menemukan bug atau error, silahkan hubungi kami di <a target="_blank" href="https://github.com/arwahyu01/main-master/issues">Github</a>.
                                         </p>
                                     </div>
                                 </div>

@@ -9,7 +9,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class QuestionController extends Controller
 {
-
     public function index()
     {
         $data = Faq::orderBy('visitors','desc')->paginate(10);
@@ -18,9 +17,7 @@ class QuestionController extends Controller
 
     public function page($page)
     {
-        $faq = Faq::whereHas('menu', function ($query) use ($page) {
-            $query->where('code', $page);
-        })->select('faqs.title','faqs.id')->paginate(10);
+        $faq = Faq::whereHas('menu', fn($query) => $query->where('code', $page))->select('faqs.title','faqs.id')->paginate(10);
         if(!$faq->isNotEmpty()) {
             $faq = Faq::orderBy('visitors', 'desc')->select('faqs.title', 'faqs.id')->paginate(10);
         }
@@ -42,11 +39,10 @@ class QuestionController extends Controller
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-                $btn = '<a href="'.url(config('master.app.url.backend').'/question/'.$row->id).'" class="edit btn btn-primary btn-xs"><i class="fa fa-search"></i> Show</a>';
-                return $btn;
+                return '<a href="'.url(config('master.app.url.backend').'/question/'.$row->id).'" class="edit btn btn-primary btn-xs"><i class="fa fa-search"></i> Show</a>';
             })
             ->rawColumns(['action'])
-            ->make(true);
+            ->make();
     }
 
     public function response(Request $request)

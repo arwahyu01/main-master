@@ -2,7 +2,7 @@
 <div class="panel shadow-sm">
     <div class="panel-body">
         <div class='form-group'>
-            {!! html()->label()->class('control-label')->for('title')->text('Title / Group Name') !!}
+            {!! html()->label('title')->text('Judul / Nama Grup / Nama Faq')->class('control-label') !!}
             <span class="text-danger">*</span>
             {!! html()->text('title',$data->title)->placeholder('Type title here')->class('form-control')->id('title') !!}
         </div>
@@ -12,11 +12,11 @@
             {!! html()->select('menu_id',$menu,$data->menu_id)->class('form-control select2')->id('menu_id')->placeholder('Choose Menu') !!}
         </div>
         <div class='form-group'>
-            {!! html()->label('description')->class('control-label')->for('description')->text('Description') !!}
+            {!! html()->label('description')->text('Deskripsi')->class('control-label') !!}
             {!! html()->textarea('description',$data->description)->placeholder('Write Here ...')->class('form-control hie')->id('description') !!}
         </div>
         <div class='form-group'>
-            {!! html()->label('file')->class('control-label')->for('file')->text('File') !!}
+            {!! html()->label('file')->text('Unggah File')->class('control-label') !!}
             <span class="text-danger">Allowed : pdf, video (mp4), image (jpg, png)</span><br>
             {!! html()->file('file')->class('form-control')->id('file')->accept('application/pdf,video/*,image/*') !!}
         </div>
@@ -26,7 +26,7 @@
                     <table class="table table-{!! $data->id !!}">
                         <tr>
                             <td>
-                                File : <a href="{{ url($data->file->link_stream) }}" target="_blank"> {{ $data->file->name }} </a><br>
+                                File : <a href="{{ url($data->file->link_stream) }}" target="_blank"> {{ $data->file->name }} </a>
                             </td>
                             <td>
                                 Size : {!! $data->file->size !!}
@@ -66,7 +66,8 @@
         </div>
     </div>
 </div>
-<div class="progress-bar bg-success" role="progressbar" style="width: 0;height: 15px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+<div class="progress-bar bg-success" role="progressbar" style="width: 0;height: 15px;" aria-valuenow="0"
+     aria-valuemin="0" aria-valuemax="100"></div>
 {!! html()->hidden('table-id','datatable')->id('table-id') !!}
 {!! html()->form()->close() !!}
 <style>

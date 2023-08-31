@@ -1,4 +1,4 @@
-{!! Form::open(['id'=>'form-create-'.$page->code, 'route' => [$page->url.'.update', $data->id], 'class' => 'form form-horizontal', 'method' => 'put', 'files' => TRUE]) !!}
+{!! html()->modelForm($data,'PUT', route($page->url.'.update', $data->id))->id('form-create-'.$page->code)->acceptsFiles()->class('form form-horizontal')->open() !!}
 <div class="row">
     <div class="col-md-6">
         <div class="form-group">
@@ -96,7 +96,7 @@
         </div>
     </div>
 </div>
-{!! html()->hidden('function')->value('loadMenu(),sidebarMenu()')->id('function') !!}
+{!! html()->hidden('function')->value('loadMenu,sidebarMenu')->id('function') !!}
 {!! html()->form()->close() !!}
 <style>
     .select2-container {

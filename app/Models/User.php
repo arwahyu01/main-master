@@ -41,12 +41,17 @@ class User extends Authenticatable
 
     public function setPasswordAttribute($value): void
     {
-        $this->attributes['password'] = bcrypt($value);
+        $this->attributes['password'] = $value ? bcrypt($value) : $this->password;
     }
 
     public function tokens(): object
     {
-        return $this->morphMany(Sanctum::$personalAccessTokenModel, 'tokenable', 'tokenable_type', 'tokenable_id');
+        return $this->morphMany(Sanctum::$personalAccessTokenModel, 'tokenable');
+    }
+
+    public function log(): object
+    {
+        return $this->morphMany(Log::class, 'loggable');
     }
 
     public function getNameAttribute()

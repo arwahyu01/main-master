@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\AccessGroup;
 use App\Models\Level;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -22,23 +21,24 @@ class UserController extends Controller
         return view($this->view.'.create', compact('level', 'access_group'));
     }
 
-    public function data()
+    public function data(Request $request)
     {
         $data = $this->model::filterLevel()->with('level', 'access_group');
+        $user = $request->user();
         return datatables()->of($data)
-            ->addColumn('action', function ($data) {
+            ->addColumn('action', function ($data) use ($user) {
                 $button ='';
-                if(Auth::user()->update){
+                if($user->update){
                     $button.='<button class="btn-action btn btn-sm btn-outline" data-title="Edit" data-action="edit" data-url="'.$this->url.'" data-id="'.$data->id.'" title="Edit"> <i class="fa fa-edit text-warning"></i> </button> ';
                 }
-                if(Auth::user()->delete){
+                if($user->delete){
                     $button.='<button class="btn-action btn btn-sm btn-outline" data-title="Delete" data-action="delete" data-url="'.$this->url.'" data-id="'.$data->id.'" title="Delete"> <i class="fa fa-trash text-danger"></i> </button>';
                 }
                 return "<div class='btn-group'>".$button."</div>";
             })
             ->addIndexColumn()
             ->rawColumns(['action'])
-            ->make(true);
+            ->make();
     }
 
     public function store(Request $request)
@@ -72,12 +72,15 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
+        $is_required = $request->password ? 'required' : 'nullable';
         $request->validate([
             'first_name' => 'required|min:2',
             'last_name' => 'nullable|min:3',
             'level_id' => 'nullable|exists:levels,id',
             'access_group_id' => 'nullable|exists:access_groups,id',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email,'.$id.',id,deleted_at,NULL',
+            'password' => $is_required.'|min:4|confirmed',
+            'password_confirmation' => $is_required.'|min:4|same:password',
         ]);
 
         $data = $this->model::find($id);

@@ -2,16 +2,16 @@
 <div class="panel shadow-sm">
     <div class="panel-body">
         <div class='form-group'>
-            {!! html()->label('Name','name')->class('control-label') !!}
-            {!! html()->text('name',$data->name)->placeholder('Type name here')->class('form-control')->id('name') !!}
+            {!! html()->label('Nama Level','name')->class('control-label') !!}
+            {!! html()->text('name',$data->name)->placeholder('Ketik nama level disini')->class('form-control')->id('name') !!}
         </div>
         <div class='form-group'>
-            {!! html()->label('Code','code')->class('control-label') !!}
-            {!! html()->text('code',$data->code)->placeholder('Type code here')->class('form-control')->id('code') !!}
+            {!! html()->label('Kode Level','code')->class('control-label') !!}
+            {!! html()->text('code',$data->code)->placeholder('Ketik kode disini')->class('form-control')->id('code') !!}
         </div>
         <div class='form-group'>
-            {!! html()->label('Global Aaccess','access')->class('control-label') !!}
-            <div class="row">
+            {!! html()->label('Ganti hak akses yang dimiliki oleh level ini?','access')->class('control-label') !!}
+            <div class="row mt-2">
                 @foreach(collect(config('master.app.level')) as $key => $level)
                     <div class="col-auto">
                         {!! html()->checkbox('access[]',in_array($level, ($data->access ?? [])) ? (($data->access[$level] ?? false) ? true : false) : false,$level)->id('md_checkbox_'.$key)->class('filled-in chk-col-primary') !!}

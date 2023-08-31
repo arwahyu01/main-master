@@ -97,7 +97,7 @@
         </div>
     </div>
 </div>
-{!! html()->hidden('function')->value('loadMenu(),sidebarMenu()')->id('function') !!}
+{!! html()->hidden('function')->value('loadMenu,sidebarMenu')->id('function') !!}
 {!! html()->form()->close() !!}
 <style>
     .select2-container {
