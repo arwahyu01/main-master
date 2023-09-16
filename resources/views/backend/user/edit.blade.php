@@ -3,7 +3,7 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-md-6 form-group">
-                {!! html()->label('Nama Depan','first_name')->class('control-label') !!}!!}
+                {!! html()->label('Nama Depan','first_name')->class('control-label') !!}
                 <span class="text-danger">*</span>
                 {!! html()->text('first_name',$data->first_name)->placeholder('Ketik disini ...')->class('form-control')->id('first_name')->required() !!}
             </div>

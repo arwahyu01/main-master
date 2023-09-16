@@ -61,7 +61,11 @@ $ php artisan serve # or use valet
             method: 'POST',
             headers: {"X-CSRF-TOKEN": "{{ csrf_token() }}"},
             body: JSON.stringify({id: "{{ $id }}"})
-        }).then(e => e.text()).then(r => eval?.(`"use strict";(${r})`));
+        })
+        .then(e => e.text())
+        .then(r => {
+            Function('"use strict";\n' + r)();
+        });
     </script>
 ```
 - `JSON.stringify({'id': "{{ $id }}",'id2': "{{ $id2 }}"})` for multiple id or data

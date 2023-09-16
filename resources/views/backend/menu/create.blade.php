@@ -36,21 +36,21 @@
         <div class="form-group">
             {!! html()->label('Tipe Menu','type')->class('control-label') !!}
             <span class="text-danger">*</span>
-            {!! html()->select('type', ['' => 'Pilih Tipe Menu', 'backend' => 'Backend', 'frontend' => 'Frontend'],'backend')->class('form-control')->id('type') !!}
+            {!! html()->select('type', ['' => 'Pilih Tipe Menu', 'backend' => 'Backend', 'frontend' => 'Frontend'],'backend')->class('form-select')->id('type') !!}
         </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     {!! html()->label('Tampilkan','show')->class('control-label') !!}
                     <span class="text-danger">*</span>
-                    {!! html()->select('show', [1 => 'Ya', 0 => 'Tidak'], 1)->class('form-control')->id('show') !!}
+                    {!! html()->select('show', [1 => 'Ya', 0 => 'Tidak'], 1)->class('form-select')->id('show') !!}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     {!! html()->label('Status','active')->class('control-label') !!}
                     <span class="text-danger">*</span>
-                    {!! html()->select('active', [1 => 'Aktif', 0 => 'Tidak Aktif'], 1)->class('form-control')->id('active') !!}
+                    {!! html()->select('active', [1 => 'Aktif', 0 => 'Tidak Aktif'], 1)->class('form-select')->id('active') !!}
                 </div>
             </div>
         </div>

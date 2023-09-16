@@ -31,7 +31,7 @@
         <div class='form-group'>
             {!! html()->label('Tingkat Kepentingan','urgency')->class('control-label') !!}
             <span class="text-danger">*</span>
-            {!! html()->select('urgency',config('master.content.announcement.status'))->class('form-control')->id('urgency')->placeholder('Pilih Urgensi')->required() !!}
+            {!! html()->select('urgency',config('master.content.announcement.status'))->class('form-select')->id('urgency')->placeholder('Pilih Urgensi')->required() !!}
         </div>
         <div class='form-group'>
             {!! html()->label('File Pendukung','file')->class('control-label') !!}
