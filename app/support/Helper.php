@@ -32,6 +32,10 @@ class Helper
         return $model;
     }
 
+    /**
+     * @param $bytes int //ukuran file
+     * @return string
+     */
     public static function bytesConverter($bytes): string
     {
         $bytes=(int)$bytes;
@@ -40,11 +44,31 @@ class Helper
         return round($bytes / pow(1024, ($i=floor(log($bytes, 1024)))), 2) . ' ' . $units[$i];
     }
 
+    /**
+     * @param $text string //text yang akan di sort
+     * @param $length int
+     * @return string
+     */
     public static function sortText($text,$length=100): string
     {
         return substr($text, 0, $length) . (strlen($text) > $length ? '...' : '');
     }
 
+    /**
+     * @param $model
+     * @param $users
+     * @param  array  $array
+     * Send Notification to user
+     * Example:
+     * $this->help::sendNotification($announcement, $users, [
+                'title' => 'Title Notification',
+                'link' => $announcement->link,
+                'icon' => 'fa fa-bullhorn',
+                'color' => 'text-info',
+                'content' => $announcement->title
+            ]);
+     * @return void
+     */
     public static function sendNotification($model, $users, array $array)
     {
         $users = is_array($users) ? $users : [$users];
