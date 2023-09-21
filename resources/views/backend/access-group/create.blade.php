@@ -2,12 +2,12 @@
 <div class="panel shadow-sm">
     <div class="panel-body">
         <div class='form-group'>
-            {!! html()->label()->class('control-label')->for('name')->text('Name') !!}
-            {!! html()->text('name')->placeholder('Type name here')->class('form-control')->id('name') !!}
+            {!! html()->label('Nama Grup','name')->class('control-label') !!}
+            {!! html()->text('name')->class('form-control')->id('name')->required()->placeholder('Ketik disini...') !!}
         </div>
         <div class='form-group'>
-            {!! html()->label()->class('control-label')->for('code')->text('Code') !!}
-            {!! html()->text('code')->placeholder('Type code here')->class('form-control')->id('code') !!}
+            {!! html()->label('Kode','code')->class('control-label') !!}
+            {!! html()->text('code')->class('form-control')->id('code')->required()->placeholder('Ketik disini...') !!}
         </div>
     </div>
 </div>

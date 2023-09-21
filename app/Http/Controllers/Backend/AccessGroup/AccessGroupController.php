@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Backend\AccessGroup;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class AccessGroupController extends Controller
 {
@@ -18,26 +17,27 @@ class AccessGroupController extends Controller
         return view($this->view.'.create');
     }
 
-    public function data()
+    public function data(Request $request)
     {
         $data = $this->model::all();
+        $user = $request->user();
         return datatables()->of($data)
-            ->addColumn('action', function ($data) {
+            ->addColumn('action', function ($data) use ($user) {
                 $button = '';
-                if (Auth::user()->read) {
+                if ($user->read) {
                     $button .= '<button type="button" class="btn-action btn btn-sm btn-outline" data-title="Detail" data-action="show" data-url="' . $this->url . '" data-id="' . $data->id . '" title="Tampilkan"><i class="fa fa-eye text-info"></i></button>';
                 }
-                if (Auth::user()->create) {
+                if ($user->create) {
                     $button .= '<button class="btn-action btn btn-sm btn-outline" data-title="Edit" data-action="edit" data-url="' . $this->url . '" data-id="' . $data->id . '" title="Edit"> <i class="fa fa-edit text-warning"></i> </button> ';
                 }
-                if (Auth::user()->delete) {
+                if ($user->delete) {
                     $button .= '<button class="btn-action btn btn-sm btn-outline" data-title="Delete" data-action="delete" data-url="' . $this->url . '" data-id="' . $data->id . '" title="Delete"> <i class="fa fa-trash text-danger"></i> </button>';
                 }
                 return "<div class='btn-group'>" . $button . "</div>";
             })
             ->addIndexColumn()
             ->rawColumns(['action'])
-            ->make(TRUE);
+            ->make();
     }
 
     public function store(Request $request)

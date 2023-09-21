@@ -72,7 +72,7 @@
                                                 <i class="fa fa-save"></i> Simpan
                                             </a>
                                         </div>
-                                        {!! html()->hidden('function','sidebarMenu()')->id('function') !!}
+                                        {!! html()->hidden('function','sidebarMenu')->id('function') !!}
                                         {!! html()->form()->close() !!}
                                     </div>
                                 </div>

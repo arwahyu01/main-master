@@ -1,3 +1,4 @@
+/*jshint esversion: 11 */
 (function ($) {
     $.loadModal = function (options) {
         // allow a simple url to be sent as the single option
@@ -26,6 +27,7 @@
             beforeShow: null,                        // This method is called at the beginning of the default success method.  If this method
             bgClass: 'secondary',
             onShow: null,
+            btnStyle: '',
         }, options);
 
         // ensure we have a url
@@ -35,7 +37,7 @@
         }
 
         // close any dialog with this id first
-        $(`#${options.id}`).modal('hide');
+        $('#' + options.id).modal('hide');
 
         // create our own success responder for the ajax
         options.ajax.success = $.isArray(options.ajax.success) ? options.ajax.success : options.ajax.success ? [options.ajax.success] : [];
@@ -45,9 +47,9 @@
             }
 
             // create the modal html
-            var headTitle = options.title;
-            var submitClass = headTitle.replace(/\s+/gi, '-').toLowerCase();
-            var div = $([
+            const headTitle = options.title;
+            const submitClass = headTitle.replace(/\s+/gi, '-').toLowerCase();
+            const div = $([
                 '<div id="' + options.id + '" class="modal ' + options.dlgClass + '" role="dialog" aria-labelledby="modalLabel' + options.bgClass + '">',
                 '  <div class="modal-dialog ' + options.size + '" role="document">',
                 '      <div class="modal-content">',
@@ -58,7 +60,7 @@
                 '        <div id="' + options.idBody + '" class="modal-body"></div>',
                 '        <div class="modal-footer">',
                 '           <button class="btn btn-sm btn-secondary" data-bs-dismiss="modal"><i class="fa fa-ban"></i> Tutup</button>',
-                '           <button type="button" data-for="" class="pull-right btn btn-info btn-sm submit-data btn-' + options.bgClass + ' submit-' + submitClass + '" style="' + options.deeStel + '">' +
+                '           <button type="button" data-for="" class="pull-right btn btn-info btn-sm submit-data btn-' + options.bgClass + ' submit-' + submitClass + '" style="' + options.btnStyle + '">' +
                 '               <i class="fa fa-refresh fa-spin loading" style="display:none;"></i><i class="fa fa-save"></i> ' + options.title +
                 '           </button>',
                 '        </div>',
@@ -147,7 +149,7 @@
 
     $.hideLoading = function () {
         $.unblockUI();
-    }
+    };
 
     $.showError = function (message) {
         $.blockUI({
@@ -165,5 +167,5 @@
             }
         });
         setTimeout($.unblockUI, 2000);
-    }
+    };
 })(jQuery);

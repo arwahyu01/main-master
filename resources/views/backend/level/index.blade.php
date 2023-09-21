@@ -34,10 +34,10 @@
                                     <thead>
                                     <tr>
                                         <th class="w-0">No</th>
-                                        <th>Name</th>
-                                        <th>Code</th>
-                                        <th>Access</th>
-                                        <th class="text-center w-0">Action</th>
+                                        <th>Nama Level</th>
+                                        <th>Kode | Alias</th>
+                                        <th>Hak Akses</th>
+                                        <th class="text-center w-0">Aksi</th>
                                     </tr>
                                     </thead>
                                     <tbody>

@@ -5,8 +5,8 @@
         </a>
         <a href="#" class="logo">
             <div class="logo-lg">
-                <i class="light-logo"><img src="{{ url($template).config('master.app.web.logo_light')}}" alt="logo" width="140" height="21"></i>
-                <i class="dark-logo"><img src="{{ url($template).config('master.app.web.logo_dark')}}" alt="logo" width="140" height="21"></i>
+                <i class="light-logo"><img src="{{ url($template).config('master.app.web.logo_light')}}" alt="logo" width="140" height="70"></i>
+                <i class="dark-logo"><img src="{{ url($template).config('master.app.web.logo_dark')}}" alt="logo" width="140" height="70"></i>
             </div>
         </a>
     </div>
@@ -31,7 +31,7 @@
                     <div class="app-menu">
                         <div class="search-bx mx-5">
                             <div class="input-group">
-                                <input type="search" class="form-control search-menu" placeholder="Search" aria-label="Search" aria-describedby="button-addon2" name="search_menu">
+                                <input type="search" class="form-control search-menu" placeholder="Ketik disini ..." aria-label="Search" aria-describedby="button-addon2" name="search_menu">
                                 <div class="input-group-append">
                                     <button class="btn" type="button" id="button-addon3" title="Search"><i class="ti-search"></i></button>
                                 </div>

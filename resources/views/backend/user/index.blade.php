@@ -35,10 +35,10 @@
                                     <thead>
                                     <tr>
                                         <th class="w-0">No</th>
-                                        <th>Nama</th>
+                                        <th>Nama Lengkap</th>
                                         <th>Email</th>
-                                        <th>Role</th>
-                                        <th>Access</th>
+                                        <th>Level</th>
+                                        <th>Akses Grup</th>
                                         <th class="text-center w-0">Aksi</th>
                                     </tr>
                                     </thead>

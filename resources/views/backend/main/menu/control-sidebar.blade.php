@@ -4,10 +4,10 @@
     </div>
     <div class="tab-content">
         <div class="flexbox">
-            <p><i class="fa fa-bullhorn"></i> Hi, what you want to do?</p>
+            <p><i class="fa fa-bullhorn"></i> Hai, ada yang bisa kami bantu ?</p>
         </div>
         <div class="lookup lookup-sm lookup-right d-lg-block">
-            <input type="text" id="search-faq" name="search" placeholder="Search" class="w-p100">
+            <input type="text" id="search-faq" name="search" placeholder="Cari disini ..." class="w-p100">
         </div>
         <div class="media-list media-list-hover mt-20">
             {{-- Content --}}

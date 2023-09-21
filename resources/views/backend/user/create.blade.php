@@ -3,43 +3,43 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-md-6 form-group">
-                {!! html()->label('First Name','first_name')->class('control-label') !!}
+                {!! html()->label('Nama Depan','first_name')->class('control-label') !!}
                 <span class="text-danger">*</span>
-                {!! html()->text('first_name')->placeholder('Type first name here')->class('form-control')->id('first_name') !!}
+                {!! html()->text('first_name')->placeholder('Ketik disini ...')->class('form-control')->id('first_name')->required() !!}
             </div>
             <div class="col-md-6 form-group">
-                {!! html()->label('Last Name','last_name')->class('control-label') !!}
-                <span class="text-danger">*</span>
-                {!! html()->text('last_name')->placeholder('Type last name here')->class('form-control')->id('last_name') !!}
+                {!! html()->label('Nama Belakang','last_name')->class('control-label') !!}
+                <span class="text-dark">(optional)</span>
+                {!! html()->text('last_name')->placeholder('Ketik disini ...')->class('form-control')->id('last_name')->required() !!}
             </div>
         </div>
         <div class="form-group">
             {!! html()->label('Email','email')->class('control-label') !!}
             <span class="text-danger">*</span>
-            {!! html()->text('email')->placeholder('Type email here')->class('form-control')->id('email') !!}
+            {!! html()->text('email')->placeholder('Ketik disini ...')->class('form-control')->id('email')->required() !!}
         </div>
         <div class="form-group row">
             <div class="col-md-6">
                 {!! html()->label('Password','password')->class('control-label') !!}
                 <span class="text-danger">*</span>
-                {!! html()->password('password')->placeholder('Type password here')->class('form-control')->id('password') !!}
+                {!! html()->password('password')->placeholder('Ketik password')->class('form-control')->id('password')->required() !!}
             </div>
             <div class="col-md-6">
-                {!! html()->label('Password Confirmation','password_confirmation')->class('control-label') !!}
+                {!! html()->label('Konfirmasi Password','password_confirmation')->class('control-label') !!}
                 <span class="text-danger">*</span>
-                {!! html()->password('password_confirmation')->placeholder('Type password confirmation here')->class('form-control')->id('password_confirmation') !!}
+                {!! html()->password('password_confirmation')->placeholder('Ketik ulang password')->class('form-control')->id('password_confirmation')->required() !!}
             </div>
         </div>
         <div class="form-group row">
             <div class="col-md-6">
-                {!! html()->label('Level','level_id')->class('control-label') !!}
+                {!! html()->label('Level Pengguna','level_id')->class('control-label') !!}
                 <span class="text-danger">*</span>
-                {!! html()->select('level_id',$level)->class('form-control select2')->id('level_id') !!}
+                {!! html()->select('level_id',$level)->class('form-control select2')->id('level_id')->required() !!}
             </div>
             <div class="col-md-6">
-                {!! html()->label('Access Group','access_group_id')->class('control-label') !!}
+                {!! html()->label('Akses Grup Pengguna','access_group_id')->class('control-label') !!}
                 <span class="text-danger">*</span>
-                {!! html()->select('access_group_id',$access_group)->class('form-control select2')->id('access_group_id') !!}
+                {!! html()->select('access_group_id',$access_group)->class('form-control select2')->id('access_group_id')->required() !!}
             </div>
         </div>
     </div>

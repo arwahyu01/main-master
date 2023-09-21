@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Backend\Faq;
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class FaqController extends Controller
@@ -21,19 +20,20 @@ class FaqController extends Controller
         return view($this->view.'.create', $data);
     }
 
-    public function data()
+    public function data(Request $request)
     {
         $data = $this->model::all();
+        $user = $request->user();
         return datatables()->of($data)
-            ->addColumn('action', function ($data) {
+            ->addColumn('action', function ($data) use ($user) {
                 $button = '';
-                if (Auth::user()->read) {
+                if ($user->read) {
                     $button .= '<button type="button" class="btn-action btn btn-sm btn-outline" data-title="Detail" data-action="show" data-url="' . $this->url . '" data-id="' . $data->id . '" title="Tampilkan"><i class="fa fa-eye text-info"></i></button>';
                 }
-                if (Auth::user()->create) {
+                if ($user->create) {
                     $button .= '<button class="btn-action btn btn-sm btn-outline" data-title="Edit" data-action="edit" data-url="' . $this->url . '" data-id="' . $data->id . '" title="Edit"> <i class="fa fa-edit text-warning"></i> </button> ';
                 }
-                if (Auth::user()->delete) {
+                if ($user->delete) {
                     $button .= '<button class="btn-action btn btn-sm btn-outline" data-title="Delete" data-action="delete" data-url="' . $this->url . '" data-id="' . $data->id . '" title="Delete"> <i class="fa fa-trash text-danger"></i> </button>';
                 }
                 return "<div class='btn-group'>" . $button . "</div>";
@@ -48,29 +48,28 @@ class FaqController extends Controller
         return view($this->view.'.index', compact('id'));
     }
 
-    public function dataSub()
+    public function dataSub(Request $request)
     {
         $data=$this->model::all();
+        $user=$request->user();
         return datatables()->of($data)
-            ->addColumn('action', function ($data) {
-                $button ='';
-                if(Auth::user()->create){
-                    $button .= '<a href="'.url($this->url.'/faq-sub/index/'.$data->id).'" class="btn btn-sm btn-outline" data-title="Sub FAQ" data-action="show" data-url="'.$this->url.'" data-id="'.$data->id.'" title="Tampilkan"><i class="fa fa-eye text-info"></i></button>';
+            ->addColumn('action', function ($data) use ($user) {
+                $button = '';
+                if ($user->create) {
+                    $button .= '<a href="' . url($this->url . '/faq-sub/index/' . $data->id) . '" class="btn btn-sm btn-outline" data-title="Sub FAQ" data-action="show" data-url="' . $this->url . '" data-id="' . $data->id . '" title="Tampilkan"><i class="fa fa-eye text-info"></i></button>';
+                    $button .= '<button class="btn-action btn btn-sm btn-outline" data-title="Edit" data-action="edit" data-url="' . $this->url . '" data-id="' . $data->id . '" title="Edit"> <i class="fa fa-edit text-warning"></i> </button> ';
                 }
-                if(Auth::user()->read){
-                    $button .= '<button type="button" class="btn-action btn btn-sm btn-outline" data-title="Detail" data-action="show" data-url="'.$this->url.'" data-id="'.$data->id.'" title="Tampilkan"><i class="fa fa-eye text-info"></i></button>';
+                if ($user->read) {
+                    $button .= '<button type="button" class="btn-action btn btn-sm btn-outline" data-title="Detail" data-action="show" data-url="' . $this->url . '" data-id="' . $data->id . '" title="Tampilkan"><i class="fa fa-eye text-info"></i></button>';
                 }
-                if(Auth::user()->create){
-                    $button.='<button class="btn-action btn btn-sm btn-outline" data-title="Edit" data-action="edit" data-url="'.$this->url.'" data-id="'.$data->id.'" title="Edit"> <i class="fa fa-edit text-warning"></i> </button> ';
+                if ($user->delete) {
+                    $button .= '<button class="btn-action btn btn-sm btn-outline" data-title="Delete" data-action="delete" data-url="' . $this->url . '" data-id="' . $data->id . '" title="Delete"> <i class="fa fa-trash text-danger"></i> </button>';
                 }
-                if(Auth::user()->delete){
-                    $button.='<button class="btn-action btn btn-sm btn-outline" data-title="Delete" data-action="delete" data-url="'.$this->url.'" data-id="'.$data->id.'" title="Delete"> <i class="fa fa-trash text-danger"></i> </button>';
-                }
-                return "<div class='btn-group'>".$button."</div>";
+                return "<div class='btn-group'>" . $button . "</div>";
             })
             ->addIndexColumn()
             ->rawColumns(['action'])
-            ->make(TRUE);
+            ->make();
     }
 
     public function store(Request $request)

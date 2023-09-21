@@ -1,5 +1,5 @@
 {{--<script>--}}
-    const loadMenu = () => {
+    function loadMenu(){
         $('.loading').show();
         $.ajax({
             url: "{{ url(config('master.app.url.backend').'/'.$url.'/data') }}",

@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Route;
 
 class Helper
 {
-    public static function menu(): ?object
+    public static function menu($code=null): ?object
     {
-        return Menu::whereCode(explode(".", Route::currentRouteName())[0])->first();
+        return Menu::where('code', explode(".", $code ?? Route::currentRouteName())[0])->first();
     }
 
     /**

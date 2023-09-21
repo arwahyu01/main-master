@@ -4,9 +4,10 @@
 PHP Framework For Web Artisans
 </p>
 
-<h3 style="text-align: center"> Main Master </h3>
+<h2 style="text-align: center"> Main Master </h2>
+<h3 style="text-align: center">( Crud Generator )</h3>
 <p style="text-align: center">
-Main Master is the base project for laravel projects. This project was created to make it easier for developers to create laravel projects. This project is build with laravel 10 and bootstrap 5.
+Main Master is a CRUD generator for Laravel projects. This project was created to make it easier for developers to create Laravel projects. This project is built with Laravel 10 and Bootstrap 5.
 </p>
 <p style="text-align: center">
 Made with ❤️ by <a href="https://www.linkedin.com/in/arwahyupradana/" target="_blank">arwp</a>
@@ -23,6 +24,7 @@ Made with ❤️ by <a href="https://www.linkedin.com/in/arwahyupradana/" target
 - [x] Login with authentication (email and password)
 - [x] CRUD with ajax request
 - [x] role and permission management
+- [x] Sidebar notification
 - [x] Default Menu
     - [x] Dashboard
     - [x] Menu with sub menu (multi level)
@@ -32,6 +34,7 @@ Made with ❤️ by <a href="https://www.linkedin.com/in/arwahyupradana/" target
       - [x] Access Menu
     - [x] Faq
     - [x] user management
+    - [x] Announcement
     - [x] Morph File
 
 ## How to install
@@ -58,7 +61,11 @@ $ php artisan serve # or use valet
             method: 'POST',
             headers: {"X-CSRF-TOKEN": "{{ csrf_token() }}"},
             body: JSON.stringify({id: "{{ $id }}"})
-        }).then(e => e.text()).then(r => eval?.(`"use strict";(${r})`));
+        })
+        .then(e => e.text())
+        .then(r => {
+            Function('"use strict";\n' + r)();
+        });
     </script>
 ```
 - `JSON.stringify({'id': "{{ $id }}",'id2': "{{ $id2 }}"})` for multiple id or data
