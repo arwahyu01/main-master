@@ -53,9 +53,10 @@
 </div>
 {!! html()->hidden('table-id','datatable')->id('table-id') !!}
 {!! html()->form()->close() !!}
-<link href="{{ url($template.'/css/fileinput.css') }}" rel="stylesheet">
+<link href="{{ url($template.'/fileupload/css/fileinput.css') }}" rel="stylesheet">
+<link href="{{ url($template.'/fileupload/css/font_bootstrap-icons.min.css') }}" rel="stylesheet">
 <style>
-    .fileinput-remove, .fileinput-upload, .file-upload-indicator, .file-actions {
+    .kv-file-upload, .fileinput-upload, .file-upload-indicator{
         display: none;
     }
     .select2-container {
@@ -67,7 +68,7 @@
         max-width: 1000px !important;
     }
 </style>
-<script src="{{ url($template.'/js/pages/fileinput.js') }}"></script>
+<script src="{{ url($template.'/fileupload/js/fileinput.js') }}"></script>
 <script>
     $('#menu_id, #parent_id').select2().parent().css('z-index', 9999)
     $('.modal-title').html('<i class="fa fa-plus-circle"></i> Tambah Data {!! $page->title !!}');
