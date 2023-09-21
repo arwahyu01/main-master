@@ -48,6 +48,7 @@ class UserController extends Controller
             'last_name' => 'nullable|min:3',
             'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
             'password' => 'required|min:8',
+            'password_confirmation' => 'required|min:8|same:password',
             'level_id' => 'required|exists:levels,id',
             'access_group_id' => 'required|exists:access_groups,id',
         ]);
@@ -79,8 +80,8 @@ class UserController extends Controller
             'level_id' => 'nullable|exists:levels,id',
             'access_group_id' => 'nullable|exists:access_groups,id',
             'email' => 'required|email|unique:users,email,'.$id.',id,deleted_at,NULL',
-            'password' => $is_required.'|min:4|confirmed',
-            'password_confirmation' => $is_required.'|min:4|same:password',
+            'password' => $is_required.'|min:8|confirmed',
+            'password_confirmation' => $is_required.'|min:8|same:password',
         ]);
 
         $data = $this->model::find($id);

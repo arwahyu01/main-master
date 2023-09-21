@@ -189,6 +189,7 @@ $(window.document).on('click', '.submit-data', function (e) {
             errorBuilder(xhr);
             $('.progress').hide();
             dismiss.prop('disabled', false);
+            btnSubmit.disabled = false;
             btnSubmit.innerHTML = '<i class="fa fa-save"></i> ' + textBtn;
         }
     }).submit();
