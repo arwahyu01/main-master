@@ -28,8 +28,10 @@
                                     @if(!$data->file->isEmpty())
                                         <ul>
                                             @foreach($data->file as $file)
-                                                <li>
-                                                    <span class="fa fa-download"></span> <a href="{!!  $file->link_download !!}" target="_blank">{!!  $file->file_name !!}</a>
+                                                <li class="list-group-item">
+                                                    <a href="{!!  $file->link_download !!}" target="_blank"><span class="fa fa-download"></span> Unduh</a> |
+                                                    <a href="{!!  $file->link_stream !!}" target="_blank"><span class="fa fa-eye"></span> Lihat </a> |
+                                                    {!!  $file->file_name !!}
                                                 </li>
                                             @endforeach
                                         </ul>

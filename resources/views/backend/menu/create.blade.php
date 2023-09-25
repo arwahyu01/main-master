@@ -13,7 +13,6 @@
         </div>
         <div class="form-group">
             {!! html()->label('Model','model')->class('control-label') !!}
-            <span class="text-danger">*</span>
             {!! html()->select('model', $model)->placeholder('Pilih Model (optional)')->class('form-control select2')->id('model') !!}
         </div>
         <div class="form-group">

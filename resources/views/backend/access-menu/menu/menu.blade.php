@@ -1,4 +1,4 @@
-{!! html()->checkbox('menu_id[]', $menu->id, in_array($menu->id, $data->access_menu()->pluck('menu_id')->toArray()) ? TRUE : FALSE)->id('menu_'.$menu->id)->class('filled-in chk-col-success') !!}
+{!! html()->checkbox('menu_id[]', in_array($menu->id, $data->access_menu()->pluck('menu_id')->toArray()), $menu->id)->id('menu_'.$menu->id)->class('filled-in chk-col-success') !!}
 {!! html()->label($menu->title)->for('menu_'.$menu->id)->class('text-nowrap') !!}
 @if(collect($menu->children)->count() > 0)
     <ul class="list-group">

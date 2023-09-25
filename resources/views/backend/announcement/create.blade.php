@@ -29,11 +29,6 @@
             {!! html()->textarea('content')->class('form-control')->id('content')->placeholder('Ketik Disini')->required() !!}
         </div>
         <div class='form-group'>
-            {!! html()->label('Tingkat Kepentingan','urgency')->class('control-label') !!}
-            <span class="text-danger">*</span>
-            {!! html()->select('urgency',config('master.content.announcement.status'))->class('form-select')->id('urgency')->placeholder('Pilih Urgensi')->required() !!}
-        </div>
-        <div class='form-group'>
             {!! html()->label('File Pendukung','file')->class('control-label') !!}
             <span class="text-danger">*</span>
             <div class="file-loading">
@@ -41,7 +36,12 @@
             </div>
         </div>
         <div class='form-group'>
-            {!! html()->label('Bagian dari announcement lain','parent_id')->class('control-label') !!}
+            {!! html()->label('Tingkat Kepentingan','urgency')->class('control-label') !!}
+            <span class="text-danger">*</span>
+            {!! html()->select('urgency',config('master.content.announcement.status'))->class('form-select')->id('urgency')->placeholder('Pilih Urgensi')->required() !!}
+        </div>
+        <div class='form-group'>
+            {!! html()->label('Berkaitan dengan pengumuman lain ?','parent_id')->class('control-label') !!}
             {!! html()->select('parent_id',$parent)->class('form-control select2')->id('parent_id')->placeholder('Pilih Pengumuman') !!}
         </div>
         <div class='form-group'>

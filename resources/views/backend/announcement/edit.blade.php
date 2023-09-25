@@ -28,6 +28,13 @@
             <span class="text-danger">*</span>
             {!! html()->textarea('content',$data->content)->class('form-control')->id('content')->placeholder('Ketik Disini')->required() !!}
         </div>
+        <div class='form-group'>
+            {!! html()->label('File Pendukung','file')->class('control-label') !!}
+            <span class="text-danger">*</span>
+            <div class="file-loading">
+                {!! html()->file('file[]')->id('file')->class('file-drag-drop')->multiple()->data('overwrite-initial',false) !!}
+            </div>
+        </div>
         @if(!$data->file->isEmpty())
             <div class="form-group">
                 <label class="control-label">File Pendukung Saat Ini :</label>
@@ -48,19 +55,12 @@
             </div>
         @endif
         <div class='form-group'>
-            {!! html()->label('File Pendukung','file')->class('control-label') !!}
-            <span class="text-danger">*</span>
-            <div class="file-loading">
-                {!! html()->file('file[]')->id('file')->class('file-drag-drop')->multiple()->data('overwrite-initial',false) !!}
-            </div>
-        </div>
-        <div class='form-group'>
             {!! html()->label('Tingkat Kepentingan','urgency')->class('control-label') !!}
             <span class="text-danger">*</span>
             {!! html()->select('urgency',config('master.content.announcement.status'),$data->urgency)->class('form-select')->id('urgency')->placeholder('Pilih Urgensi')->required() !!}
         </div>
         <div class='form-group'>
-            {!! html()->label('Bagian dari announcement lain','parent_id')->class('control-label') !!}
+            {!! html()->label('Bagian dari pengumuman lain ?','parent_id')->class('control-label') !!}
             {!! html()->select('parent_id',$parent,$data->parent_id)->class('form-select form-control select2')->id('parent_id')->placeholder('Pilih Pengumuman') !!}
         </div>
         <div class='form-group'>
