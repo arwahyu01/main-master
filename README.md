@@ -25,6 +25,9 @@ Made with ❤️ by <a href="https://www.linkedin.com/in/arwahyupradana/" target
 - [x] CRUD with ajax request
 - [x] role and permission management
 - [x] Sidebar notification
+- [x] Header notification
+- [x] Seeder menu and access menu with run command `php artisan app:convert-menu`
+- [x] Morph File
 - [x] Default Menu
     - [x] Dashboard
     - [x] Menu with sub menu (multi level)
@@ -35,15 +38,14 @@ Made with ❤️ by <a href="https://www.linkedin.com/in/arwahyupradana/" target
     - [x] Faq
     - [x] user management
     - [x] Announcement
-    - [x] Morph File
 
 ## How to install
 ```bash
 # From Packagist
-$ composer create-project arwp/main-master
+$ composer create-project arwp/main-master {your-project-name}
 # ---- OR -----
 # Clone the repository
-$ git clone https://github.com/arwahyu01/main-master.git
+$ git clone https://github.com/arwahyu01/main-master.git {your-project-name}
 $ cd main-master
 $ composer install
 $ cp .env.example .env
@@ -77,7 +79,7 @@ $ php artisan serve # or use valet
     });
 ```
 
-## Features for developer
+## Features for developer (MVC Builder) :
 Install this package to your laravel project
 ```bash
 composer require arwp/mvc
@@ -93,9 +95,7 @@ composer require arwp/mvc
   - Run `php artisan migrate` to create table
     - add new menu in menu table
     - add access menu in access menu table
-
   - Run `php artisan delete:mvc [name]` to delete a module (delete all file and table in database)
-
 
 ## License
 - No License (free to use for personal)[README.md](..%2Fmvc-builder%2FREADME.md)
