@@ -156,5 +156,18 @@
                 "children": []
             }
         ]
+    },
+    {
+        "title": "Test",
+        "subtitle": "Tes",
+        "code": "test",
+        "model": "TestCoy",
+        "url": "test",
+        "icon": "fa fa-font-awesome",
+        "type": "backend",
+        "show": true,
+        "active": true,
+        "sort": 0,
+        "children": []
     }
 ]

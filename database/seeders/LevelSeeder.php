@@ -3,49 +3,18 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
 
 class LevelSeeder extends Seeder
 {
     public function run()
     {
-        $data = [
-            [
-                'id'=> 1,
-                'name' => 'Root User',
-                'code'=>'root',
-                'access' => [
-                    'create' => true,
-                    'read' => true,
-                    'update' => true,
-                    'delete' => true,
-                ],
-            ],
-            [
-                'id'=> 2,
-                'name' => 'Administrator',
-                'code'=>'admin',
-                'access' => [
-                    'create' => true,
-                    'read' => true,
-                    'update' => true,
-                    'delete' => true,
-                ],
-            ],
-            [
-                'id'=> 3,
-                'name' => 'User',
-                'code'=>'user',
-                'access' => [
-                    'create' => false,
-                    'read' => true,
-                    'update' => false,
-                    'delete' => false,
-                ],
-            ],
-        ];
-
-        foreach ($data as $item) {
-            \App\Models\Level::create($item);
+        $access_menu=json_decode(File::get(config_path('seeders/level.json')), true);
+        foreach ($access_menu as $item) {
+            \App\Models\Level::updateOrCreate(['code'=>$item['code']], [
+                'name'=>$item['name'],
+                'access'=>$item['access'],
+            ]);
         }
     }
 }

@@ -1,0 +1,217 @@
+[
+    {
+        "access_group_code": "root",
+        "code_menu": "dashboard",
+        "access": null
+    },
+    {
+        "access_group_code": "root",
+        "code_menu": "menu",
+        "access": [
+            "read",
+            "create",
+            "update",
+            "delete"
+        ]
+    },
+    {
+        "access_group_code": "root",
+        "code_menu": "level",
+        "access": [
+            "read",
+            "create",
+            "update",
+            "delete"
+        ]
+    },
+    {
+        "access_group_code": "root",
+        "code_menu": "access-group",
+        "access": [
+            "read",
+            "create",
+            "update",
+            "delete"
+        ]
+    },
+    {
+        "access_group_code": "root",
+        "code_menu": "access-menu",
+        "access": [
+            "read",
+            "create",
+            "update",
+            "delete"
+        ]
+    },
+    {
+        "access_group_code": "root",
+        "code_menu": "announcement",
+        "access": [
+            "read",
+            "create",
+            "update",
+            "delete"
+        ]
+    },
+    {
+        "access_group_code": "root",
+        "code_menu": "master",
+        "access": [
+            "read",
+            "create",
+            "update",
+            "delete"
+        ]
+    },
+    {
+        "access_group_code": "root",
+        "code_menu": "faq",
+        "access": [
+            "read",
+            "create",
+            "update",
+            "delete"
+        ]
+    },
+    {
+        "access_group_code": "root",
+        "code_menu": "user",
+        "access": [
+            "read",
+            "create",
+            "update",
+            "delete"
+        ]
+    },
+    {
+        "access_group_code": "root",
+        "code_menu": "question",
+        "access": [
+            "read",
+            "create",
+            "update",
+            "delete"
+        ]
+    },
+    {
+        "access_group_code": "root",
+        "code_menu": "hidden-menu",
+        "access": [
+            "read",
+            "create",
+            "update",
+            "delete"
+        ]
+    },
+    {
+        "access_group_code": "root",
+        "code_menu": "notification",
+        "access": [
+            "read",
+            "create",
+            "update",
+            "delete"
+        ]
+    },
+    {
+        "access_group_code": "admin",
+        "code_menu": "announcement",
+        "access": [
+            "read",
+            "create",
+            "update",
+            "delete"
+        ]
+    },
+    {
+        "access_group_code": "admin",
+        "code_menu": "master",
+        "access": [
+            "read",
+            "create",
+            "update",
+            "delete"
+        ]
+    },
+    {
+        "access_group_code": "admin",
+        "code_menu": "faq",
+        "access": [
+            "read",
+            "create",
+            "update",
+            "delete"
+        ]
+    },
+    {
+        "access_group_code": "admin",
+        "code_menu": "user",
+        "access": [
+            "read",
+            "create",
+            "update",
+            "delete"
+        ]
+    },
+    {
+        "access_group_code": "admin",
+        "code_menu": "question",
+        "access": [
+            "read",
+            "create",
+            "update",
+            "delete"
+        ]
+    },
+    {
+        "access_group_code": "admin",
+        "code_menu": "hidden-menu",
+        "access": [
+            "read",
+            "create",
+            "update",
+            "delete"
+        ]
+    },
+    {
+        "access_group_code": "admin",
+        "code_menu": "notification",
+        "access": [
+            "read",
+            "create",
+            "update",
+            "delete"
+        ]
+    },
+    {
+        "access_group_code": "user",
+        "code_menu": "user",
+        "access": [
+            "read",
+            "create",
+            "update",
+            "delete"
+        ]
+    },
+    {
+        "access_group_code": "user",
+        "code_menu": "hidden-menu",
+        "access": [
+            "read",
+            "create",
+            "update",
+            "delete"
+        ]
+    },
+    {
+        "access_group_code": "user",
+        "code_menu": "notification",
+        "access": [
+            "read",
+            "create",
+            "update",
+            "delete"
+        ]
+    }
+]

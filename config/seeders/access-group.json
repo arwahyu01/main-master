@@ -1,34 +1,45 @@
 [
     {
-        "root": [
-            "master",
+        "id": "1",
+        "code": "root",
+        "name": "Root User",
+        "menu": [
+            "dashboard",
             "menu",
             "level",
             "access-group",
             "access-menu",
+            "announcement",
+            "master",
             "faq",
-            "dashboard",
-            "notification",
             "user",
             "question",
             "hidden-menu",
-            "announcement"
+            "notification"
         ]
     },
     {
-        "admin": [
-            "notification",
+        "id": "2",
+        "code": "admin",
+        "name": "Administrator",
+        "menu": [
+            "announcement",
+            "master",
+            "faq",
             "user",
             "question",
             "hidden-menu",
-            "announcement"
+            "notification"
         ]
     },
     {
-        "user": [
-            "notification",
+        "id": "3",
+        "code": "user",
+        "name": "User",
+        "menu": [
             "user",
-            "hidden-menu"
+            "hidden-menu",
+            "notification"
         ]
     }
 ]

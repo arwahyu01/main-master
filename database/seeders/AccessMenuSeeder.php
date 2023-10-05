@@ -9,21 +9,18 @@ class AccessMenuSeeder extends Seeder
 {
     public function run()
     {
-        $group = json_decode(File::get(config_path('seeders/access-group.json')), true);
-        foreach ($group as $item) {
-            foreach ($item as $code => $menus) {
-                if($accessGroup = \App\Models\AccessGroup::where('code', $code)->first()){
-                    collect($menus)->map(function ($item) use ($accessGroup) {
-                        if ($menu=\App\Models\Menu::where('code', $item)->first()) {
-                            $accessGroup->access_menu()->updateOrCreate(['menu_id'=>$menu->id], [
-                                'access_group_id'=>$accessGroup->id, 'access'=>[
-                                    "read", "create", "update", "delete",
-                                ],
-                            ]);
-                        }
-                    });
+        $groups=json_decode(File::get(config_path('seeders/access-group.json')), true);
+        $access_menu=json_decode(File::get(config_path('seeders/access-menu.json')), true);
+        foreach ($groups as $item) {
+            $accessGroup=\App\Models\AccessGroup::where('code', $item['code'])->first();
+            collect($item['menu'] ?? [])->map(function ($item) use ($accessGroup, $access_menu) {
+                if ($menu=\App\Models\Menu::where('code', $item)->first()) {
+                    $access=collect($access_menu)->where('code_menu', $item)->where('access_group_code', $accessGroup->code)->first();
+                    $accessGroup->access_menu()->updateOrCreate(['menu_id'=>$menu->id], [
+                        'access_group_id'=>$accessGroup->id, 'access'=>$access['access'] ?? null,
+                    ]);
                 }
-            }
+            });
         }
     }
 }

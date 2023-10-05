@@ -1,0 +1,35 @@
+[
+    {
+        "id": 1,
+        "code": "root",
+        "name": "Root User",
+        "access": {
+            "read": true,
+            "create": true,
+            "delete": true,
+            "update": true
+        }
+    },
+    {
+        "id": 2,
+        "code": "admin",
+        "name": "Administrator",
+        "access": {
+            "read": true,
+            "create": true,
+            "delete": true,
+            "update": true
+        }
+    },
+    {
+        "id": 3,
+        "code": "user",
+        "name": "User",
+        "access": {
+            "read": true,
+            "create": true,
+            "delete": true,
+            "update": true
+        }
+    }
+]
