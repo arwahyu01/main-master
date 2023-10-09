@@ -37,7 +37,7 @@
         <span class="message"></span>
     </div>
 </div>
-{!! html()->hidden('function')->value('loadMenu(),sidebarMenu()')->id('function') !!}
+{!! html()->hidden('function')->value('loadMenu,sidebarMenu')->id('function') !!}
 {!! html()->form()->close() !!}
 <script>
     $('.modal-title').html('<i class="mdi mdi-delete-forever"></i> Hapus Data {!! $page->title !!}');
