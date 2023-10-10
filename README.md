@@ -71,7 +71,6 @@ $ php artisan serve # or use valet
     </script>
 ```
 - `JSON.stringify({'id': "{{ $id }}",'id2': "{{ $id2 }}"})` for multiple id or data
-- Warning: `eval` function is not secure, so don't remove `?.` in `eval?.` function for security reason
 - Add `$id`, in datatable.blade.js file like this :
 ```
     $('#datatable').DataTable({
