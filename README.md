@@ -26,7 +26,7 @@ Made with ❤️ by <a href="https://www.linkedin.com/in/arwahyupradana/" target
 - [x] role and permission management
 - [x] Sidebar notification
 - [x] Header notification
-- [x] Seeder menu and access menu with run command `php artisan app:convert-menu`
+- [x] Create a menu seeder and access the menu using the php artisan `app:convert-menu command`.
 - [x] Morph File
 - [x] Default Menu
     - [x] Dashboard
@@ -55,7 +55,7 @@ $ php artisan serve # or use valet
 ```
 
 ## Custom Script
-#### For Datatable
+#### For Datatables
 - use this script to send multiple data to 'datatable.blade.js'
 ```
     <script type="application/javascript">
@@ -67,14 +67,15 @@ $ php artisan serve # or use valet
         .then(e => e.text())
         .then(r => {
             Function('"use strict";\n' + r)();
-        });
+        }).catch(e => console.log(e));
     </script>
 ```
-- `JSON.stringify({'id': "{{ $id }}",'id2': "{{ $id2 }}"})` for multiple id or data
+- `JSON.stringify({'id': "{{ $id }}",'id2': "{{ $id2 }}"})` for multiple request
+- `JSON.stringify({id: "{{ $id }}"})` for single request
 - Add `$id`, in datatable.blade.js file like this :
 ```
     $('#datatable').DataTable({
-        ajax: "{{ url(config('master.app.url.backend').'/'.$url.'/data/'.$id) }}",`
+        ajax: `{{ url(config('master.app.url.backend').'/'.$url.'/data?id='${id}') }}`,
     });
 ```
 
@@ -83,7 +84,7 @@ Install this package to your laravel project
 ```bash
 composer require arwp/mvc
 ```
-#### Don't forget to set the configuration, read more <a href="https://github.com/arwahyu01/mvc-builder" target="_blank">here</a>
+#### Don't forget to set the configuration, read more [here](https://github.com/arwahyu01/mvc-builder)
 ### How to use this package :
   - Run `php artisan make:mvc [name]` in your terminal to create a module
     - [x] Controller (with CRUD function)
@@ -97,7 +98,7 @@ composer require arwp/mvc
   - Run `php artisan delete:mvc [name]` to delete a module (delete all file and table in database)
 
 ## License
-- No License (free to use for personal)[README.md](..%2Fmvc-builder%2FREADME.md)
+- No License (free to use for personal) [README.md](..%2Fmvc-builder%2FREADME.md)
 - Template `Eduadmin` is not free; you can buy it [here](https://themeforest.net/item/eduadmin-responsive-bootstrap-admin-template-dashboard/29365133)
 - please give me a star & follow my GitHub account if you like this project :)
 - Don't remove the credits in any of the files
