@@ -101,7 +101,7 @@ class File extends Model
 
     public function getLinkDownloadAttribute() : string
     {
-        return url(config('master.app.url.backend')."/file/download/{$this->id}/{$this->name_alias}-".uniqid().'.'.$this->extension);
+        return url(config('master.app.url.backend')."/file/download/{$this->id}/{$this->name_alias}-".uniqid());
     }
 
     public function getLinkDeleteAttribute() : string

@@ -47,7 +47,7 @@
                         <ul>
                             @foreach($data->file as $file)
                                 <li>
-                                    <span class="fa fa-download"></span> <a href="{!!  $file->link_download !!}" target="_blank">{!!  $file->file_name !!}</a>
+                                    <a href="{!!  $file->link_download !!}" class="fa fa-download"></a> | <a href="{!!  $file->link_stream !!}" target="_blank" class="fa fa-search"></a> | {!!  $file->file_name !!}
                                 </li>
                             @endforeach
                         </ul>
@@ -76,5 +76,6 @@
 </style>
 <script>
     $('.submit-data').hide();
-    $('.modal-title').html('<i class="fa fa-eye"></i> Detail {!! $page->title !!}');
+    $('.modal-title').html('<i class="fa fa-search"></i> Detail {!! $page->title !!}');
+    getNotification();
 </script>

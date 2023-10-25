@@ -163,18 +163,17 @@
                     head_notify.html('');
                     $('#clear-notification').attr('data-total', response.notifications.total);
                     $.each(response.notifications.data, function (i, v) {
-                        let open_modal = v.link === "#" ? `data-action="show" data-url="notification" data-id="${v.id} class="btn-action""` : '';
-                        head_notify.append(`<li> <a href="${v.link}" ${open_modal}><i class="${v.icon} ${v.color}"></i> ${v.title}, ${v.content}</a> </li>`);
+                        head_notify.append(`<li><a href="#" data-action="show" data-url="{!! url(config('master.app.url.backend').'/notification') !!}" data-id="${v.id}" class="btn-action"><i class="${v.icon} ${v.color}"></i> ${v.title}, ${v.content}</a> </li>`);
                     });
 
                     setTimeout(function () {
-                        $('#notification-button').attr('title', `Kamu memiliki ${response.notifications.total} notifikasi`).addClass('animated swing text-danger').tooltip('show');
+                        $('#notification-button').attr('title', `Hi, Kamu punya ${response.notifications.total} pesan`).addClass('animated swing text-danger').tooltip('show');
                         hideTooltips('#notification-button')
                     }, 1000);
 
                 } else {
                     head_notify.html(`<li class="text-center"><i class="fa fa-smile-o fa-2x text-primary"></i><a href="#" class="mt-0">Tidak ada notifikasi yang belum dibaca</a></li>`);
-                    $('#notification-button').attr('title', `Kamu memiliki ${response.notifications.total} notifikasi`).removeClass('animated swing text-danger');
+                    $('#notification-button').attr('title', `Hi, Kamu punya ${response.notifications.total} pesan`).removeClass('animated swing text-danger');
                 }
             },
             error: function () {

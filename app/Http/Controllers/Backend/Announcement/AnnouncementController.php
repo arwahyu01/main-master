@@ -56,9 +56,9 @@ class AnnouncementController extends Controller
     {
         $request->validate([
             'menu_id' => 'required|exists:menus,id',
-            'title' => 'required',
-            'start' => 'required|date|before:end',
-            'end' => 'required|date|after:start',
+            'title'   => 'required',
+            'start'   => 'required|date|after_or_equal:today',
+            'end'     => 'required|date|after_or_equal:start',
             'content' => 'required',
             'urgency' => 'required',
             'publish' => 'nullable',
@@ -67,17 +67,7 @@ class AnnouncementController extends Controller
         ]);
 
         if ($announcement = $this->model::create($request->all())) {
-            if ($request->hasFile('file')) {
-                foreach ($request->file('file') as $file) {
-                    $announcement->file()->create([
-                    'data' => [
-                        'name' => $file->getClientOriginalName(),
-                        'disk' => config('filesystems.default'),
-                        'target' => Storage::disk(config('filesystems.default'))->putFile($this->code . '/' . date('Y') . '/' . date('m') . '/' . date('d'), $file),
-                    ]
-                ]);
-                }
-            }
+            $this->extracted($request, $announcement);
             $users = $request->user()->all_user_id;
             $this->help::sendNotification($announcement, $users, [
                 'title' => 'Pengumuman Baru',
@@ -111,9 +101,9 @@ class AnnouncementController extends Controller
     {
         $request->validate([
             'menu_id' => 'required|exists:menus,id',
-            'title' => 'required',
-            'start' => 'required|date|before:end',
-            'end' => 'required|date|after:start',
+            'title'   => 'required',
+            'start'   => 'required|date|after_or_equal:today',
+            'end'     => 'required|date|after_or_equal:start',
             'content' => 'required',
             'urgency' => 'required',
             'publish' => 'nullable',
@@ -124,17 +114,7 @@ class AnnouncementController extends Controller
         $request->has('publish') ? $request->merge(['publish' => 1]) : $request->merge(['publish' => 0]);
         $data = $this->model::find($id);
         if ($data->update($request->all())) {
-            if ($request->hasFile('file')) {
-                foreach ($request->file('file') as $file) {
-                    $data->file()->create([
-                    'data' => [
-                        'name' => $file->getClientOriginalName(),
-                        'disk' => config('filesystems.default'),
-                        'target' => Storage::disk(config('filesystems.default'))->putFile($this->code . '/' . date('Y') . '/' . date('m') . '/' . date('d'), $file),
-                    ]
-                ]);
-                }
-            }
+            $this->extracted($request, $data);
             $response = ['status' => TRUE, 'message' => 'Data berhasil disimpan'];
         }
         return response()->json($response ?? ['status' => FALSE, 'message' => 'Data gagal disimpan']);
@@ -161,5 +141,24 @@ class AnnouncementController extends Controller
             return view($this->view.'.detail', compact('data', 'title'));
         }
         abort(404, 'Halaman tidak ditemukan');
+    }
+
+    /**
+     * @param  Request  $request
+     * @param $announcement
+     * @return void
+     */
+    public function extracted(Request $request, $announcement): void
+    {
+        if ($request->hasFile('file')) {
+            foreach ($request->file('file') as $file) {
+                $announcement->file()->create([
+                    'data'=>[
+                        'name'  =>$file->getClientOriginalName(), 'disk'=>config('filesystems.default'),
+                        'target'=>Storage::disk(config('filesystems.default'))->putFile($this->code.'/'.date('Y').'/'.date('m').'/'.date('d'), $file),
+                    ]
+                ]);
+            }
+        }
     }
 }

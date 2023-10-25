@@ -5,7 +5,7 @@
                 <div class="box-header with-border">
                     <h4 class="box-title"><span class="fa fa-bullhorn"></span>
                         <strong>  {!! $announcement->title !!}</strong>
-                        <small class="sidetitle">{{ date('d M Y', strtotime($announcement->start)) }} - {{ date('d M Y', strtotime($announcement->end)) }}</small>
+                        <small class="sidetitle">Tayang {{ date('d M Y', strtotime($announcement->start)) }} - {{ date('d M Y', strtotime($announcement->end)) }} ({!! $announcement->days_left !!} hari lagi)</small>
                     </h4>
                     <div class="box-tools pull-right">
                         <ul class="box-controls">
@@ -30,14 +30,12 @@
                 @foreach($page->announcement as $announcement)
                     @if(isset($_COOKIE["content-{$announcement->id}"]))
                         $('#alert-content-{!! $announcement->id !!}').remove();
-                        console.log('content-{!! $announcement->id !!}')
                         content.children().length === 0 ? content.remove() : null
                     @endif
                 @endforeach
 
                 $('.close-alert').click(function () {
-                    let code = $(this).data('code');
-                    document.cookie = `content-${code}=hide;`;
+                    document.cookie = `content-${$(this).data('code')}=hide;`;
                 });
             });
         </script>

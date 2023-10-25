@@ -60,15 +60,12 @@ class AuthController extends Controller
         } else {
             if ($user = User::where('email', $request->email)->first()) {
                 if (Auth::attempt(['email' => $request->email, 'password' => base64_decode($request->password)], $request->remember == 'true')) {
-                    $token = $user->createToken($request->device_name)->plainTextToken;
                     $user->log()->create([
                         'ip' => $request->ip(), 'data' => [
-                            'token' => $token,
                             'platform' => $request->device_name ?? 'web',
                             'browser' => $request->header('User-Agent') ?? 'web',
                         ], 'user_agent' => $request->userAgent(),
                     ]);
-                    $this->response['data'] = ['token' => $token];
                     $this->response['message'] = 'User logged in successfully';
                 } else {
                     $this->response['status'] = 401;
