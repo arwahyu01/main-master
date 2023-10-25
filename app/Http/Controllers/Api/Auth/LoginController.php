@@ -12,7 +12,7 @@ class LoginController extends Controller
         $credentials=$request->only('email', 'password');
         if (auth()->attempt($credentials)) {
             $user=auth()->user();
-            $token=$user->createToken(uniqid().date('ymd-m-Y-H-i-s'))->plainTextToken;
+            $token=$user->createToken(uniqid().now())->plainTextToken;
             $response=[
                 'status'=>true,
                 'message'=>'Login success',
