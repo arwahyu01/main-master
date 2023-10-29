@@ -30,11 +30,9 @@ $(function () {
                 },
                 success: function (e) {
                     $('#go-login').html('SIGN IN');
-                    if (e.status === 200 && e.data !== null) {
-                        if(e.data.hasOwnProperty('token')) {
-                            login_info.html('<i class="fa fa-check text-success"></i> Login successful, redirecting...');
-                            window.location.href = 'login';
-                        }
+                    if (e.status === 200) {
+                        login_info.html('<i class="fa fa-check text-success"></i> Login successful, redirecting...');
+                        window.location.href = 'login';
                     } else {
                         login_info.html('<span class="text-danger"><i class="fa fa-exclamation-triangle"></i> ' + e.message + '</span>');
                     }
