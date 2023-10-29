@@ -26,6 +26,10 @@ class UserController extends Controller
         $data = $this->model::filterLevel()->with('level', 'access_group');
         $user = $request->user();
         return datatables()->of($data)
+            ->filterColumn('name',function($query,$keyword){
+                $sql = "CONCAT(first_name,' ',last_name)  like ?";
+                $query->whereRaw($sql, ["%{$keyword}%"]);
+            })
             ->addColumn('action', function ($data) use ($user) {
                 $button ='';
                 if($user->update){
