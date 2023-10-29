@@ -6,11 +6,11 @@
             <div class="content-header">
                 <div class="d-flex align-items-center">
                     <div class="me-auto">
-                        <h3 class="page-title"><i class="{!! $page->icon !!}"></i> {!! $page->title ?? 'Page Name' !!} </h3>
+                        <h3 class="page-title"><i class="{{ $page->icon }}"></i> {{ $page->title ?? 'Page Name' }} </h3>
                         <div class="d-inline-block align-items-center">
                             <nav>
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"> {!! $page->subtitle ?? 'Welcome to '.$page->title.' page' !!}</li>
+                                    <li class="breadcrumb-item"> {{ $page->subtitle ?? 'Welcome to '.$page->title.' page' }}</li>
                                 </ol>
                             </nav>
                         </div>
@@ -22,7 +22,7 @@
                     <div class="col-12">
                         <div class="box">
                             <div class="box-header">
-                                <h4 class="box-title">List {!! $page->title ?? 'Page Name' !!}</h4>
+                                <h4 class="box-title">List {{ $page->title ?? 'Page Name' }}</h4>
                             </div>
                             <div class="box-body">
                                 <table id="datatable" class="table table-bordered table-striped" style="width: 100%;">

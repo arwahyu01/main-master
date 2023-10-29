@@ -67,7 +67,7 @@
     }
 </style>
 <script>
-    $('.modal-title').html('<i class="mdi mdi-bookmark-plus"></i> Tambah Data {!! $page->title !!}');
+    $('.modal-title').html('<i class="mdi mdi-bookmark-plus"></i> Tambah Data {{ $page->title }}');
     $('.select2').select2();
     $('#password_confirmation').on('keyup', function () {
         let password = $('#password');

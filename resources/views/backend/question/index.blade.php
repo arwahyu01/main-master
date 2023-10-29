@@ -8,7 +8,7 @@
                 <div class="d-flex align-items-center">
                     <div class="me-auto">
                         <h3 class="page-title">
-                            <i class="{!! $page->icon !!}"></i> All {!! $page->title ?? 'Page Name' !!}
+                            <i class="{{ $page->icon }}"></i> All {{ $page->title ?? 'Page Name' }}
                         </h3>
                     </div>
                 </div>

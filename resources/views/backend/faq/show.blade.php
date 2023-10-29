@@ -55,5 +55,5 @@
 </style>
 <script>
     $('.submit-data').hide();
-    $('.modal-title').html('<i class="fa fa-eye"></i> Detail Data {!! $page->title !!}');
+    $('.modal-title').html('<i class="fa fa-eye"></i> Detail Data {{ $page->title }}');
 </script>

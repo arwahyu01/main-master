@@ -7,12 +7,12 @@
             <div class="content-header">
                 <div class="d-flex align-items-center">
                     <div class="me-auto">
-                        <h3 class="page-title"><i class="{!! $page->icon !!}"></i> {!! $page->title ?? 'Page Name' !!}
+                        <h3 class="page-title"><i class="{{ $page->icon }}"></i> {{ $page->title ?? 'Page Name' }}
                         </h3>
                         <div class="d-inline-block align-items-center">
                             <nav>
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"> {!! $page->subtitle ?? 'Welcome to '.$page->title.' page' !!}</li>
+                                    <li class="breadcrumb-item"> {{ $page->subtitle ?? 'Welcome to '.$page->title.' page' }}</li>
                                 </ol>
                             </nav>
                         </div>
@@ -24,7 +24,7 @@
                     <div class="col-12">
                         <div class="box">
                             <div class="box-header">
-                                <h4 class="box-title">Content {!! $page->title ?? 'Page Name' !!}</h4>
+                                <h4 class="box-title">Content {{ $page->title ?? 'Page Name' }}</h4>
                                 @if($user->create)
                                     <button type="button" class="btn-action pull-right btn btn-success btn-sm" data-title="Tambah" data-action="create" data-url="{!! $page->url ?? '' !!}">
                                         <span class="fa fa-plus-circle"></span> Tambah

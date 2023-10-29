@@ -56,7 +56,7 @@ class AnnouncementController extends Controller
     {
         $request->validate([
             'menu_id' => 'required|exists:menus,id',
-            'title'   => 'required',
+            'title'   => 'required|required|regex:/^[a-zA-Z0-9\s\-\.\,\(\)\'\’\“\”\/]+$/',
             'start'   => 'required|date|after_or_equal:today',
             'end'     => 'required|date|after_or_equal:start',
             'content' => 'required',
@@ -65,6 +65,8 @@ class AnnouncementController extends Controller
             'parent_id' => 'nullable',
             'file.*' => 'nullable|mimes:jpg,jpeg,png,pdf,doc,docx,xls,xlsx|max:2048',
         ]);
+
+        $request->merge(['content' => preg_replace('#<script(.*?)>(.*?)</script>#is', '', $request->get('content'))]);
 
         if ($announcement = $this->model::create($request->all())) {
             $this->extracted($request, $announcement);
@@ -101,7 +103,7 @@ class AnnouncementController extends Controller
     {
         $request->validate([
             'menu_id' => 'required|exists:menus,id',
-            'title'   => 'required',
+            'title'   => 'required|required|regex:/^[a-zA-Z0-9\s\-\.\,\(\)\'\’\“\”\/]+$/',
             'start'   => 'required|date|after_or_equal:today',
             'end'     => 'required|date|after_or_equal:start',
             'content' => 'required',
@@ -110,7 +112,7 @@ class AnnouncementController extends Controller
             'parent_id' => 'nullable',
             'file.*' => 'nullable|mimes:jpg,jpeg,png,pdf,doc,docx,xls,xlsx|max:2048',
         ]);
-
+        $request->merge(['content' => preg_replace('#<script(.*?)>(.*?)</script>#is', '', $request->get('content'))]);
         $request->has('publish') ? $request->merge(['publish' => 1]) : $request->merge(['publish' => 0]);
         $data = $this->model::find($id);
         if ($data->update($request->all())) {

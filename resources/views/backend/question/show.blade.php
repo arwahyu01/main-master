@@ -7,7 +7,7 @@
             <div class="content-header">
                 <div class="d-flex align-items-center">
                     <div class="me-auto">
-                        <h3 class="page-title"><i class="{!! $page->icon !!}"></i> {!! $page->title ?? 'Page Name' !!}
+                        <h3 class="page-title"><i class="{{ $page->icon }}"></i> {{ $page->title ?? 'Page Name' }}
                         </h3>
                         <div class="d-inline-block align-items-center">
                             <nav>
@@ -15,7 +15,7 @@
                                     <li class="breadcrumb-item">
                                         <a href="{!! url(config('master.app.url.backend').'/'.$page->url) !!}"><i class="fa fa-home"></i> FAQ
                                         </a></li>
-                                    <li class="breadcrumb-item"> {!! $page->subtitle ?? 'Welcome to '.$page->title.' page' !!}</li>
+                                    <li class="breadcrumb-item"> {{ $page->subtitle ?? 'Welcome to '.$page->title.' page' }}</li>
                                 </ol>
                             </nav>
                         </div>

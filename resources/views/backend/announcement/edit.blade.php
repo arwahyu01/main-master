@@ -26,7 +26,7 @@
         <div class='form-group'>
             {!! html()->label('Isi Pengumuman','content')->class('control-label') !!}
             <span class="text-danger">*</span>
-            {!! html()->textarea('content',$data->content)->class('form-control')->id('content')->placeholder('Ketik Disini')->required() !!}
+            {!! html()->textarea('content',htmlspecialchars($data->content))->class('form-control')->id('content')->placeholder('Ketik Disini')->required() !!}
         </div>
         <div class='form-group'>
             {!! html()->label('File Pendukung','file')->class('control-label') !!}
@@ -40,12 +40,12 @@
                 <label class="control-label">File Pendukung Saat Ini :</label>
                 <table class="table">
                     @foreach($data->file as $file)
-                        <tr id="{!! $file->id !!}">
+                        <tr id="{{ $file->id }}">
                             <td>
                                 <a href="{{ $file->link_stream }}" target="_blank">{{ $file->file_name }}</a>
                             </td>
                             <td>
-                                <a href="#delete" class="btn btn-danger btn-xs delete-file" data-title="Delete" data-id="{{$file->id}}" data-url="{{ $file->link_delete }}" data-message="Do you want to delete this data ?">
+                                <a href="#delete" class="btn btn-danger btn-xs delete-file" data-title="Delete" data-id="{{ $file->id }}" data-url="{{ $file->link_delete }}" data-message="Do you want to delete this data ?">
                                     <span class="fa fa-trash"></span> Delete File
                                 </a>
                             </td>
@@ -74,9 +74,10 @@
 <link href="{{ url($template.'/fileupload/css/fileinput.css') }}" rel="stylesheet">
 <link href="{{ url($template.'/fileupload/css/font_bootstrap-icons.min.css') }}" rel="stylesheet">
 <style>
-    .kv-file-upload, .fileinput-upload, .file-upload-indicator{
+    .kv-file-upload, .fileinput-upload, .file-upload-indicator {
         display: none;
     }
+
     .select2-container {
         z-index: 9999 !important;
         width: 100% !important;
@@ -89,7 +90,7 @@
 <script src="{{ url($template.'/fileupload/js/fileinput.js') }}"></script>
 <script>
     $('#menu_id, #parent_id').select2().parent().css('z-index', 9999)
-    $('.modal-title').html('<i class="fa fa-edit"></i> Edit Data {!! $page->title !!}');
+    $('.modal-title').html('<i class="fa fa-edit"></i> Edit Data {{ $page->title }}');
     $('.submit-data').html('<i class="fa fa-save"></i> Simpan Data');
     $('#content').summernote({
         tabsize: 2,
@@ -115,7 +116,7 @@
     $(".file-drag-drop").fileinput({
         theme: 'fa',
         uploadUrl: "/#",
-        allowedFileExtensions:['jpg','jpeg','png','pdf','doc','docx','xls','xlsx'],
+        allowedFileExtensions: ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx', 'xls', 'xlsx'],
         overwriteInitial: false,
         maxFileSize: 2048,
         maxFilesNum: 10,

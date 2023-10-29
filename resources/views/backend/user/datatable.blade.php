@@ -12,6 +12,9 @@ $(document).ready(function () {
             {{-- Uncomment this line to use Indonesian language --}}
             {{--url: "{{ asset(config('master.app.web.assets').'/assets/vendor_components/datatable/indonesian.json') }}"--}}
         },
+        "columnDefs": [
+            { "targets": [1,2,3,4], "render": $.fn.dataTable.render.text() }
+        ],
 		columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex',orderable: false, searchable: false, orderable: false, className: 'text-center' },
             { data: 'name', name: 'name' },

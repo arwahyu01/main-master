@@ -28,6 +28,6 @@
 {!! html()->hidden('table-id','datatable')->id('table-id') !!}
 {!! html()->form()->close() !!}
 <script>
-    $('.modal-title').html('<i class="mdi mdi-delete-forever"></i> Hapus Data {!! $page->title !!}');
+    $('.modal-title').html('<i class="mdi mdi-delete-forever"></i> Hapus Data {{ $page->title }}');
     $('.submit-data').html('<i class="fa fa-trash"></i> Hapus Data');
 </script>

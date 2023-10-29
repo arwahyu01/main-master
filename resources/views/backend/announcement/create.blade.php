@@ -32,7 +32,7 @@
             {!! html()->label('File Pendukung','file')->class('control-label') !!}
             <span class="text-danger">*</span>
             <div class="file-loading">
-                {!! html()->file('file[]')->id('file')->class('file-drag-drop')->multiple()->data('overwrite-initial',false)->data('min-file-count',1)->required() !!}
+                {!! html()->file('file[]')->id('file')->class('file-drag-drop')->multiple()->data('overwrite-initial',false)->data('min-file-count',1) !!}
             </div>
         </div>
         <div class='form-group'>
@@ -71,7 +71,7 @@
 <script src="{{ url($template.'/fileupload/js/fileinput.js') }}"></script>
 <script>
     $('#menu_id, #parent_id').select2().parent().css('z-index', 9999)
-    $('.modal-title').html('<i class="fa fa-plus-circle"></i> Tambah Data {!! $page->title !!}');
+    $('.modal-title').html('<i class="fa fa-plus-circle"></i> Tambah Data {{ $page->title }}');
     $('.submit-data').html('<i class="fa fa-save"></i> Simpan Data');
     $('#content').summernote({
         tabsize: 2,

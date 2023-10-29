@@ -110,7 +110,7 @@
 <script src="{{ url($template.'/assets/vendor_components/bootstrap-iconpicker/dist/iconpicker.js') }}"></script>
 <script src="{{ url($template.'/assets/vendor_components/nestable/jquery.nestable.js') }}"></script>
 <script>
-    $('.modal-title').html('<i class="mdi mdi-bookmark-plus"></i> Tambah Data {!! $page->title !!}');
+    $('.modal-title').html('<i class="mdi mdi-bookmark-plus"></i> Tambah Data {{ $page->title }}');
     $('.select2').select2();
 
     (async () => {

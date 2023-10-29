@@ -8,7 +8,7 @@
                     <div class="col-12">
                         <div class="box">
                             <div class="box-header">
-                                <h4 class="box-title"><span class="fa fa-bullhorn"></span> {!! $data->title !!} </h4>
+                                <h4 class="box-title"><span class="fa fa-bullhorn"></span> {{ $data->title }} </h4>
                             </div>
                             <div class="box-body">
                                 <div class="end-date">

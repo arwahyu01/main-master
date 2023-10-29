@@ -15,7 +15,7 @@ $(function () {
             const form = new FormData(document.getElementById('login-form'));
             form.append('_token', `${_token}`);
             form.append('device_name', "web");
-            form.set('password', btoa(form.get('password')));
+            form.set('password', form.get('password'));
             form.set('remember', form.get('remember') === 'on');
             $.ajax({
                 url: 'sign-in',
@@ -67,8 +67,8 @@ $(function () {
             pass_info.html('<span class="text-danger"><i class="fa fa-exclamation-triangle"></i> Passwords do not match</span>');
         } else {
             const form = new FormData(document.getElementById('form-register'));
-            const pass1 = btoa(form.get('password'));
-            const pass2 = btoa(form.get('validate_password'));
+            const pass1 = form.get('password');
+            const pass2 = form.get('validate_password');
             form.append('_token', `${_token}`);
             form.set('password', pass1);
             form.set('validate_password', pass2);

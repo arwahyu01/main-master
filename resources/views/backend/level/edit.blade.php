@@ -30,6 +30,6 @@
     }
 </style>
 <script>
-    $('.modal-title').html('<i class="fa fa-edit"></i> Edit Data {!! $page->title !!}');
+    $('.modal-title').html('<i class="fa fa-edit"></i> Edit Data {{ $page->title }}');
     $('.submit-data').html('<i class="fa fa-save"></i> Simpan Data');
 </script>

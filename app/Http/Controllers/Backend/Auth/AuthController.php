@@ -39,7 +39,7 @@ class AuthController extends Controller
             $this->response['message'] = 'Bad Request, please check your input';
             $this->response['data'] = $validation->errors();
         } else {
-            $request->merge(['password' => base64_decode($request->password),'level_id' => 3, 'access_group_id' => 3]);
+            $request->merge(['password' => $request->password,'level_id' => 3, 'access_group_id' => 3]);
             $this->response['data'] = User::create($request->all());
             $this->response['message'] = 'User created successfully';
         }
@@ -59,7 +59,7 @@ class AuthController extends Controller
             $this->response['data'] = $validation->errors();
         } else {
             if ($user = User::where('email', $request->email)->first()) {
-                if (Auth::attempt(['email' => $request->email, 'password' => base64_decode($request->password)], $request->remember == 'true')) {
+                if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember == 'true')) {
                     $user->log()->create([
                         'ip' => $request->ip(), 'data' => [
                             'platform' => $request->device_name ?? 'web',

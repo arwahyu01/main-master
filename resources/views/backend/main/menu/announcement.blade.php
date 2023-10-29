@@ -4,7 +4,7 @@
             <div id="alert-content-{!! $announcement->id !!}" class="box box-inverse bg-{!! config('master.content.announcement.color.'.$announcement->urgency) !!}">
                 <div class="box-header with-border">
                     <h4 class="box-title"><span class="fa fa-bullhorn"></span>
-                        <strong>  {!! $announcement->title !!}</strong>
+                        <strong>  {{ $announcement->title }}</strong>
                         <small class="sidetitle">Tayang {{ date('d M Y', strtotime($announcement->start)) }} - {{ date('d M Y', strtotime($announcement->end)) }} ({!! $announcement->days_left !!} hari lagi)</small>
                     </h4>
                     <div class="box-tools pull-right">
@@ -17,7 +17,7 @@
                 <div class="box-body box-shadowed box-outline-{!! config('master.content.announcement.color.'.$announcement->urgency) !!} text-dark">
                     {!! \App\support\Helper::sortText($announcement->content,1000) !!}
                     <div class="pull-right">
-                        <a href="{!! $announcement->link !!}" target="_blank" class="btn btn-sm btn-{!! config('master.content.announcement.color.'.$announcement->urgency) !!}">Baca Selengkapnya</a>
+                        <a href="{{ $announcement->link }}" target="_blank" class="btn btn-sm btn-{!! config('master.content.announcement.color.'.$announcement->urgency) !!}">Baca Selengkapnya</a>
                     </div>
                 </div>
             </div>

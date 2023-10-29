@@ -13,7 +13,7 @@
                                         <img src="{{ url($template."/images/svg-icon/color-svg/custom-14.svg") }}" alt="" width="274" height="150">
                                     </div>
                                     <div class="col-12 col-lg-9">
-                                        <h2>Hai {!! $user->name !!}</h2>
+                                        <h2>Hai {{ $user->name }}</h2>
                                         <p class="text-dark mb-0 fs-16">
                                             Selamat datang di {!! config('master.app.profile.name') !!}, CRUD Generator laravel {!! config('master.app.profile.laravel') !!} dengan mudah dan cepat.
                                             <br>

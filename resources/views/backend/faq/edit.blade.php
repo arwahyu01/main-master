@@ -82,7 +82,7 @@
 </style>
 <script>
     $('.select2').select2();
-    $('.modal-title').html('<i class="fa fa-edit"></i> Edit Data {!! $page->title !!}');
+    $('.modal-title').html('<i class="fa fa-edit"></i> Edit Data {{ $page->title }}');
     $('.submit-data').html('<i class="fa fa-save"></i> Simpan Data');
     $("#file").on("change", function () {
         var file = this.files[0];
