@@ -61,7 +61,10 @@ $ php artisan serve # or use valet
     <script type="application/javascript">
         fetch("{{ url('/js/'.$backend.'/'.$page->code.'/datatable.js') }}", {
             method: 'POST',
-            headers: {"X-CSRF-TOKEN": "{{ csrf_token() }}"},
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify({id: "{{ $id }}"})
         })
         .then(e => e.text())
