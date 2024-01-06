@@ -21,24 +21,27 @@
             {!! html()->file('file')->class('form-control')->id('file')->accept('application/pdf,video/*,image/*') !!}
         </div>
         @if(!is_null($data->file))
-            @if($data->file->exists())
                 <div class='form-group'>
                     <table class="table table-{!! $data->id !!}">
-                        <tr>
-                            <td>
-                                File : <a href="{{ url($data->file->link_stream) }}" target="_blank"> {{ $data->file->name }} </a>
-                            </td>
-                            <td>
-                                Size : {!! $data->file->size !!}
-                            </td>
-                            <td>
-                                {!! html()->a(url($data->file->link_download),'<i class="fa fa-download"></i> Download')->class('btn btn-xs btn-primary')->target('_blank') !!}
-                                {!! html()->a('#delete','<i class="fa fa-trash"></i> Delete File')->class('delete btn btn-danger btn-xs')->attribute('data-url',url($data->file->link_delete)) !!}
-                            </td>
-                        </tr>
+                        @foreach($data->files()->whereNull('alias')->cursor() as $file)
+                            @if($file->exists())
+                                <tr>
+                                    <td>
+                                        File :
+                                        <a href="{{ url($file->link_stream) }}" target="_blank"> {{ $file->name }} </a>
+                                    </td>
+                                    <td>
+                                        Size : {!! $file->size !!}
+                                    </td>
+                                    <td>
+                                        {!! html()->a(url($data->file->link_download),'<i class="fa fa-download"></i> Download')->class('btn btn-xs btn-primary')->target('_blank') !!}
+                                        {!! html()->a('#delete','<i class="fa fa-trash"></i> Delete File')->class('delete btn btn-danger btn-xs')->attribute('data-url',url($data->file->link_delete)) !!}
+                                    </td>
+                                </tr>
+                            @endif
+                        @endforeach
                     </table>
                 </div>
-            @endif
         @endif
         <div class="row">
             <div class="col-auto">
@@ -95,34 +98,83 @@
             swal("Oops!", "File not allowed, please choose a PDF, Video or Image file.", "error");
         }
     });
+    function sendFile(file, editor) {
+        data = new FormData();
+        data.append("file", file);
+        data.append("_token", "{{ csrf_token() }}");
+        $.ajax({
+            data: data,
+            type: "POST",
+            url: "{{ url(config('master.app.url.backend').'/file/upload-image-editor') }}",
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.status) {
+                    let url = response.data.url;
+                    $('#description').summernote('insertImage', url);
+                }
+            }
+        });
+    }
+
     $('#description').summernote({
         tabsize: 2,
         height: 250,
+        spellCheck: false,
+        dialogsInBody: true,
         toolbar: [
-            "fontsize",
-            "paragraph",
-            "table",
-            "insert",
-            "codeview",
-        ]
+            ['font', ['bold', 'underline', 'italic', 'clear']],
+            ['fontname', ['fontname', 'fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+        ],
+        callbacks: {
+            onImageUpload: function (files) {
+                sendFile(files[0], $(this));
+            },
+            onMediaDelete: function (target) {
+                let id = $(target).attr('id');
+                let alt = $(target).attr('alt');
+                let url = "{{ url(config('master.app.url.backend').'/file/delete') }}" + '/' + id + '/' + alt;
+                fileDelete(url, function (status) {
+                    if (status) {
+                        swal("Success!", "File deleted successfully.", "success");
+                    }
+                });
+            }
+        }
     });
+
     $('.delete').on("click", function () {
         let url = $(this).data('url');
-        $.ajax({
-            url: `${url}`,
-            type: 'GET',
-            success: function (data) {
-                if (data.status) {
-                    swal("Success!", data.message, "success");
-                    $(this).closest('tr').remove();
-                    $('.table-{!! $data->id !!}').remove();
-                } else {
-                    swal("Oops!", data.message, "error");
-                }
-            },
-            error: function () {
+        let row = $(this).closest('tr');
+        row.hide();
+        fileDelete(url, function (status) {
+            if (status) {
+                swal("Success!", "File deleted successfully.", "success");
+            } else {
+                row.show();
                 swal("Oops!", "Something went wrong, please try again later.", "error");
             }
         });
-    })
+    });
+
+    function fileDelete(url, callback) {
+        $.ajax({
+            type: 'GET',
+            url: url,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                callback(response.status);
+            },
+            error: function () {
+                callback(false);
+            }
+        });
+    }
 </script>

@@ -43,6 +43,11 @@ class Faq extends Model
         return $this->morphOne(File::class, 'fileable');
     }
 
+    public function files()
+    {
+        return $this->morphMany(File::class, 'fileable');
+    }
+
     public function log() : object
     {
         return $this->morphOne(Log::class, 'loggable');

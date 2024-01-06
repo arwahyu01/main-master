@@ -23,6 +23,7 @@ Route::group(['prefix'=>config('master.app.url.backend')], function () {
         Route::get('stream/{id}/{name}', "File\FileController@getFile");
         Route::get('download/{id}/{name}', "File\FileController@downloadFile");
         Route::get('delete/{id}/{name}', "File\FileController@deleteFile");
+        Route::post('upload-image-editor','File\FileController@handleEditorImageUpload');
     });
     Route::group(['middleware'=>['userRoles']], function () {
         //user

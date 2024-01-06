@@ -65,17 +65,6 @@
     $('.select2').select2();
     $('.modal-title').html('<i class="fa fa-plus-circle"></i> Tambah Data {{ $page->title }}');
     $('.submit-data').html('<i class="fa fa-save"></i> Simpan Data');
-    $('#description').summernote({
-        tabsize: 2,
-        height: 250,
-        toolbar: [
-            "fontsize",
-            "paragraph",
-            "table",
-            "insert",
-            "codeview",
-        ]
-    });
     $("#file").on("change", function () {
         var file = this.files[0];
         var fileType = file["type"];
@@ -85,6 +74,38 @@
         if ($.inArray(fileType, ValidImageTypes) < 0 && $.inArray(fileType, ValidVideoTypes) < 0 && $.inArray(fileType, ValidPdfTypes) < 0) {
             $("#file").val('');
             swal("Oops!", "File not allowed, please choose a PDF, Video or Image file.", "error");
+        }
+    });
+
+    function sendFile(file, editor) {
+        data = new FormData();
+        data.append("file", file);
+        data.append("_token", "{{ csrf_token() }}");
+        $.ajax({
+            data: data,
+            type: "POST",
+            url: "{{ url(config('master.app.url.backend').'/file/upload-image-editor') }}",
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.status) {
+                    let url = response.data.url;
+                    $('#description').summernote('insertImage', url);
+                }
+            }
+        });
+    }
+
+    $('#description').summernote({
+        tabsize: 2,
+        height: 250,
+        spellCheck: false,
+        dialogsInBody: true,
+        callbacks: {
+            onImageUpload: function (files) {
+                sendFile(files[0], $(this));
+            }
         }
     });
 </script>
