@@ -10,19 +10,23 @@
         "show": false,
         "active": true,
         "sort": 4,
+        "coming_soon": 0,
+        "maintenance": 0,
         "children": []
     },
     {
         "title": "Master",
         "subtitle": "Master",
         "code": "master",
-        "model": "",
+        "model": "Models",
         "url": "master",
         "icon": "fa fa-cogs",
         "type": "backend",
         "show": true,
         "active": true,
         "sort": 2,
+        "coming_soon": 0,
+        "maintenance": 0,
         "children": [
             {
                 "title": "Menu",
@@ -35,6 +39,8 @@
                 "show": true,
                 "active": true,
                 "sort": 1,
+                "coming_soon": 0,
+                "maintenance": 0,
                 "children": []
             },
             {
@@ -48,6 +54,8 @@
                 "show": true,
                 "active": true,
                 "sort": 2,
+                "coming_soon": 0,
+                "maintenance": 0,
                 "children": []
             },
             {
@@ -61,6 +69,8 @@
                 "show": true,
                 "active": true,
                 "sort": 3,
+                "coming_soon": 0,
+                "maintenance": 0,
                 "children": []
             },
             {
@@ -74,6 +84,8 @@
                 "show": true,
                 "active": true,
                 "sort": 4,
+                "coming_soon": 0,
+                "maintenance": 0,
                 "children": []
             },
             {
@@ -87,6 +99,8 @@
                 "show": true,
                 "active": true,
                 "sort": 5,
+                "coming_soon": 0,
+                "maintenance": 0,
                 "children": []
             },
             {
@@ -100,6 +114,8 @@
                 "show": true,
                 "active": true,
                 "sort": 6,
+                "coming_soon": 0,
+                "maintenance": 0,
                 "children": []
             }
         ]
@@ -108,13 +124,15 @@
         "title": "Dashboard",
         "subtitle": "Dashboard",
         "code": "dashboard",
-        "model": "",
+        "model": "Models",
         "url": "dashboard",
         "icon": "fa fa-tachometer",
         "type": "backend",
         "show": true,
         "active": true,
         "sort": 1,
+        "coming_soon": 0,
+        "maintenance": 0,
         "children": []
     },
     {
@@ -128,19 +146,23 @@
         "show": true,
         "active": true,
         "sort": 3,
+        "coming_soon": 0,
+        "maintenance": 0,
         "children": []
     },
     {
         "title": "Hidden Menu",
         "subtitle": null,
         "code": "hidden-menu",
-        "model": "",
+        "model": "Models",
         "url": "hidden-menu",
         "icon": "fa fa-eye-slash",
         "type": "backend",
         "show": false,
         "active": true,
         "sort": 5,
+        "coming_soon": 0,
+        "maintenance": 0,
         "children": [
             {
                 "title": "Notification",
@@ -153,21 +175,10 @@
                 "show": true,
                 "active": true,
                 "sort": 1,
+                "coming_soon": 0,
+                "maintenance": 0,
                 "children": []
             }
         ]
-    },
-    {
-        "title": "Test",
-        "subtitle": "Tes",
-        "code": "test",
-        "model": "TestCoy",
-        "url": "test",
-        "icon": "fa fa-font-awesome",
-        "type": "backend",
-        "show": true,
-        "active": true,
-        "sort": 0,
-        "children": []
     }
 ]

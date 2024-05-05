@@ -15,8 +15,8 @@ Made with ❤️ by <a href="https://www.linkedin.com/in/arwahyupradana/" target
 
 ## Requirements
 
-- Laravel 10 or higher
-- PHP 8.1 or higher
+- Laravel 11 or higher
+- PHP 8.2 or higher
 - MySQL 5.7 or higher or any other database
 - Composer 2.2.* or higher
 
@@ -101,8 +101,8 @@ composer require arwp/mvc
   - Run `php artisan delete:mvc [name]` to delete a module (delete all file and table in database)
 
 ## License
-- No License (free to use for personal) [README.md](..%2Fmvc-builder%2FREADME.md)
-- Template `Eduadmin` is not free; you can buy it [here](https://themeforest.net/item/eduadmin-responsive-bootstrap-admin-template-dashboard/29365133)
-- Don't remove the credits in any of the files
+- MVC Builder Package: This package is offered with no license, making it free to use for personal projects.
+- Eduadmin Template: The Eduadmin template used for the views in this package is not free. You'll need to purchase a license for commercial use from [here](https://themeforest.net/item/eduadmin-responsive-bootstrap-admin-template-dashboard/29365133).
+- Copyright and Attribution: Please respect the copyright of the package and its contributors. Do not remove the credits included within the files.
 
-#### I hope this project can help you to make your project faster and easier to develop :)
+#### I hope this MVC Builder makes your development process faster and easier! 😊

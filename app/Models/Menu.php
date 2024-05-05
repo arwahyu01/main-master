@@ -13,7 +13,7 @@ class Menu extends Model
     use HasFactory, HasUuids, SoftDeletes;
 
     protected $fillable=[
-        'id', 'parent_id', 'title', 'subtitle', 'code', 'url', 'model', 'icon', 'type', 'show', 'active', 'sort',
+        'id', 'parent_id', 'title', 'subtitle', 'code', 'url', 'model', 'icon', 'type', 'show', 'active', 'sort','maintenance','coming_soon'
     ];
     protected $casts=[
         'show'=>'boolean', 'active'=>'boolean', 'id'=>'string','parent_id'=>'string',

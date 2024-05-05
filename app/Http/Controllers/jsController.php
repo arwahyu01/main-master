@@ -7,14 +7,12 @@ use Illuminate\Support\Str;
 
 class jsController extends Controller
 {
-    public function javaScript(Request $request, $layout,$page,$file)
+    public function javaScript(Request $request, $layout, $page, $file)
     {
-        foreach (json_decode($request->getContent(),true) ?? [] as  $key => $value){
-            $data[$key] = $value;
-        }
+        $data = json_decode($request->getContent(), true) ?? [];
         $data['url'] = $page;
-        $layout = config('master.app.view.'.$layout);
-        $file=Str::before($file,'.js');
-        return response()->view("$layout.$page.$file",$data)->header('Content-Type','application/javascript');
+        $layout = config('master.app.view.' . $layout);
+        $viewPath = "$layout.$page." . Str::before($file, '.js');
+        return response()->view($viewPath, $data)->header('Content-Type', 'application/javascript');
     }
 }

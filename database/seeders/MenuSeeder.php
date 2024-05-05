@@ -9,7 +9,7 @@ class MenuSeeder extends Seeder
 {
     public function run()
     {
-        $data = json_decode(File::get(config_path('seeders/menu.json')), true);
+        $data = json_decode(File::get(database_path('seeders/backup/menu.json')), true);
         foreach ($data as $item) {
             if ($menu = \App\Models\Menu::updateOrCreate(collect($item)->except('children')->toArray())) {
                 if(count($item['children']) > 0) {

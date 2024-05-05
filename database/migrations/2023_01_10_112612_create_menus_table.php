@@ -26,6 +26,8 @@ return new class extends Migration
             $table->boolean('show')->default(true);
             $table->boolean('active')->default(true);
             $table->integer('sort')->default(0);
+            $table->boolean('maintenance')->default(false);
+            $table->boolean('coming_soon')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -9,8 +9,8 @@ class AccessMenuSeeder extends Seeder
 {
     public function run()
     {
-        $groups=json_decode(File::get(config_path('seeders/access-group.json')), true);
-        $access_menu=json_decode(File::get(config_path('seeders/access-menu.json')), true);
+        $groups=json_decode(File::get(database_path('seeders/backup/access-group.json')), true);
+        $access_menu=json_decode(File::get(database_path('seeders/backup/access-menu.json')), true);
         foreach ($groups as $item) {
             $accessGroup=\App\Models\AccessGroup::where('code', $item['code'])->first();
             collect($item['menu'] ?? [])->map(function ($item) use ($accessGroup, $access_menu) {

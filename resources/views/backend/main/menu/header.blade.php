@@ -31,7 +31,7 @@
                     <div class="app-menu">
                         <div class="search-bx mx-5">
                             <div class="input-group">
-                                <input type="search" class="form-control search-menu" placeholder="Ketik disini ..." aria-label="Search" aria-describedby="button-addon2" name="search_menu">
+                                <input type="search" class="form-control search-menu" placeholder="Cari menu disini ..." aria-label="Search" aria-describedby="button-addon2" name="search_menu">
                                 <div class="input-group-append">
                                     <button class="btn" type="button" id="button-addon3" title="Search"><i class="ti-search"></i></button>
                                 </div>

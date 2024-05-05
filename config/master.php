@@ -14,8 +14,8 @@ return [
             'description'=>'Main Master is a automatic CRUD generator for Laravel 10',
             'keywords'=>'Main Master, Laravel, CRUD',
             'author'=>'@arwahyupradana', // Your name or company
-            'version'=>'1.0.0', // major.minor.patch
-            'laravel'=>'10.0', // Laravel version
+            'version'=>'1.0.1', // major.minor.patch
+            'laravel'=>'11.0', // Laravel version
         ],
         'root'=>[
             'backend'=>'App/Http/Controllers/Backend', // path to backend controller

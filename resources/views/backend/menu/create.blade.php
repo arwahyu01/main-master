@@ -7,7 +7,7 @@
             {!! html()->text('title')->placeholder('Type name here')->class('form-control')->id('title') !!}
         </div>
         <div class="form-group">
-            {!! html()->label('Informasi','subtitle')->class('control-label') !!}
+            {!! html()->label('Sub Title Menu','subtitle')->class('control-label') !!}
             {!! html()->span('e.g : Welcome to Menu page')->class('text-danger') !!}
             {!! html()->text('subtitle')->placeholder('Type subtitle here')->class('form-control')->id('subtitle') !!}
         </div>
@@ -37,26 +37,40 @@
             <span class="text-danger">*</span>
             {!! html()->select('type', ['' => 'Pilih Tipe Menu', 'backend' => 'Backend', 'frontend' => 'Frontend'],'backend')->class('form-select')->id('type') !!}
         </div>
+        <div class="form-group">
+            {!! html()->label('Link','url')->class('control-label') !!}
+            <span class="text-danger">*</span>
+            {!! html()->text('url')->placeholder('Type url here')->class('form-control')->id('url') !!}
+        </div>
         <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    {!! html()->label('Tampilkan','show')->class('control-label') !!}
-                    <span class="text-danger">*</span>
-                    {!! html()->select('show', [1 => 'Ya', 0 => 'Tidak'], 1)->class('form-select')->id('show') !!}
-                </div>
-            </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="form-group">
                     {!! html()->label('Status','active')->class('control-label') !!}
                     <span class="text-danger">*</span>
                     {!! html()->select('active', [1 => 'Aktif', 0 => 'Tidak Aktif'], 1)->class('form-select')->id('active') !!}
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            {!! html()->label('Link','url')->class('control-label') !!}
-            <span class="text-danger">*</span>
-            {!! html()->text('url')->placeholder('Type url here')->class('form-control')->id('url') !!}
+            <div class="col-md-3">
+                <div class="form-group">
+                    {!! html()->label('Tampilkan','show')->class('control-label') !!}
+                    <span class="text-danger">*</span>
+                    {!! html()->select('show', [1 => 'Ya', 0 => 'Tidak'], 1)->class('form-select')->id('show') !!}
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    {!! html()->label('Akan Datang','coming_soon')->class('control-label') !!}
+                    <span class="text-danger">*</span>
+                    {!! html()->select('coming_soon', [1 => 'Ya', 0 => 'Tidak'], 0)->class('form-select')->id('coming_soon') !!}
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    {!! html()->label('Maintenance','maintenance')->class('control-label') !!}
+                    <span class="text-danger">*</span>
+                    {!! html()->select('maintenance', [1 => 'Ya', 0 => 'Tidak'], 0)->class('form-select')->id('maintenance') !!}
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-md-12">
@@ -66,15 +80,22 @@
             <div class="row p-5" id="access_group_id">
                 @foreach($access_group as $key => $value)
                     <div class="col-12">
-                        <input type="checkbox" name="access_group_id[]" onclick="checkAllLevel('access-menu-crud-{{$key}}',this)" value="{{ $key }}" id="md_checkbox_{{$key}}" class="filled-in chk-col-primary access_group_id">
+                        <input type="checkbox" name="access_group_id[]"
+                               onclick="checkAllLevel('access-menu-crud-{{$key}}',this)" value="{{ $key }}"
+                               id="md_checkbox_{{$key}}" class="filled-in chk-col-primary access_group_id">
                         <label for="md_checkbox_{{$key}}">{{ $value }}</label>
                         <div class="form-control access-menu-crud-{{$key}} m-2" style="display: none;">
                             <label class="control-label">Tentukan Hak Akses</label> <span class="text-danger">*</span>
-                            <a href="javascript:void(0)" type="button" onclick="checkAll('access-crud-{{$key}}',{{$key}})" class="check-all-{{$key}} btn btn-xs btn-success"><i class="fa fa-check"></i> Check All</a>
+                            <a href="javascript:void(0)" type="button"
+                               onclick="checkAll('access-crud-{{$key}}',{{$key}})"
+                               class="check-all-{{$key}} btn btn-xs btn-success"><i class="fa fa-check"></i> Check
+                                All</a>
                             <div class="row mt-2">
                                 @foreach(config('master.app.level') as $i => $v)
                                     <div class="col-md-2 access-crud-{{$key}}">
-                                        <input type="checkbox" onclick="checkAllLevel('crud_{{$i}}',this)" name="access_crud_{{$key}}[]" value="{{$v}}" id="crud_{{$i}}_{{$key}}" class="filled-in chk-col-info">
+                                        <input type="checkbox" onclick="checkAllLevel('crud_{{$i}}',this)"
+                                               name="access_crud_{{$key}}[]" value="{{$v}}" id="crud_{{$i}}_{{$key}}"
+                                               class="filled-in chk-col-info">
                                         <label for="crud_{{$i}}_{{$key}}">{{ucwords($v)}}</label>
                                     </div>
                                 @endforeach

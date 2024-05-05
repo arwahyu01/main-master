@@ -38,18 +38,32 @@
             {!! html()->select('type',['' => 'Pilih Tipe Menu', 'backend' => 'Backend', 'frontend' => 'Frontend'],$data->type)->class('form-select')->id('type') !!}
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="form-group">
                     {!! html()->label('Tampilkan','show')->class('control-label') !!}
                     <span class="text-danger">*</span>
                     {!! html()->select('show',[1 => 'Ya', 0 => 'Tidak'],$data->show)->class('form-select')->id('show') !!}
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="form-group">
                     {!! html()->label('Status','active')->class('control-label') !!}
                     <span class="text-danger">*</span>
                     {!! html()->select('active',[1 => 'Aktif', 0 => 'Tidak Aktif'],$data->active)->class('form-select')->id('active') !!}
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    {!! html()->label('Akan Datang','coming_soon')->class('control-label') !!}
+                    <span class="text-danger">*</span>
+                    {!! html()->select('coming_soon', [1 => 'Ya', 0 => 'Tidak'], $data->coming_soon)->class('form-select')->id('coming_soon') !!}
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    {!! html()->label('Maintenance','maintenance')->class('control-label') !!}
+                    <span class="text-danger">*</span>
+                    {!! html()->select('maintenance', [1 => 'Ya', 0 => 'Tidak'], $data->maintenance)->class('form-select')->id('maintenance') !!}
                 </div>
             </div>
         </div>
