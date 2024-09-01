@@ -7,7 +7,7 @@ PHP Framework For Web Artisans
 <h2 style="text-align: center"> Main Master </h2>
 <h3 style="text-align: center">( Crud Generator )</h3>
 <p style="text-align: center">
-Main Master is a CRUD generator for Laravel projects. This project was created to make it easier for developers to create Laravel projects. This project is built with Laravel 10 and Bootstrap 5.
+Main Master is a CRUD generator for Laravel projects. This project was created to make it easier for developers to create Laravel projects. This project is built with Laravel 11 and Bootstrap 5.
 </p>
 <p style="text-align: center">
 Made with ❤️ by <a href="https://www.linkedin.com/in/arwahyupradana/" target="_blank">arwp</a>
