@@ -29,7 +29,7 @@
 <script src="{{ url($template.'/assets/vendor_components/sweetalert/sweetalert.min.js') }}"></script>
 <script src="{{ url($template.'/js/jquery.loadmodal.js') }}"></script>
 <script src="{{ url($template.'/js/template.js') }}"></script>
-<script src="{{ url('/js/'.$backend.'/js/jquery.js') }}"></script>
+<script src="{{ url('/js/'.$backend.'/js/jquery.js?time='.time()) }}"></script>
 <script src="{{ url('/js/'.$backend.'/js/form-helpers.js') }}"></script>
 @stack('js')
 </body>

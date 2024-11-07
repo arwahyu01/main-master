@@ -69,6 +69,7 @@ $(window.document).on('click', '.btn-action', function (e) {
     const title = $(this).data('title') ?? '';
     const modalId = $(this).data('modalId') ?? 'modal-master';
     const bgClass = $(this).data('bgClass') ?? 'bg-default';
+    const arguments = $(this).data('options') ?? '';
     const actionUrls = {
         'create': 'create',
         'edit': `${id}/edit`,
@@ -77,7 +78,7 @@ $(window.document).on('click', '.btn-action', function (e) {
     };
     const urlExtension = actionUrls[action] || '';
     const modalOptions = {
-        url: urlExtension ? `${url}/${urlExtension}` : url,
+        url: urlExtension ? `${url}/${urlExtension}${arguments}` : url,
         id: modalId,
         dlgClass: 'fade',
         bgClass: bgClass,
