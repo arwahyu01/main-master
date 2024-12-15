@@ -57,7 +57,7 @@
     <script src="{{ url($template.'/assets/vendor_components/jquery-validation-1.17.0/lib/jquery.form.js') }}"></script>
     <script src="{{ url($template.'/assets/vendor_components/datatable/datatables.min.js') }}"></script>
     <script src="{{ url('/js/'.$backend.'/'.$page->code.'/datatable.js') }}"></script>
-    <script src="{{ url('js/jquery-crud.js') }}"></script>
+    <script src="{{ url('js/jquery-crud.js?id='.time()) }}"></script>
     <script>
         $(document).ready(function () {
             $(document).on("keyup", "#name", function () {

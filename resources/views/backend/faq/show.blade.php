@@ -19,24 +19,26 @@
             @if(!is_null($data->file))
                 @if($data->file->exists())
                     <div class="form-group text-center">
-                        @if($data->file->type == 'image')
-                            {!! html()->img(url($data->file->link_stream),$data->file->name)->class('img-fluid img-thumbnail')->style('width: 50%') !!}
+                        @if($data->file->type == 'video')
+                            <video width="320" controls>
+                                <source src="{!! url($data->file->link_stream) !!}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
                         @else
-                            @if($data->file->type == 'video')
-                                <video width="320" controls>
-                                    <source src="{!! url($data->file->link_stream) !!}" type="video/mp4"> Your browser does not support the video tag.
-                                </video>
+                            @if($data->file->type == 'file')
+                                <object data="{!! url($data->file->link_stream) !!}" type="application/pdf" width="100%" height="600px">
+                                    <p> Alternative text - include a link
+                                        <a href="{!! url($data->file->link_stream) !!}">to the PDF!</a>
+                                    </p>
+                                </object>
                             @else
-                                @if($data->file->type == 'file')
-                                    <object data="{!! url($data->file->link_stream) !!}" type="application/pdf" width="100%" height="600px">
-                                        <p> Alternative text - include a link <a href="{!! url($data->file->link_stream) !!}">to the PDF!</a></p>
-                                    </object>
+                                @if($data->file->type == 'audio')
+                                    <audio controls>
+                                        <source src="{!! url($data->file->link_stream) !!}" type="audio/mpeg">
+                                        Your browser does not support the audio element.
+                                    </audio>
                                 @else
-                                    @if($data->file->type == 'audio')
-                                        <audio controls>
-                                            <source src="{!! url($data->file->link_stream) !!}" type="audio/mpeg"> Your browser does not support the audio element.
-                                        </audio>
-                                    @else
+                                    @if($data->file->type != 'image')
                                         <a href="{!! url($data->file->link_stream) !!}" target="_blank"> {!! $data->file->name !!} </a>
                                     @endif
                                 @endif

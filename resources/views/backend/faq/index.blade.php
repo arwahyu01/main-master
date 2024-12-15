@@ -64,5 +64,5 @@
     <script src="{{ url($template.'/assets/vendor_components/datatable/datatables.min.js') }}"></script>
     <script src="{{ url($template.'/assets/vendor_plugins/summernote/summernote-lite.min.js') }}"></script>
     <script src="{{ url('/js/'.$backend.'/'.$page->code.'/datatable.js') }}"></script>
-    <script src="{{ url('js/jquery-crud.js') }}"></script>
+    <script src="{{ url('js/jquery-crud.js?id='.time()) }}"></script>
 @endpush

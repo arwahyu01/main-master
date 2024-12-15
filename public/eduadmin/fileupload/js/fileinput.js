@@ -6447,7 +6447,7 @@
         elErrorContainer: null,
         errorCloseButton: undefined,
         slugCallback: null,
-        dropZoneEnabled: true,
+        dropZoneEnabled: false,
         dropZoneTitleClass: 'file-drop-zone-title',
         fileActionSettings: {},
         otherActionButtons: '',
@@ -6554,7 +6554,7 @@
             uploadBatch: 'batch file upload',
             uploadExtra: 'form data upload'
         },
-        dropZoneTitle: 'Drag & drop files here &hellip;',
+        dropZoneTitle: 'Previous files',
         dropZoneClickTitle: '<br>(or click to select {files})',
         previewZoomButtonTitles: {
             prev: 'View previous file',

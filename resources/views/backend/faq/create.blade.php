@@ -4,16 +4,16 @@
         <div class='form-group'>
             {!! html()->label('title')->text('Judul / Nama Grup / Nama Faq')->class('control-label') !!}
             <span class="text-danger">*</span>
-            {!! html()->text('title')->placeholder('Ketik disini ...')->class('form-control')->id('title') !!}
+            {!! html()->text('title')->placeholder('Ketik disini ...')->class('form-control')->id('title')->required() !!}
         </div>
         <div class='form-group'>
             {!! html()->label('menu_id')->text('Menu')->class('control-label') !!}
             <span class="text-danger">*</span>
-            {!! html()->select('menu_id',$menu)->class('form-control select2')->id('menu_id')->placeholder('Choose Menu') !!}
+            {!! html()->select('menu_id',$menu)->class('form-control select2')->id('menu_id')->placeholder('Choose Menu')->required() !!}
         </div>
         <div class='form-group'>
             {!! html()->label('description')->text('Deskripsi')->class('control-label') !!}
-            {!! html()->textarea('description')->placeholder('Ketik disini ...')->class('form-control')->id('description') !!}
+            {!! html()->textarea('description')->placeholder('Ketik disini ...')->class('form-control')->id('description')->required() !!}
         </div>
         <div class='form-group'>
             {!! html()->label('file')->text('Unggah File')->class('control-label') !!}

@@ -2,7 +2,7 @@
 const errorBuilder = (error, targetClass = 'modal-message') => {
     const errorValidation = (errors) => {
         for (const [index, value] of Object.entries(errors)) {
-            const element = document.getElementById(index);
+            const element = document.getElementById(index) || document.getElementsByName(index)[0];
             if (element) {
                 const isSelect2 = $(element).hasClass('select2-hidden-accessible');
                 const targetElement = isSelect2 ? ($(element).next().find('.select2-selection')[0] || element)
@@ -38,11 +38,12 @@ const clearError = (targetClass = 'error-msg') => {
 const formValidate = (formIds) => {
     let isValid = true;
     let errors = {};
+    const isRadioChecked = field => $(`input[name="${field.name}"]:checked`).length > 0;
 
     formIds.forEach(formId => {
-        $(`#${formId} [required]`).each(function (e, field) {
-            if (!field.value || (['radio', 'checkbox'].includes(field.type) && !field.checked)) {
-                errors[field.id] = 'This field is required.';
+        $(`#${formId} [required]`).each(function (index, field) {
+            if (!field.value || (['radio', 'checkbox'].includes(field.type) && !isRadioChecked(field))) {
+                errors[field.id || field.name] = 'This field is required.';
                 isValid = false;
             }
         });
@@ -132,17 +133,17 @@ $(window.document).on('click', '.submit-data', function (e) {
             progress.html(percentComplete === 100 ? 'Please Wait ...' : percentVal);
         },
         beforeSubmit: function () {
+            btnSubmit.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Processing...';
+            btnSubmit.disabled = true;
             progress.width('0%');
             progress.html('0% Complete');
             dismiss.prop('disabled', true);
-            btnSubmit.disabled = true;
-            btnSubmit.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Processing...';
             $('.progress').show();
         },
         success: function (response, status, xhr, $form) {
-            $('.progress').hide();
             btnSubmit.disabled = false;
             btnSubmit.innerHTML = '<i class="fa fa-save"></i> ' + textBtn;
+            $('.progress').hide();
             dismiss.prop('disabled', false);
 
             if (response.status === true) {
@@ -155,7 +156,12 @@ $(window.document).on('click', '.submit-data', function (e) {
                     text: response.message,
                     type: 'success',
                     timer: 2000,
-                    showConfirmButton: false
+                    showConfirmButton: true
+                }, function () {
+                    swal.close();
+                    if (_redirect) {
+                        window.location.href = _redirect;
+                    }
                 });
 
                 if (_targetTable) {
@@ -167,10 +173,6 @@ $(window.document).on('click', '.submit-data', function (e) {
                 if (_targetFunction) {
                     targetFunction(_targetFunction);
                 }
-
-                if (_redirect) {
-                    window.location.href = _redirect;
-                }
                 $('.modal').modal('hide');
             } else {
                 if (response.hasOwnProperty('data')) {
@@ -181,17 +183,17 @@ $(window.document).on('click', '.submit-data', function (e) {
                         text: response.message,
                         type: 'error',
                         timer: 2500,
-                        showConfirmButton: false
+                        showConfirmButton: true,
                     });
                 }
             }
         },
         error: function (xhr) {
-            errorBuilder(xhr);
-            $('.progress').hide();
-            dismiss.prop('disabled', false);
             btnSubmit.disabled = false;
             btnSubmit.innerHTML = '<i class="fa fa-save"></i> ' + textBtn;
+            $('.progress').hide();
+            dismiss.prop('disabled', false);
+            errorBuilder(xhr);
         }
     }).submit();
 });
@@ -211,20 +213,31 @@ $(window.document).on('click', '.delete-file', function (e) {
         closeOnCancel: false
     }, function (isConfirm) {
         if (isConfirm) {
-            $.ajax({
-                url: btn.data('url'),
-                success: function (data) {
+            fetch(btn.data('url'), {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(async (response) => {
+                    if (!response.ok) {
+                        const error = await response.json();
+                        throw new Error(error.message || 'Error occurred');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
                     if (data.status === true) {
                         $('#' + btn.data('id')).remove();
                         swal("Deleted!", data.message, "success");
                     }
-                },
-                error: function (e) {
-                    swal("Error!", e.responseJSON.message, "error");
-                }
-            });
+                })
+                .catch((error) => {
+                    swal("Error!", error.message, "error");
+                });
         } else {
             swal.close();
         }
     });
 });
+

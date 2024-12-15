@@ -34,6 +34,7 @@
             <div class="file-loading">
                 {!! html()->file('file[]')->id('file')->class('file-drag-drop')->multiple()->data('overwrite-initial',false)->data('min-file-count',1) !!}
             </div>
+            <span class="text-danger">Allowed : jpg, jpeg, png, pdf, doc, docx, xls, xlsx</span>
         </div>
         <div class='form-group'>
             {!! html()->label('Tingkat Kepentingan','urgency')->class('control-label') !!}
@@ -94,8 +95,12 @@
     $(".file-drag-drop").fileinput({
         theme: 'fa',
         uploadUrl: "/#",
-        allowedFileExtensions:['jpg','jpeg','png','pdf','doc','docx','xls','xlsx'],
-        overwriteInitial: false,
+        showUpload: false,
+        showRemove: false,
+        showCancel: false,
+        showClose: false,
+        allowedFileExtensions: ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx', 'xls', 'xlsx'],
+        overwriteInitial: true,
         maxFileSize: 2048,
         maxFilesNum: 10,
         slugCallback: function (filename) {

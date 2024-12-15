@@ -3,11 +3,11 @@
     <div class="panel-body">
         <div class='form-group'>
             {!! html()->label('Nama Level','name')->class('control-label') !!}
-            {!! html()->text('name')->placeholder('Ketik nama levl disini')->class('form-control')->id('name') !!}
+            {!! html()->text('name')->placeholder('Ketik nama levl disini')->class('form-control')->id('name')->required() !!}
         </div>
         <div class='form-group'>
             {!! html()->label('Kode Level','code')->class('control-label') !!}
-            {!! html()->text('code')->placeholder('Ketik kode disini')->class('form-control')->id('code') !!}
+            {!! html()->text('code')->placeholder('Ketik kode disini')->class('form-control')->id('code')->required() !!}
         </div>
         <div class='form-group'>
             {!! html()->label('Apa saja hak akses yang dimiliki oleh level ini?','access')->class('control-label') !!}

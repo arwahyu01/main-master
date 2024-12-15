@@ -17,9 +17,9 @@ class QuestionController extends Controller
 
     public function page($page)
     {
-        $faq = Faq::whereHas('menu', fn($query) => $query->where('code', $page))->select('faqs.title','faqs.id')->paginate(10);
+        $faq = Faq::whereHas('menu', fn($query) => $query->where('code', $page))->select('faqs.title','faqs.id')->wherePublish(true)->paginate(10);
         if(!$faq->isNotEmpty()) {
-            $faq = Faq::orderBy('visitors', 'desc')->select('faqs.title', 'faqs.id')->paginate(10);
+            $faq = Faq::orderBy('visitors', 'desc')->select('faqs.title', 'faqs.id')->wherePublish(true)->paginate(10);
         }
         return response()->json($faq);
     }
