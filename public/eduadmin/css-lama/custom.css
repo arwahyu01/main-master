@@ -5,7 +5,7 @@ File: scss
 */
 
 /*Body*/
-@import url(color_theme.css);
+/*@import url(color_theme.css);*/
 @import url(../assets/icons/font-awesome/css/font-awesome.css);
 @import url(../assets/icons/themify-icons/themify-icons.css);
 html {
