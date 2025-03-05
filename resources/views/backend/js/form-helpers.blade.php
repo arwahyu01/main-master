@@ -53,11 +53,11 @@
         // end format rupiah
 
         //sort_text
-        $('.sort_text').html(function (i, html) {
-            let text = $(this).text();
-            let text_sort = text.substring(0, 20);
-            if (text.length > 20) {
-                $(this).html('<i class="ti-user text-muted me-2"></i> ' + text_sort + '...');
+        document.querySelectorAll('.sort_text').forEach(function(element) {
+            let text = element.textContent.trim();
+            let text_sort = text.substring(0, 5);
+            if (text.length > 5) {
+                element.innerHTML = text_sort + '...';
             }
         });
         //end sort_text

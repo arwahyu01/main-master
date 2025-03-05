@@ -32,7 +32,7 @@
             {!! html()->label('File Pendukung','file')->class('control-label') !!}
             <span class="text-danger">*</span>
             <div class="file-loading">
-                {!! html()->file('file[]')->id('file')->class('file-drag-drop')->multiple()->data('overwrite-initial',false) !!}
+                {!! html()->file('file[]')->id('file')->class('file-drag-drop')->multiple()->data('overwrite-initial',false)->data('min-file-count',1) !!}
             </div>
         </div>
         @if(!$data->file->isEmpty())
@@ -124,5 +124,13 @@
             return filename.replace('(', '_').replace(']', '_');
         },
         initialPreviewAsData: true,
+    });
+
+    $('.select2').each(function () {
+        let dropdownParent = $(this).closest('form');
+        $(this).select2({
+            placeholder: "Silahkan Pilih",
+            dropdownParent: dropdownParent
+        });
     });
 </script>

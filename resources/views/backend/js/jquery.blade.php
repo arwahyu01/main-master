@@ -1,6 +1,5 @@
 {{--<script>--}}
     $(function () {
-        sidebarMenu();
         $('.search-menu').on('input', function () {
             let keyword = $(this).val();
             let filter = $('.filtered');
@@ -13,9 +12,9 @@
                     let key = $(this).data('key');
                     if (key.indexOf(keyword.toLowerCase()) > -1) {
                         let item = $(this).clone();
-                        if(item.find('a').length > 0){
+                        if (item.find('a').length > 0) {
                             filter.append(item);
-                        }else{
+                        } else {
                             filter.append($(this).parent().clone());
                         }
                     }
@@ -27,7 +26,6 @@
             }
         });
 
-        // clear notification
         $('#clear-notification').on('click', function () {
             if ($(this).data('total') > 0) {
                 $.ajax({
@@ -53,11 +51,43 @@
                 });
             }
         })
+
+        $('.logoutBtn').click(function (e) {
+            e.preventDefault();
+            swal({
+                title: 'Apakah kamu yakin?',
+                text: "Kamu akan keluar dari aplikasi ini!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonText: 'Batal',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, keluar!',
+                dangerMode: true,
+            }, function (willLogout) {
+                if (willLogout) {
+                    $.ajax({
+                        url: '{!! url(config('master.app.url.backend').'/logout') !!}',
+                        type: 'POST',
+                        data: {
+                            _token: '{!! csrf_token() !!}',
+                            device: `web`
+                        },
+                        dataType: 'json',
+                        success: function (response) {
+                            if (response.status === 200) {
+                                window.location.href = "{!! url('login') !!}";
+                            }
+                        }
+                    });
+                }
+            });
+        });
     });
 
     function sidebarMenu() {
         $.ajax({
-            url: '{!! url(config('master.app.url.backend').'/list-menu') !!}',
+            url: '{!! url(config('master.app.url.backend').'/list-menu?time='.time()) !!}',
             type: 'GET',
             dataType: 'json',
             success: function (response) {
@@ -68,7 +98,7 @@
                         $('.all-menu').append(menuChild(value.access_children, value));
                     } else {
                         $('.all-menu').append(`
-                                <li class="text-light list-menu" data-key="${value.code.toLowerCase()}">
+                                <li class="list-menu" data-key="${value.code.toLowerCase()}">
                                     <a href="{!! url(config('master.app.url.backend')) !!}/${value.url}"><i class="${value.icon}"></i> <span class="${value.code}-notice">${value.title}</span></a>
                                 </li>
                             `);
@@ -78,14 +108,15 @@
                 getNotification();
                 sidebarNotification();
             },
-            error: function (e) {
-                console.log('Error load menu : ', e.responseJSON.message);
+            error: function (xhr, status, error) {
+                sidebarMenu();
+               console.error('AJAX Error: ' + status, error);
             }
         });
 
         const menuChild = function (children, value) {
             let html = '<li class="treeview parent-menu">';
-            html += `<a href="#" class="text-light list-menu" data-key="${value.code.toLowerCase()}"><i class="${value.icon}"></i><span class="${value.code}-notice">${value.title}</span><span class="pull-right-container"><i class="fa fa-angle-right pull-right"></i></span></a>`;
+            html += `<a href="#" class="list-menu" data-key="${value.code.toLowerCase()}"><i class="${value.icon}"></i><span class="${value.code}-notice">${value.title}</span><span class="pull-right-container"><i class="fa fa-angle-right pull-right"></i></span></a>`;
             html += '<ul class="treeview-menu">';
             $.each(children, function (index, child) {
                 if (child.access_children.length > 0) {
@@ -127,15 +158,15 @@
             let page = $(this).data('page') ?? null;
             if (page !== null) {
                 $.ajax({
-                    url: '{!! url(config('master.app.url.backend').'/question/page') !!}/'+$(this).data('page'),
+                    url: '{!! url(config('master.app.url.backend').'/question/page') !!}/' + $(this).data('page'),
                     type: 'GET',
                     dataType: 'json',
-                    beforeSend: function(){
+                    beforeSend: function () {
                         $('.control-sidebar .tab-content .media-list').html("<p class='text-center'>Loading...</p>")
                     },
                     success: function (response) {
                         $('.control-sidebar .tab-content .media-list').html('');
-                        $.each(response.data,function(i,v){
+                        $.each(response.data, function (i, v) {
                             $('.control-sidebar .tab-content .media-list').append(`
                                 <div class="media py-5 px-0">
                                     <p class="pt-1 fa fa-info-circle"></p>
@@ -154,7 +185,7 @@
 
     function getNotification() {
         $.ajax({
-            url: '{!! url(config('master.app.url.backend').'/get-notification') !!}',
+            url: '{!! url(config('master.app.url.backend').'/get-notification?time='.time()) !!}',
             type: 'GET',
             dataType: 'json',
             success: function (response) {
@@ -187,78 +218,25 @@
         };
     }
 
-    function logout() {
-        swal({
-            title: 'Apakah kamu yakin?',
-            text: "Kamu akan keluar dari aplikasi ini!",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonText: 'Batal',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, keluar!',
-            dangerMode: true,
-        }, function (willLogout) {
-            if (willLogout) {
-                $.ajax({
-                    url: '{!! url(config('master.app.url.backend').'/logout') !!}',
-                    type: 'POST',
-                    data: {
-                        _token: '{!! csrf_token() !!}',
-                        device: `web`
-                    },
-                    dataType: 'json',
-                    success: function (response) {
-                        if (response.status === 200) {
-                            window.location.href = "{!! url('login') !!}";
-                        }
+    function sidebarNotification() {
+        $.ajax({
+            url: '{!! url(config('master.app.url.backend').'/sidebar-notification?time='.time()) !!}',
+            type: 'GET',
+            dataType: 'json',
+            success: function (e) {
+                $.each(e.sidebar_notification, function (code, total) {
+                    const notify = $(`.${code}-notice`);
+                    $(`.${code}-item`).remove();
+                    if (total > 0) {
+                        notify.html(`${notify.text()} <span class="${code}-item bg-danger ms-5 badge-pill p-1 fs-10" title="${total}">${total > 10 ? '+' + total : total}</span>`)
                     }
                 });
+            },
+            error: function (xhr, status, error) {
+               console.error('AJAX Error: ' + status, error);
             }
         });
     }
 
-    function sidebarNotification() {
-        $.ajax({
-            url: '{!! url(config('master.app.url.backend').'/sidebar-notification') !!}',
-            type:'GET',
-            dataType:'json',
-            success:function (e) {
-                $.each(e.sidebar_notification,function (code,total){
-                   const notify = $(`.${code}-notice`);
-                   $(`.${code}-item`).remove();
-                   if(total > 0){
-                       notify.html(`${notify.text()} <span class="${code}-item bg-danger ms-5 badge-pill p-1 fs-10" title="${total}">${total > 10 ? '+'+total : total}</span>`)
-                   }
-                });
-            },
-            error: function (e){
-                {{-- console.log(e.responseJSON.message);--}}
-            }
-        })
-    }
-
-    function setCookie(cname, cvalue, exdays) {
-        var d = new Date();
-        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-        var expires = "expires=" + d.toUTCString();
-        document.cookie = cname + "=" + cvalue + "; " + expires + "; path=/";
-    }
-
-    function getCookie(cname) {
-        var name = cname + "=";
-        var decodedCookie = decodeURIComponent(document.cookie);
-        var ca = decodedCookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return "";
-    }
-
+    sidebarMenu();
 {{--</script>--}}

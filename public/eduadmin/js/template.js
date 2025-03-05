@@ -963,21 +963,25 @@ throw new Error('template requires jQuery')
     if (event) event.preventDefault()
     Plugin.call($(this), 'toggle')
   })
-  
+
   // Slim scrolling
-  
+
   $('.inner-content-div').slimScroll({
     height: '200'
   });
 
-  $('.sm-scrol').slimScroll({
-    height: '250'
-  });
-	
+  document.querySelector('.sm-scrol').addEventListener(
+        'touchstart',
+        function (event) {
+            // Handler kode Anda jika diperlukan
+        },
+        {passive: true}
+    );
+
   $('.direct-chat-messages').slimScroll({
     height: '420'
   });
-	
+
   $('.chat-box-one').slimScroll({
     height: '550'
   });
@@ -997,32 +1001,32 @@ throw new Error('template requires jQuery')
   $('.chat-box-one-side3').slimScroll({
     height: '685'
   });
-	
+
   $('.notification-side').slimScroll({
     height: '325'
   });
-	
+
   $('.suggestions-side').slimScroll({
     height: '300'
   });
-	
+
   $('.events-side').slimScroll({
     height: '265'
-  });	
-	
+  });
+
   $('.pat-div').slimScroll({
     height: '204'
   });
 $('.demo-panel-bx').slimScroll({
     height: 'auto'
   });
-  
+
   $(".search-box a, .search-box .app-search .srh-btn").on('click', function() {
         $(".app-search").toggle(200);
     });
-	
-	
-	
+
+
+
   // Close
     //
     $(document).on('click', '.box-btn-close', function() {
@@ -1059,22 +1063,22 @@ $('.demo-panel-bx').slimScroll({
     $(document).on('click', '.box-btn-fullscreen', function(){
       $(this).parents('.box').toggleClass('box-fullscreen').removeClass('box-maximize');
     });
-	
-		
+
+
 		// Disable demonstrative links!
     //
     $(document).on('click', 'a[href="#"]', function(e){
       e.preventDefault();
     });
-	
-	
+
+
     // This is for the innerleft sidebar
     $(".open-left-block").on('click', function() {
         $('.left-block').toggleClass('open-panel');
         $('.open-left-block').toggleClass('mdi-menu');
     });
-	
-	
+
+
     // Upload
     //
     $(document).on('click', '.file-browser', function() {
@@ -1112,8 +1116,8 @@ $('.demo-panel-bx').slimScroll({
       $(this).next('.custom-file-control').attr('data-input-value', filename);
     });
     $('.custom-file-control:not([data-input-value])').attr('data-input-value', 'Choose file...');
-	
-		
+
+
 
 	/* The todo list plugin */
 	  $('.todo-list').todoList({
@@ -1124,9 +1128,9 @@ $('.demo-panel-bx').slimScroll({
 		  window.console.log($(this), 'The element has been unchecked');
 		}
 	  });
-	
+
 	// bradcrumb section
-	
+
 		$('#thismonth').sparkline([8, 5, 4, 7, 9, 7, 10, 9], {
 				type: 'bar',
 				height: '35',
@@ -1144,11 +1148,11 @@ $('.demo-panel-bx').slimScroll({
 				barColor: '#ec4b71'
 			});
 		var sparkResize;
-	
+
         $("#chat-circle, #chat-box-toggle, #chat-popup").click(function(){
             $("#chat-box-body").toggleClass("show");
           });
-	
+
 }(jQuery) // End of use strict
 
 // Fullscreen
@@ -1164,7 +1168,7 @@ $('.demo-panel-bx').slimScroll({
 
 +function ($) {
   'use strict'
-	
+
 // Dynamic active menu
     var path = window.location.pathname.split("/").pop();
     var target = $('.sidebar-menu li a[href="'+path+'"]');
@@ -1176,7 +1180,7 @@ $('.demo-panel-bx').slimScroll({
 
 +function ($) {
   'use strict'
-	
+
 // Dynamic active horizontal menu
     var path = window.location.pathname.split("/").pop();
     var target = $('.sm li a[href="'+path+'"]');
@@ -1188,8 +1192,8 @@ $('.demo-panel-bx').slimScroll({
 
 // feather icon
 	$(function () {
-		'use strict'			
-		feather.replace();		
+		'use strict'
+		feather.replace();
 	}); // End of use strict
 
 
@@ -1544,8 +1548,8 @@ function w3_close() {
   document.getElementById("myOverlay").style.display = "none";
 }
 
-// loader 
-		
+// loader
+
 	var loader;
 
 	function loadNow(opacity) {
@@ -1569,7 +1573,13 @@ function w3_close() {
 	});
 
 
-new PerfectScrollbar(".multinav-scroll");
+document.querySelector(".multinav-scroll").addEventListener(
+    "touchstart",
+    function (event) {
+        // Handler kode Anda (jika perlu)
+    },
+    {passive: true}
+);
 
 
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
@@ -1578,3 +1588,48 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 })
 
 
+// switch dark mode
+const body = document.body;
+const themeSwitch = document.getElementById('themeSwitch');
+const themeSwitchToggle = document.getElementById('themeSwitchToggle'); // Jika menggunakan <a>
+
+const currentTheme = localStorage.getItem('theme') || 'light';
+applyTheme(currentTheme);
+
+if (themeSwitch) {
+  themeSwitch.addEventListener('change', () => {
+    toggleTheme();
+  });
+}
+
+if (themeSwitchToggle) {
+  themeSwitchToggle.addEventListener('click', () => {
+    themeSwitch.checked = !themeSwitch.checked; // Toggle checkbox
+    toggleTheme();
+  });
+}
+
+function toggleTheme() {
+    const newTheme = themeSwitch.checked ? 'dark' : 'light';
+    applyTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+
+    if(newTheme === 'dark') {
+        document.querySelector('.main-sidebar .sidebar-footer').style.backgroundColor = '#112038';
+    }else{
+        document.querySelector('.main-sidebar .sidebar-footer').style.backgroundColor = '#f4f4f4';
+    }
+
+}
+
+function applyTheme(theme) {
+  if (theme === 'dark' && !body.classList.contains('dark-skin')) {
+    body.classList.remove('light-skin');
+    body.classList.add('dark-skin');
+    if (themeSwitch) themeSwitch.checked = true; // Pastikan checkbox tersinkron
+  } else if (theme === 'light' && !body.classList.contains('light-skin')) {
+    body.classList.remove('dark-skin');
+    body.classList.add('light-skin');
+    if (themeSwitch) themeSwitch.checked = false; // Pastikan checkbox tersinkron
+  }
+}

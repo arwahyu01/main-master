@@ -36,5 +36,6 @@
     </div>
 @endsection
 @push('js')
-
+    <script src="{{ url($template.'/assets/vendor_components/jquery-validation-1.17.0/lib/jquery.form.js') }}"></script>
+    <script src="{{ url('js/jquery-crud.js?id='.time()) }}"></script>
 @endpush

@@ -5,7 +5,10 @@ $(function () {
     "use strict";
 
     //Initialize Select2 Elements
-    $('.select2').select2();
+    $(".select2").select2({
+        placeholder: "Silahkan Pilih",
+        dropdownParent: $('.select2').closest('form')
+    });
 
     //Datemask dd/mm/yyyy
     $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' });

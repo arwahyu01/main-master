@@ -1,10 +1,13 @@
 {{ html()->form('POST', route($page->url.'.store'))->id('form-create-'.$page->code)->acceptsFiles()->class('form form-horizontal')->open() }}
 <div class="panel shadow-sm">
     <div class="panel-body">
-        <div class='form-group'>
-            {!! html()->label('Target Menu','menu_id')->class('control-label') !!}
-            <span class="text-danger">*</span>
-            {!! html()->select('menu_id',$menu)->class('form-control select2')->id('menu_id')->placeholder('Pilih Menu')->required() !!}
+        <div class="form-group">
+            <label for="menu_id">Pilih Menu</label>
+            {!! html()->select('menu_id', $menu)
+                ->class('form-control select2')
+                ->id('menu_id')
+                ->placeholder('Pilih Menu')
+                ->required() !!}
         </div>
         <div class='form-group'>
             {!! html()->label('Judul Pengumuman','title')->class('control-label') !!}
@@ -57,11 +60,12 @@
 <link href="{{ url($template.'/fileupload/css/fileinput.css') }}" rel="stylesheet">
 <link href="{{ url($template.'/fileupload/css/font_bootstrap-icons.min.css') }}" rel="stylesheet">
 <style>
-    .kv-file-upload, .fileinput-upload, .file-upload-indicator{
+    .kv-file-upload, .fileinput-upload, .file-upload-indicator {
         display: none;
     }
+
     .select2-container {
-        z-index: 9999 !important;
+        z-index: 999999 !important;
         width: 100% !important;
     }
 
@@ -108,4 +112,13 @@
         },
         initialPreviewAsData: true,
     });
+
+    $('.select2').each(function () {
+        let dropdownParent = $(this).closest('form');
+        $(this).select2({
+            placeholder: "Silahkan Pilih",
+            dropdownParent: dropdownParent
+        });
+    });
 </script>
+

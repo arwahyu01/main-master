@@ -13,7 +13,7 @@ File: rtl scss
   direction: rtl; }
 
 /*******************
-Padding property
+Padding property 
 *******************/
 .rtl .ps-0 {
   padding-right: 0px !important;
@@ -1024,7 +1024,7 @@ Padding property
     padding-left: 100px !important;
     padding-right: inherit !important; } }
 /*******************
-Margin property
+Margin property 
 *******************/
 .rtl .ms-0 {
   margin-right: 0px !important;
@@ -3055,4 +3055,4 @@ Margin property
 .rtl input {
   text-align: right !important; }
 
-/*# sourceMappingURL=light/style_rtl.css.map */
+/*# sourceMappingURL=style_rtl.css.map */

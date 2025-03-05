@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{{ url($template.'/css/skin_color.css') }}">
     @stack('css')
 </head>
-<body class="hold-transition light-skin sidebar-mini theme-primary fixed">
+<body class="hold-transition light-skin sidebar-mini theme-primary">
 <div class="wrapper">
     <div id="loader"></div>
     @include('backend.main.menu.header')

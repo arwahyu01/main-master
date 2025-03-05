@@ -90,7 +90,7 @@
     <script src="{{ url('js/'.$backend.'/'.$page->code.'/datatable.js') }}"></script>
     <script src="{{ url('js/jquery-crud.js') }}"></script>
     <script>
-        $(document).on("keyup", "#title", function () {
+        $(document).on("keyup", "#code", function () {
             let title = $(this).val();
             let value = title.replace(/ /g, "-");
             $("#url").val(value.toLowerCase());

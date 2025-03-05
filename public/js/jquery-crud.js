@@ -66,11 +66,14 @@ $(window.document).on('click', '.btn-action', function (e) {
 
     const id = $(this).data('id') ?? '';
     const url = $(this).data('url') ?? window.location.href;
-    const action = $(this).data('action') ?? '';
     const title = $(this).data('title') ?? '';
+    const action = $(this).data('action') ?? '';
     const modalId = $(this).data('modalId') ?? 'modal-master';
+    const modalSize = $(this).data('size') ?? 'modal-lg';
     const bgClass = $(this).data('bgClass') ?? 'bg-default';
     const arguments = $(this).data('options') ?? '';
+    const _targetTable = $(this).data('table') ?? '';
+    const _targetFunction = $(this).data('function') ?? '';
     const actionUrls = {
         'create': 'create',
         'edit': `${id}/edit`,
@@ -79,12 +82,13 @@ $(window.document).on('click', '.btn-action', function (e) {
     };
     const urlExtension = actionUrls[action] || '';
     const modalOptions = {
-        url: urlExtension ? `${url}/${urlExtension}${arguments}` : url,
+        url: urlExtension ? `${url}/${urlExtension}${arguments}` : url+`${arguments}`,
         id: modalId,
         dlgClass: 'fade',
         bgClass: bgClass,
         title: title,
         width: 'whatever',
+        size: modalSize,
         modal: {
             keyboard: false,
             backdrop: 'static',
@@ -99,6 +103,12 @@ $(window.document).on('click', '.btn-action', function (e) {
             success() {
                 $.hideLoading();
                 $(`#${modalId}`).modal('show');
+                if (_targetTable) {
+                    _targetTable.split(',').forEach((tableId) => $(`#${tableId}`).DataTable().ajax.reload());
+                }
+                if (_targetFunction) {
+                    targetFunction(_targetFunction);
+                }
             },
             error: function (xhr) {
                 $.hideLoading();
@@ -120,6 +130,8 @@ $(window.document).on('click', '.submit-data', function (e) {
     const formId = form.id ?? form.attr('id');
     const progress = $('.progress-bar');
     const dismiss = parent.find('[data-bs-dismiss]');
+    const icon = e.target.querySelector('i') ?? '';
+
     clearError();
 
     if (!formValidate([formId])) {
@@ -142,7 +154,7 @@ $(window.document).on('click', '.submit-data', function (e) {
         },
         success: function (response, status, xhr, $form) {
             btnSubmit.disabled = false;
-            btnSubmit.innerHTML = '<i class="fa fa-save"></i> ' + textBtn;
+            btnSubmit.innerHTML = icon !== '' ? icon.outerHTML + ' ' + textBtn : textBtn;
             $('.progress').hide();
             dismiss.prop('disabled', false);
 
@@ -150,19 +162,26 @@ $(window.document).on('click', '.submit-data', function (e) {
                 const _targetTable = $form.find('input[name="table-id"]').val();
                 const _targetFunction = $form.find('input[name="function"]').val();
                 const _redirect = $form.find('input[name="redirect"]').val() || '';
+                const _removeAlert = $form.find('input[name="remove-alert"]').val() || 0;
 
-                swal({
-                    title: response.title || 'Good job!',
-                    text: response.message,
-                    type: 'success',
-                    timer: 2000,
-                    showConfirmButton: true
-                }, function () {
-                    swal.close();
+                if (_removeAlert === 0) {
+                    swal({
+                        title: response.title || 'Good job!',
+                        text: response.message,
+                        type: 'success',
+                        timer: 2000,
+                        showConfirmButton: true
+                    }, function () {
+                        swal.close();
+                        if (_redirect) {
+                            window.location.href = _redirect;
+                        }
+                    });
+                }else{
                     if (_redirect) {
                         window.location.href = _redirect;
                     }
-                });
+                }
 
                 if (_targetTable) {
                     _targetTable.split(',').forEach((tableId) => {
@@ -190,7 +209,7 @@ $(window.document).on('click', '.submit-data', function (e) {
         },
         error: function (xhr) {
             btnSubmit.disabled = false;
-            btnSubmit.innerHTML = '<i class="fa fa-save"></i> ' + textBtn;
+            btnSubmit.innerHTML = icon !== '' ? icon.outerHTML + ' ' + textBtn : textBtn;
             $('.progress').hide();
             dismiss.prop('disabled', false);
             errorBuilder(xhr);

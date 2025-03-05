@@ -1,12 +1,19 @@
 <header class="main-header">
     <div class="d-flex align-items-center logo-box justify-content-start">
-        <a href="#" title="{!! config('master.app.profile.name') !!}" class="waves-effect waves-light nav-link d-none d-md-inline-block mx-10 push-btn bg-transparent text-white" data-toggle="push-menu" role="button">
+        <a href="#" title="{!! config('master.app.profile.name') !!}"
+           class="waves-effect waves-green nav-link d-none d-md-inline-block mx-10 push-btn bg-transparent"
+           data-toggle="push-menu" role="button">
             <i class="icon-Align-left"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
         </a>
-        <a href="#" class="logo">
+        <a href="#" class="logo p-0">
             <div class="logo-lg">
-                <i class="light-logo"><img src="{{ url($template).config('master.app.web.logo_light')}}" alt="logo" width="140" height="70"></i>
-                <i class="dark-logo"><img src="{{ url($template).config('master.app.web.logo_dark')}}" alt="logo" width="140" height="70"></i>
+                <h2 class="light-logo">
+{{--                    <img src="{{ url($template).config('master.app.web.logo_light')}}" alt="logo" width="140" class="pull-left">--}}
+                    <span>{{ config('master.app.profile.name') }}</span>
+                </h2>
+                <h2 class="dark-logo">
+                    <span class="text-white">{{ config('master.app.profile.name') }}</span>
+                </h2>
             </div>
         </a>
     </div>
@@ -72,11 +79,17 @@
                     </a>
                     <ul class="dropdown-menu animated flipInX">
                         <li class="user-body">
-                            <a class="dropdown-item" href="#"><i class="ti-user text-muted me-2"></i>{!! $user->name !!}</a>
+                            <a class="dropdown-item btn-action text-center" href="#" data-action="edit"
+                               data-url="{{ url(config('master.app.url.backend').'/user') }}" data-title="Profil User"
+                               data-id="{{ $user->id }}">
+                                <i class="ti-user text-muted me-2"></i>{!! $user->name !!}<br>
+                                <span class="fs-12">( {{ $user->level->name }} )</span>
+                            </a>
                             <div class="dropdown-divider"></div>
                         </li>
                         <li class="user-body">
-                            <a class="dropdown-item" href="#" onclick="logout()"><i class="ti-lock text-muted me-2"></i> Sign Out</a>
+                            <a class="dropdown-item logoutBtn" href="#"><i class="ti-lock text-muted me-2"></i>
+                                Sign Out</a>
                         </li>
                     </ul>
                 </li>
@@ -85,6 +98,17 @@
                 {{--        <i class="icon-Settings"><span class="path1"></span><span class="path2"></span></i>--}}
                 {{--    </a>--}}
                 {{--</li>--}}
+                <li>
+                    <a href="javascript:void(0)" class="switch waves-effect waves-green" id="themeSwitchToggle">
+                        <input type="checkbox" id="themeSwitch" data-mainsidebarskin="toggle" style="display: none;">
+                        <span class="switch-on font-size-30">
+                            <i class="mdi mdi-lightbulb-on"></i>
+                        </span>
+                        <span class="switch-off font-size-30">
+                            <i class="mdi mdi-lightbulb"></i>
+                        </span>
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>
