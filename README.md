@@ -26,6 +26,7 @@ Made with ❤️ by <a href="https://www.linkedin.com/in/arwahyupradana/" target
 - [x] role and permission management
 - [x] Sidebar notification
 - [x] Header notification
+- [x] Dark Mode
 - [x] Create a menu seeder and access the menu using the php artisan `app:convert-menu command`.
 - [x] Morph File
 - [x] Default Menu
@@ -54,6 +55,24 @@ $ php artisan migrate --seed
 $ php artisan serve # or use valet
 ```
 
+## Features for developer (MVC Builder) :
+Install this package to your laravel project
+```bash
+composer require arwp/mvc
+```
+#### Don't forget to set the configuration, read more [here](https://github.com/arwahyu01/mvc-builder)
+### How to use this package :
+  - Run `php artisan make:mvc [name]` in your terminal to create a module
+    - [x] Controller (with CRUD function)
+    - [x] Model (with fillable and relation)
+    - [x] Migration (with table and relation)
+    - [x] views (with CRUD function)
+    - [x] routes 
+  - Run `php artisan migrate` to create table
+    - add new menu in menu table
+    - add access menu in access menu table
+  - Run `php artisan delete:mvc [name]` to delete a module (delete all file and table in database)
+
 ## Custom Script
 #### For Datatables
 - use this script to send multiple data to 'datatable.blade.js'
@@ -81,24 +100,6 @@ $ php artisan serve # or use valet
         ajax: `{{ url(config('master.app.url.backend').'/'.$url.'/data?id='${id}') }}`,
     });
 ```
-
-## Features for developer (MVC Builder) :
-Install this package to your laravel project
-```bash
-composer require arwp/mvc
-```
-#### Don't forget to set the configuration, read more [here](https://github.com/arwahyu01/mvc-builder)
-### How to use this package :
-  - Run `php artisan make:mvc [name]` in your terminal to create a module
-    - [x] Controller (with CRUD function)
-    - [x] Model (with fillable and relation)
-    - [x] Migration (with table and relation)
-    - [x] views (with CRUD function)
-    - [x] routes 
-  - Run `php artisan migrate` to create table
-    - add new menu in menu table
-    - add access menu in access menu table
-  - Run `php artisan delete:mvc [name]` to delete a module (delete all file and table in database)
 
 ## License
 - MVC Builder Package: This package is offered with no license, making it free to use for personal projects.
