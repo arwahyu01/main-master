@@ -102,7 +102,7 @@ $(function () {
                 },
                 success: function (data) {
                     pass_info.html('<i class="fa fa-check text-success"></i> Register successful, redirecting...');
-                    setTimeout(() => window.location.href = 'email/verify', 2000);
+                    setTimeout(() => window.location.href = 'login', 2000);
                 },
                 error: function (e, i, j) {
                     setTimeout(() => {
