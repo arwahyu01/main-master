@@ -34,9 +34,9 @@ return [
         'web'=>[
             'template'=>'eduadmin', // template for frontend view (default: eduadmin)
             'icon'=>'',
-            'logo_light'=>'/images/logo-main-master.png',
-            'logo_dark'=>'/images/logo-main-master.png',
-            'favicon'=>'/images/favicon.ico',
+            'logo_light'=>'/images/logo-text.png',
+            'logo_dark'=>'/images/logo-text.png',
+            'favicon'=>'/images/favicon.png',
             'background'=>'/images/auth-bg/bg-1.jpg',
             'header_animation'=>'on', // turn on/off header animation
         ],

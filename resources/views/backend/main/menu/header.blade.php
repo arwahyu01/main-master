@@ -7,10 +7,10 @@
         </a>
         <a href="#" class="logo p-0">
             <div class="logo-lg">
-{{--                <i class="light-logo"><img src="{{ url($template).config('master.app.web.logo_light')}}" alt="logo" width="140" height="70"></i>--}}
-{{--                <i class="dark-logo"><img src="{{ url($template).config('master.app.web.logo_dark')}}" alt="logo" width="140" height="70"></i>--}}
-                <h2 class="light-logo"><span>{{ config('master.app.profile.name') }}</span></h2>
-                <h2 class="dark-logo"><span class="text-white">{{ config('master.app.profile.name') }}</span></h2>
+                <i class="light-logo"><img src="{{ url($template).config('master.app.web.logo_light')}}" alt="logo" width="140" ></i>
+                <i class="dark-logo"><img src="{{ url($template).config('master.app.web.logo_dark')}}" alt="logo" width="140" ></i>
+{{--                <h2 class="light-logo"><span>{{ config('master.app.profile.name') }}</span></h2>--}}
+{{--                <h2 class="dark-logo"><span class="text-white">{{ config('master.app.profile.name') }}</span></h2>--}}
             </div>
         </a>
     </div>

@@ -6,13 +6,12 @@
     <div class="container-custom register-split">
         <div class="left-side">
             <div class="content">
-                <img src="{{ asset(config('master.app.web.template') . '/images/main-master-logo.png') }}"
-                     alt="Ilustrasi Pendaftaran" class="illustration">
+                <img src="{{ asset(config('master.app.web.template') . '/images/main-master-logo.png') }}" alt="Ilustrasi Pendaftaran" class="illustration">
                 <h2>Bangun Lebih Cepat, Lebih Pintar</h2>
-                <p>Lupakan repotnya bikin CRUD dari awal. <strong>Main Master</strong> jadi fondasi solid untuk
+                <p>Lupakan repotnya bikin CRUD dari awal. <strong>Main Master</strong> fondasi solid untuk
                     pengembangan aplikasi yang efisien dan scalable.</p>
                 <div class="cta">
-                    <p>Siap percepat proses development?</p>
+                    <p>Anda sudah punya akun?</p>
                     <a href="{{ url('login') }}">Masuk Sekarang <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
@@ -110,7 +109,7 @@
         .container-custom.register-split {
             background: #fff;
             border-radius: 12px;
-            max-width: 800px; /* Batasi lebar maksimum container di desktop */
+            max-width: 800px;
             width: 100%;
             overflow: hidden;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
@@ -315,18 +314,17 @@
             text-decoration: underline;
         }
 
-        /* Media query untuk layar dengan lebar maksimum 768px (ukuran umum tablet) */
         @media (max-width: 768px) {
             .container-custom.register-split {
                 flex-direction: column;
             }
 
             .left-side {
-                display: none; /* Sembunyikan sisi kiri di tablet */
+                display: none;
             }
 
             .right-side {
-                width: 100%; /* Gunakan seluruh lebar */
+                width: 100%;
                 padding: 30px;
             }
 
@@ -335,11 +333,10 @@
             }
 
             .right-side .content-top-agile {
-                text-align: center; /* Pusatkan judul di tablet */
+                text-align: center;
             }
         }
 
-        /* Media query untuk layar dengan lebar maksimum 576px (ukuran umum mobile) */
         @media (max-width: 576px) {
             body {
                 padding: 15px;
@@ -350,12 +347,12 @@
             }
 
             .right-side {
-                padding: 20px; /* Padding lebih kecil untuk mobile kecil */
+                padding: 20px;
             }
 
             .right-side .content-top-agile h2 {
-                font-size: 1.6em; /* Ukuran font lebih kecil di mobile kecil */
-                text-align: center; /* Pusatkan judul di mobile kecil */
+                font-size: 1.6em;
+                text-align: center;
             }
 
             .form-control {

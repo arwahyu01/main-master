@@ -10,7 +10,7 @@
                  alt="Logo Aplikasi">
             <h1>{{ config('master.app.profile.name') }}</h1>
             <h2>Laravel {{ config('master.app.profile.laravel') }}</h2>
-            <p>Selamat datang di <strong>Main Master</strong> — solusi CRUD siap pakai untuk Laravel. Semua fitur dasar
+            <p>Selamat datang di <strong>Main Master</strong> — CRUD siap pakai untuk Laravel. Semua fitur dasar
                 seperti <em>login, user management, role & permission,</em> hingga notifikasi sudah tersedia. Tinggal
                 fokus ke fitur utama aplikasi kamu.</p>
         </section>
@@ -103,8 +103,8 @@
             padding: 60px 80px;
             display: flex;
             flex-direction: column;
-            align-items: center; /* Pusatkan horizontal */
-            justify-content: center; /* Pusatkan vertikal */
+            align-items: center;
+            justify-content: center;
             position: relative;
             z-index: 2;
             background: #e8eaf6;
@@ -347,7 +347,6 @@
             z-index: 0;
         }
 
-        /* Media query untuk layar dengan lebar maksimum 768px (ukuran umum tablet) */
         @media (max-width: 768px) {
             .container-custom {
                 flex-direction: column;
@@ -378,7 +377,6 @@
             }
         }
 
-        /* Media query untuk layar dengan lebar maksimum 576px (ukuran umum mobile) */
         @media (max-width: 576px) {
             body {
                 padding: 15px;
