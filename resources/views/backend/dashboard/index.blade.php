@@ -10,20 +10,21 @@
                             <div class="box-body pe-0 ps-lg-50 ps-15 py-0">
                                 <div class="row align-items-center">
                                     <div class="col-12 col-lg-8">
-                                        <h1 class="fs-40 text-dark">Hai {{ $user->name }}!</h1>
+                                        <h1 class="fs-40 text-dark">Halo, {{ $user->name }}!</h1>
                                         <p class="text-dark mb-0 fs-20">
-                                            Selamat datang di {!! config('master.app.profile.name') !!}, CRUD Generator
-                                            laravel {!! config('master.app.profile.laravel') !!} dengan mudah dan cepat.
+                                            Selamat datang di {!! config('master.app.profile.name') !!}, platform CRUD Generator berbasis Laravel {!! config('master.app.profile.laravel') !!} yang dirancang untuk mempercepat dan mempermudah pengembangan aplikasi.
                                         </p>
                                         <p class="text-dark mb-0 fs-20">
-                                            Jika kamu menemukan bug atau error, silahkan laporkan ke kami di
-                                            <a target="_blank" href="https://github.com/arwahyu01/main-master/issues"
-                                               class="text-blue">Github</a>.
+                                            Jika Anda menemukan bug atau kendala teknis, silakan laporkan melalui
+                                            <a target="_blank" href="https://github.com/arwahyu01/main-master/issues" class="text-blue">GitHub</a>.
+                                        </p>
+                                        <p class="text-dark mb-0 fs-20">
+                                            Dokumentasi lengkap dapat dibaca di
+                                            <a target="_blank" href="https://github.com/arwahyu01/main-master/blob/master/README.md" class="text-blue">halaman ini</a>.
                                         </p>
                                     </div>
                                     <div class="col-12 col-lg-4">
-                                        <img src="{{ url($template."/images/svg-icon/color-svg/custom-15.svg") }}"
-                                             alt="">
+                                        <img src="{{ url($template."/images/svg-icon/color-svg/custom-15.svg") }}" alt="">
                                     </div>
                                 </div>
                             </div>

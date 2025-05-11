@@ -7,10 +7,10 @@
         </a>
         <a href="#" class="logo p-0">
             <div class="logo-lg">
-                <i class="light-logo"><img src="{{ url($template).config('master.app.web.logo_light')}}" alt="logo" width="140" ></i>
-                <i class="dark-logo"><img src="{{ url($template).config('master.app.web.logo_dark')}}" alt="logo" width="140" ></i>
-{{--                <h2 class="light-logo"><span>{{ config('master.app.profile.name') }}</span></h2>--}}
-{{--                <h2 class="dark-logo"><span class="text-white">{{ config('master.app.profile.name') }}</span></h2>--}}
+                <i class="light-logo"><img src="{{ url($template).config('master.app.web.logo_light')}}" alt="logo" width="140"></i>
+                <i class="dark-logo"><img src="{{ url($template).config('master.app.web.logo_dark')}}" alt="logo" width="140"></i>
+                {{--                <h2 class="light-logo"><span>{{ config('master.app.profile.name') }}</span></h2>--}}
+                {{--                <h2 class="dark-logo"><span class="text-white">{{ config('master.app.profile.name') }}</span></h2>--}}
             </div>
         </a>
     </div>
@@ -98,12 +98,8 @@
                 <li>
                     <a href="javascript:void(0)" class="switch waves-effect waves-green" id="themeSwitchToggle">
                         <input type="checkbox" id="themeSwitch" data-mainsidebarskin="toggle" style="display: none;">
-                        <span class="switch-on font-size-30">
-                            <i class="mdi mdi-lightbulb-on"></i>
-                        </span>
-                        <span class="switch-off font-size-30">
-                            <i class="mdi mdi-lightbulb"></i>
-                        </span>
+                        <span class="switch-on font-size-30"><i class="mdi mdi-weather-sunny"></i></span>
+                        <span class="switch-off font-size-30"><i class="mdi mdi-weather-night"></i></span>
                     </a>
                 </li>
             </ul>

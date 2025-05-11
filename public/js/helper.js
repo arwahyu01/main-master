@@ -89,10 +89,11 @@ $(function () {
     // Input File Validation
     $(document).on('change', 'input[type="file"]', function () {
         clearError();
-        let id = $(this).attr('id');q
+        let id = $(this).attr('id');
+        q
         let size = $(this).data('size') || 0;
         let max_byte = size * 1024;
-        if(!$(this).attr('accept')) return;
+        if (!$(this).attr('accept')) return;
         const accept = $(this).attr('accept').split(',').map(item => item.trim());
         const fileInput = $(this)[0];
 

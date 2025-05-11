@@ -1,27 +1,33 @@
+Berikut adalah versi terjemahan lengkap dalam bahasa Indonesia dari dokumentasi tersebut:
+
+---
+
 <p style="text-align: center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p style="text-align: center">
-PHP Framework For Web Artisans
+Framework PHP untuk Para Pengrajin Web
 </p>
 
 <h2 style="text-align: center"> Main Master </h2>
-<h3 style="text-align: center">( Crud Generator )</h3>
+<h3 style="text-align: center">( Generator CRUD )</h3>
 <p style="text-align: center">
-Main Master is a CRUD generator for Laravel projects. This project was created to make it easier for developers to create Laravel projects. This project is built with Laravel 12 and Bootstrap 5.
+Main Master adalah generator CRUD untuk proyek Laravel. Proyek ini dibuat untuk mempermudah para pengembang dalam membangun proyek Laravel. Dibuat menggunakan Laravel 12 dan Bootstrap 5.
 </p>
 <p style="text-align: center">
-Made with ❤️ by <a href="https://www.linkedin.com/in/arwahyupradana/" target="_blank">arwp</a>
+Dibuat dengan ❤️ oleh <a href="https://www.linkedin.com/in/arwahyupradana/" target="_blank">arwp</a>
 </p>
 
-## Requirements
+## Persyaratan
 
-- Laravel 12 or higher
-- PHP 8.2 or higher
-- MySQL 5.7 or higher or any other database
-- Composer 2.2.* or higher
+* Laravel 12 atau lebih baru
+* PHP 8.2 atau lebih baru
+* MySQL 5.7 atau database lainnya
+* Composer 2.2.\* atau lebih baru
 
-## Features Master
+## Fitur Utama
+
 - [x] Login with authentication (email and password)
+- [x] Login API with Sanctum
 - [x] CRUD with ajax request
 - [x] role and permission management
 - [x] Sidebar notification
@@ -40,70 +46,140 @@ Made with ❤️ by <a href="https://www.linkedin.com/in/arwahyupradana/" target
     - [x] user management
     - [x] Announcement
 
-## How to install
+## Cara Instalasi
+
 ```bash
-# From Packagist
-$ composer create-project arwp/main-master {your-project-name}
-# ---- OR -----
-# Clone the repository
-$ git clone https://github.com/arwahyu01/main-master.git {your-project-name}
+# Dari Packagist
+$ composer create-project arwp/main-master {nama-proyek-anda}
+# ---- ATAU -----
+# Clone repositori
+$ git clone https://github.com/arwahyu01/main-master.git {nama-proyek-anda}
 $ cd main-master
 $ composer install
 $ cp .env.example .env
 $ php artisan key:generate
 $ php artisan migrate --seed
-$ php artisan serve # or use valet
+$ php artisan serve # atau gunakan valet
 ```
 
-## Features for developer (MVC Builder) :
-Install this package to your laravel project
+## Fitur untuk Pengembang (MVC Builder):
+
+Install paket ini ke proyek Laravel Anda
+
 ```bash
 composer require arwp/mvc
 ```
-#### Don't forget to set the configuration, read more [here](https://github.com/arwahyu01/mvc-builder)
-### How to use this package :
-  - Run `php artisan make:mvc [name]` in your terminal to create a module
-    - [x] Controller (with CRUD function)
-    - [x] Model (with fillable and relation)
-    - [x] Migration (with table and relation)
-    - [x] views (with CRUD function)
-    - [x] routes 
-  - Run `php artisan migrate` to create table
-    - add new menu in menu table
-    - add access menu in access menu table
-  - Run `php artisan delete:mvc [name]` to delete a module (delete all file and table in database)
 
-## Custom Script
-#### For Datatables
-- use this script to send multiple data to 'datatable.blade.js'
-```
-    <script type="application/javascript">
-        fetch("{{ url('/js/'.$backend.'/'.$page->code.'/datatable.js') }}", {
-            method: 'POST',
-            headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({id: "{{ $id }}"})
-        })
+#### Jangan lupa untuk mengatur konfigurasi, baca selengkapnya di [sini](https://github.com/arwahyu01/mvc-builder)
+
+## Skrip Khusus
+
+#### Untuk Datatables
+
+* Gunakan skrip ini untuk mengirim banyak data ke 'datatable.blade.js'
+
+- Hapus skrip lama dan ganti dengan skrip berikut:
+- script lama : `<script src="{{ asset('js/'.$backend.'/'.$page->code.'/datatable.js') }}"></script>`
+- script baru:
+
+```html
+
+<script type="application/javascript">
+    fetch("{{ url('/js/'.$backend.'/'.$page->code.'/datatable.js') }}", {
+        method: 'POST',
+        headers: {
+            "X-CSRF-TOKEN": "{{ csrf_token() }}",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({id: "{{ $id }}"})
+    })
         .then(e => e.text())
         .then(r => {
             Function('"use strict";\n' + r)();
         }).catch(e => console.log(e));
-    </script>
-```
-- `JSON.stringify({'id': "{{ $id }}",'id2': "{{ $id2 }}"})` for multiple request
-- `JSON.stringify({id: "{{ $id }}"})` for single request
-- Add `$id`, in datatable.blade.js file like this :
-```
-    $('#datatable').DataTable({
-        ajax: `{{ url(config('master.app.url.backend').'/'.$url.'/data?id='${id}') }}`,
-    });
+</script>
 ```
 
-## License
-- MVC Builder Package: This package is offered with no license, making it free to use for personal projects.
-- Eduadmin Template: The Eduadmin template used for the views in this package is not free. You'll need to purchase a license for commercial use from [here](https://themeforest.net/item/eduadmin-responsive-bootstrap-admin-template-dashboard/29365133).
-- Copyright and Attribution: Please respect the copyright of the package and its contributors. Do not remove the credits included within the files.
+* Gunakan `JSON.stringify({'id': "{{ $id }}",'id2': "{{ $id2 }}"})` untuk mengirim beberapa arguemen ke `datatable.blade.js`
+* Gunakan `JSON.stringify({id: "{{ $id }}"})` untuk satu permintaan
+* Tambahkan `$id` di file `datatable.blade.js` seperti ini:
 
-#### I hope this MVC Builder makes your development process faster and easier! 😊
+```javascript
+$('#datatable').DataTable({
+    ajax: `{{ url(config('master.app.url.backend').'/'.$url.'/data?id='${id}') }}`,
+});
+```
+
+Berikut contoh penjelasan yang bisa kamu gunakan dalam file `README.md` untuk menjelaskan mekanisme **sub-sub menu dinamis dengan ID induk** di Laravel:
+
+---
+
+## 📚 Sub-Sub Menu Dinamis (Dengan ID Induk)
+
+Dalam implementasi sub-menu atau sub-sub menu yang membutuhkan hubungan dengan data induk (misalnya kategori, parent item, dsb), mekanisme berikut digunakan agar proses penambahan data (`create`) tetap mengetahui ID dari entitas induknya.
+
+### 🔗 Alur Umum:
+
+1. **Controller induk** meneruskan `id` data induk ke halaman sub-menu.
+2. **View sub-menu (`index.blade.php`)** menampilkan tombol "Tambah" yang menyisipkan `id` ke URL.
+3. **Controller sub-menu** mengambil `id` dari `Request` dan menggunakannya untuk menyiapkan halaman `create`.
+
+### 🧩 Implementasi
+
+#### 1. Kirimkan ID dari controller induk:
+
+```php
+return view('sub_menu.index', compact('id', 'page', 'user'));
+```
+
+#### 2. Sesuaikan tombol Tambah di `index.blade.php` pada sub-menu:
+
+```blade
+@if($user->create)
+<button
+    type="button"
+    class="btn-action pull-right btn btn-success btn-sm"
+    data-title="Tambah"
+    data-id="{{ $id }}"
+    data-url="{{ $page->url.'/create?id='.$id }}">
+    <span class="fa fa-plus-circle"></span> Tambah
+</button>
+@endif
+```
+
+> ⚠️ **Catatan:** Atribut `data-action="create"` tidak lagi digunakan, jadi hapus jika masih ada.
+
+#### 3. Tangani ID di controller sub-menu:
+
+```php
+public function create(Request $request)
+{
+    $id = $request->input('id');
+    $page = Page::where('id', $id)->first();
+    $user = Auth::user();
+    return view($page->url.'.create', compact('page', 'user'));
+}
+```
+
+#### 4. Sertakan `id` di form `create.blade.php`:
+
+```blade
+<input type="hidden" name="parent_id" value="{{ request('id') }}">
+```
+
+---
+
+Dengan pendekatan ini, halaman sub-menu tetap mengetahui data induknya dan hubungan antar data dapat terjaga secara dinamis.
+
+---
+
+
+## Lisensi
+
+* Paket MVC Builder: Paket ini tidak memiliki lisensi, dan bebas digunakan untuk proyek pribadi.
+* Template Eduadmin: Template Eduadmin yang digunakan untuk tampilan dalam paket ini tidak gratis. Anda perlu membeli lisensinya untuk penggunaan komersial dari [sini](https://themeforest.net/item/eduadmin-responsive-bootstrap-admin-template-dashboard/29365133).
+* Hak Cipta dan Atribusi: Mohon hormati hak cipta dari paket dan kontributornya. Jangan menghapus kredit yang ada di dalam file.
+
+#### Semoga Main Master ini mempercepat dan mempermudah proses pengembangan proyek Anda. Jika Anda memiliki pertanyaan atau saran, jangan ragu untuk menghubungi saya di [Insta](https://www.instagram.com/arwahyupradana/) atau [LinkedIn](https://www.linkedin.com/in/arwahyupradana/).
+
+```

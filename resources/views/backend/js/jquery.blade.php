@@ -239,4 +239,63 @@
     }
 
     sidebarMenu();
+
+    @if(env('APP_ENV') == 'production')
+        window.authUser = @json(Auth::user());
+
+        (function () {
+            let isConsoleOpen = false;
+
+            const detectDevTools = function () {
+                const threshold = 160;
+                const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+                const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+
+                if (widthThreshold || heightThreshold) {
+                    if (!isConsoleOpen) {
+                        isConsoleOpen = true;
+                        triggerConsoleWarning();
+                    }
+                } else {
+                    isConsoleOpen = false;
+                }
+            };
+
+            function triggerConsoleWarning() {
+                console.log('%cAkses Dilarang!', 'color: red; font-size: 24px; font-weight: bold;');
+                console.log('%cMohon tidak menginspeksi kode sumber secara langsung.', 'color: #555; font-size: 16px;');
+
+                if (window.authUser) {
+                    console.log('%cAktivitas Anda Tercatat:', 'color: orange; font-size: 18px; font-weight: bold;');
+                    console.table({
+                        ID: window.authUser.id,
+                        Nama: window.authUser.name,
+                        Email: window.authUser.email,
+                    });
+                }
+
+                console.log('%c© Team', 'color: green; font-size: 14px; font-style: italic;');
+
+                if (typeof $ !== 'undefined' && $.blockUI) {
+                    $.blockUI({
+                        message: '<div class="loader"></div>',
+                        css: {
+                            border: 'none',
+                            backgroundColor: 'transparent',
+                            color: '#fff'
+                        },
+                        overlayCSS: {
+                            backgroundColor: '#000',
+                            opacity: 0.6,
+                            cursor: 'wait'
+                        }
+                    });
+                }
+            }
+
+            setInterval(detectDevTools, 500);
+        })();
+
+    @endif
+
 {{--</script>--}}
